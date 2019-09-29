@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Nness.Optional
 {
-    public class Optional<T> : IOptional<T>
+    public struct Optional<T> : IOptional<T>
     {
         private readonly T _value;
 
@@ -46,8 +47,102 @@ namespace Nness.Optional
             return false;
         }
 
+        public bool IsSet() => State != OptionalState.Undefined;
+
         public bool IsNull() => State == OptionalState.Null;
 
         public bool IsUndefined() => State == OptionalState.Undefined;
+
+        public static implicit operator Optional<T>(T value)
+        {
+            return new Optional<T>(value);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            switch (obj) {
+                case null:
+                    return State == OptionalState.Null;
+
+                case Optional<T> other:
+                    return Equals(other);
+
+                case T value:
+                    return Equals(new Optional<T>(value));
+
+                default:
+                    return false;
+            }
+        }
+
+        public bool Equals(Optional<T> other)
+        {
+            if (State != other.State) {
+                return false;
+            }
+
+            if (!HasValue(out T current)) {
+                return true;
+            }
+
+            other.HasValue(out T otherValue);
+
+            return EqualityComparer<T>.Default.Equals(current, otherValue);
+        }
+
+        public bool Equals(Optional<T> other, EqualityComparer<T> comparer)
+        {
+            if (comparer == null) {
+                throw new ArgumentNullException(nameof(comparer));
+            }
+
+            if (State != other.State) {
+                return false;
+            }
+
+            if (!HasValue(out T current)) {
+                return true;
+            }
+
+            other.HasValue(out T otherValue);
+
+            return comparer.Equals(current, otherValue);
+        }
+
+        public override int GetHashCode()
+        {
+            if (HasValue(out T value)) {
+                return value.GetHashCode();
+            }
+
+            switch (State) {
+                case OptionalState.Undefined:
+                    return -1;
+
+                case OptionalState.Null:
+                    return 0;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public override string ToString()
+        {
+            if (HasValue(out T value)) {
+                return value.ToString() ?? String.Empty;
+            }
+
+            switch (State) {
+                case OptionalState.Undefined:
+                    return "undefined";
+
+                case OptionalState.Null:
+                    return "null";
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }
