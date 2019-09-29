@@ -91,7 +91,7 @@ namespace Nness.Optional
 
             other.HasValue(out T otherValue);
 
-            return EqualityComparer<T>.Default.Equals(current, otherValue);
+            return current.Equals(otherValue);
         }
 
         public bool Equals(Optional<T> other, EqualityComparer<T> comparer)
