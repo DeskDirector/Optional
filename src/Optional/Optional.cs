@@ -4,8 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Nness.Optional
 {
+    [Serializable]
     public struct Optional<T> : IOptional<T>
     {
+        public static readonly Optional<T> Undefined = new Optional<T>(OptionalState.Undefined);
+        public static readonly Optional<T> Null = new Optional<T>(OptionalState.Null);
+
         private readonly T _value;
 
         public OptionalState State { get; }
