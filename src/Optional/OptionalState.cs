@@ -1,4 +1,4 @@
-﻿namespace Nness.Optional
+﻿namespace Nness.Text.Json
 {
     public enum OptionalState
     {

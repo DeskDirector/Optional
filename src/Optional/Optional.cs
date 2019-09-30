@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nness.Optional
+namespace Nness.Text.Json
 {
     [Serializable]
     public struct Optional<T> : IOptional<T>

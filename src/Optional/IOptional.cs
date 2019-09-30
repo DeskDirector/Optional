@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Nness.Optional
+namespace Nness.Text.Json
 {
     public interface IOptional
     {

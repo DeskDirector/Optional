@@ -4,7 +4,7 @@
     <LangVersion>8.0</LangVersion>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <RootNamespace>Nness.Optional</RootNamespace>
+    <RootNamespace>Nness.Text.Json</RootNamespace>
   </PropertyGroup>
 
 </Project>
