@@ -31,12 +31,11 @@ namespace Nness.Text.Json
 
         public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out T value)
         {
-            value = default!;
+            value = _value;
             if (State != OptionalState.HasValue) {
                 return false;
             }
 
-            value = _value;
             return true;
         }
 
@@ -134,6 +133,7 @@ namespace Nness.Text.Json
         public override string ToString()
         {
             if (HasValue(out T value)) {
+                // ReSharper disable once ConstantNullCoalescingCondition
                 return value.ToString() ?? String.Empty;
             }
 
