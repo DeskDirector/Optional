@@ -52,5 +52,26 @@ namespace Nness.Text.Json.Tests
                 return data;
             }
         }
+
+        [Theory]
+        [MemberData(nameof(IsSetSamples))]
+        public void IsSet(Optional<int> item, bool expectIsSet)
+        {
+            bool actualIsSet = item.IsSet();
+
+            Assert.Equal(expectIsSet, actualIsSet);
+        }
+
+        public static TheoryData<Optional<int>, bool> IsSetSamples {
+            get {
+                var data = new TheoryData<Optional<int>, bool>
+                {
+                    { new Optional<int>(OptionalState.Null), true },
+                    { new Optional<int>(OptionalState.Undefined), false },
+                    { new Optional<int>(0), true }
+                };
+                return data;
+            }
+        }
     }
 }
