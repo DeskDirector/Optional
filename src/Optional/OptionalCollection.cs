@@ -84,7 +84,6 @@ namespace Nness.Text.Json
         public override string ToString()
         {
             if (HasValue(out ICollection<T>? value)) {
-                // ReSharper disable once ConstantNullCoalescingCondition
                 return value.ToString() ?? String.Empty;
             }
 
