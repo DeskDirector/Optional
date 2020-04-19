@@ -86,10 +86,11 @@ namespace Nness.Text.Json
 
             other.HasValue(out T otherValue);
 
-            return current.Equals(otherValue);
+            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
+            return comparer.Equals(current, otherValue);
         }
 
-        public bool Equals(Optional<T> other, EqualityComparer<T> comparer)
+        public bool Equals(Optional<T> other, IEqualityComparer<T> comparer)
         {
             if (comparer == null) {
                 throw new ArgumentNullException(nameof(comparer));
@@ -106,6 +107,16 @@ namespace Nness.Text.Json
             other.HasValue(out T otherValue);
 
             return comparer.Equals(current, otherValue);
+        }
+
+        public static bool operator ==(Optional<T> item1, Optional<T> item2)
+        {
+            return item1.Equals(item2);
+        }
+
+        public static bool operator !=(Optional<T> item1, Optional<T> item2)
+        {
+            return !item1.Equals(item2);
         }
 
         public override int GetHashCode()

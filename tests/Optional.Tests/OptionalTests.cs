@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Nness.Text.Json.Tests
@@ -70,6 +71,99 @@ namespace Nness.Text.Json.Tests
                     { new Optional<int>(OptionalState.Undefined), false },
                     { new Optional<int>(0), true }
                 };
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(ValueTypeIsEqualSamples))]
+        public void ValueTypeEqual(Optional<int> item1, Optional<int> item2, bool expectEqual)
+        {
+            bool actualEqual = item1 == item2;
+            bool actualNotEqual = item1 != item2;
+
+            Assert.Equal(expectEqual, actualEqual);
+            Assert.Equal(!expectEqual, actualNotEqual);
+        }
+
+        public static TheoryData<Optional<int>, Optional<int>, bool> ValueTypeIsEqualSamples {
+            get {
+                var data = new TheoryData<Optional<int>, Optional<int>, bool>
+                {
+                    {new Optional<int>(OptionalState.Null), new Optional<int>(OptionalState.Null), true },
+                    {new Optional<int>(OptionalState.Undefined), new Optional<int>(OptionalState.Undefined), true },
+                    {new Optional<int>(OptionalState.Null), new Optional<int>(OptionalState.Undefined), false },
+                    {new Optional<int>(0), new Optional<int>(0), true },
+                    {new Optional<int>(0), new Optional<int>(-1), false },
+                    {new Optional<int>(OptionalState.Null), new Optional<int>(0), false },
+                    {new Optional<int>(OptionalState.Undefined), new Optional<int>(0), false },
+                    {new Optional<int>(0), new Optional<int>(OptionalState.Null), false },
+                    {new Optional<int>(0), new Optional<int>(OptionalState.Undefined), false }
+                };
+
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(StringTypeCaseIsEqualSamples))]
+        public void StringTypeCaseEqual(Optional<string?> item1, Optional<string?> item2, bool expectEqual)
+        {
+            bool actualEqual = item1 == item2;
+            bool actualNotEqual = item1 != item2;
+
+            Assert.Equal(expectEqual, actualEqual);
+            Assert.Equal(!expectEqual, actualNotEqual);
+        }
+
+        public static TheoryData<Optional<string?>, Optional<string?>, bool> StringTypeCaseIsEqualSamples {
+            get {
+                var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
+                {
+                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Null), true },
+                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(OptionalState.Undefined), true },
+                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Undefined), false },
+                    {new Optional<string?>("test"), new Optional<string?>("test"), true },
+                    {new Optional<string?>("test"), new Optional<string?>("Test"), false },
+                    {new Optional<string?>("test"), new Optional<string?>("abc"), false },
+                    {new Optional<string?>(null), new Optional<string?>("Test"), false },
+                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(String.Empty), false },
+                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(String.Empty), false },
+                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Null), false },
+                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Undefined), false }
+                };
+
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(StringTypeNotCaseEqualSample))]
+        public void StringTypeNotCaseEqual(Optional<string?> item1, Optional<string?> item2, bool expectEqual)
+        {
+            IEqualityComparer<string?> comparer = StringComparer.OrdinalIgnoreCase;
+            bool actualEqual = item1.Equals(item2, comparer);
+
+            Assert.Equal(expectEqual, actualEqual);
+        }
+
+        public static TheoryData<Optional<string?>, Optional<string?>, bool> StringTypeNotCaseEqualSample {
+            get {
+                var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
+                {
+                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Null), true },
+                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(OptionalState.Undefined), true },
+                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Undefined), false },
+                    {new Optional<string?>("test"), new Optional<string?>("test"), true },
+                    {new Optional<string?>("test"), new Optional<string?>("Test"), true },
+                    {new Optional<string?>("test"), new Optional<string?>("abc"), false },
+                    {new Optional<string?>(null), new Optional<string?>("Test"), false },
+                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(String.Empty), false },
+                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(String.Empty), false },
+                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Null), false },
+                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Undefined), false }
+                };
+
                 return data;
             }
         }
