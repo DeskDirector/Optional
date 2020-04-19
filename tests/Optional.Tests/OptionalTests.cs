@@ -138,7 +138,7 @@ namespace Nness.Text.Json.Tests
         }
 
         [Theory]
-        [MemberData(nameof(StringTypeNotCaseEqualSample))]
+        [MemberData(nameof(StringTypeNotCaseEqualSamples))]
         public void StringTypeNotCaseEqual(Optional<string?> item1, Optional<string?> item2, bool expectEqual)
         {
             IEqualityComparer<string?> comparer = StringComparer.OrdinalIgnoreCase;
@@ -147,7 +147,7 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(expectEqual, actualEqual);
         }
 
-        public static TheoryData<Optional<string?>, Optional<string?>, bool> StringTypeNotCaseEqualSample {
+        public static TheoryData<Optional<string?>, Optional<string?>, bool> StringTypeNotCaseEqualSamples {
             get {
                 var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
                 {
@@ -164,6 +164,52 @@ namespace Nness.Text.Json.Tests
                     {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Undefined), false }
                 };
 
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(HashCodeSamples))]
+        public void HashCode(Optional<string?> item, int expectHashCode)
+        {
+            int actualHashCode = item.GetHashCode();
+
+            Assert.Equal(expectHashCode, actualHashCode);
+        }
+
+        public static TheoryData<Optional<string?>, int> HashCodeSamples {
+            get {
+                var data = new TheoryData<Optional<string?>, int>
+                {
+                    {new Optional<string?>(OptionalState.Null), 0 },
+                    {new Optional<string?>(OptionalState.Undefined), -1 },
+                    {new Optional<string?>(String.Empty), String.Empty.GetHashCode() },
+                    {new Optional<string?>("test"), "test".GetHashCode() },
+                    {new Optional<string?>(null), 0 }
+                };
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(ToStringSamples))]
+        public void ToStringTest(Optional<string?> item, string expectToString)
+        {
+            string actualToString = item.ToString();
+            Assert.Equal(expectToString, actualToString);
+        }
+
+        public static TheoryData<Optional<string?>, string> ToStringSamples {
+            get {
+                var data = new TheoryData<Optional<string?>, string>
+                {
+                    {new Optional<string?>(OptionalState.Null), "null" },
+                    {new Optional<string?>(OptionalState.Undefined), "undefined" },
+                    {new Optional<string?>(String.Empty), String.Empty },
+                    {new Optional<string?>("test"), "test" },
+                    {new Optional<string?>(null), "null" },
+                    {new Optional<string?>("undefined"), "undefined" }
+                };
                 return data;
             }
         }
