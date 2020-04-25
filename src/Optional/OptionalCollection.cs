@@ -6,10 +6,11 @@ using System.Linq;
 
 namespace Nness.Text.Json
 {
-    public class OptionalCollection<T> : IOptional<ICollection<T>>, IEnumerable<T>
+    [Serializable]
+    public readonly struct OptionalCollection<T> : IOptional<ICollection<T>?>, IEnumerable<T>
     {
         [AllowNull]
-        private readonly ICollection<T> _value;
+        private readonly ICollection<T>? _value;
 
         public OptionalState State { get; }
 
@@ -30,7 +31,7 @@ namespace Nness.Text.Json
 
         public bool IsSet() => State != OptionalState.Undefined;
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out ICollection<T> value)
+        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out ICollection<T>? value)
         {
             value = _value;
             return State == OptionalState.HasValue;
