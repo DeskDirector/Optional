@@ -54,5 +54,30 @@ namespace Nness.Text.Json.Tests
                 return data;
             }
         }
+
+        [Theory]
+        [MemberData(nameof(EnumerableSamples))]
+        public void EnumerableTest(OptionalCollection<int> list, bool expectHasValue, IEnumerable<int> expectValue)
+        {
+            bool actualHasValue = list.HasValue(out ICollection<int>? _);
+
+            Assert.Equal(expectHasValue, actualHasValue);
+            Assert.Equal(expectValue, list);
+        }
+
+        public static TheoryData<OptionalCollection<int>, bool, IEnumerable<int>> EnumerableSamples {
+            get {
+                var data = new TheoryData<OptionalCollection<int>, bool, IEnumerable<int>>
+                {
+                    {default, false, Array.Empty<int>()},
+                    {new OptionalCollection<int>(OptionalState.Null), false, Array.Empty<int>()},
+                    {new OptionalCollection<int>(OptionalState.Undefined), false, Array.Empty<int>()},
+                    {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
+                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
+                };
+
+                return data;
+            }
+        }
     }
 }
