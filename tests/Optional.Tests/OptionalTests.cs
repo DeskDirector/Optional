@@ -20,6 +20,7 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<int>, bool, int>
                 {
+                    {default, false, default},
                     {new Optional<int>(OptionalState.Null), false, default},
                     {new Optional<int>(OptionalState.Undefined), false, default},
                     {new Optional<int>(0), true, 0},
@@ -44,6 +45,7 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<string?>, bool, string?>
                 {
+                    {default, false, default},
                     {new Optional<string?>(OptionalState.Null), false, default},
                     {new Optional<string?>(OptionalState.Undefined), false, default},
                     {new Optional<string?>(null), false, null},
@@ -67,9 +69,10 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<int>, bool>
                 {
-                    { new Optional<int>(OptionalState.Null), true },
-                    { new Optional<int>(OptionalState.Undefined), false },
-                    { new Optional<int>(0), true }
+                    {default, false},
+                    {new Optional<int>(OptionalState.Null), true},
+                    {new Optional<int>(OptionalState.Undefined), false},
+                    {new Optional<int>(0), true}
                 };
                 return data;
             }
@@ -90,6 +93,7 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<int>, Optional<int>, bool>
                 {
+                    {default, default, true},
                     {new Optional<int>(OptionalState.Null), new Optional<int>(OptionalState.Null), true },
                     {new Optional<int>(OptionalState.Undefined), new Optional<int>(OptionalState.Undefined), true },
                     {new Optional<int>(OptionalState.Null), new Optional<int>(OptionalState.Undefined), false },
@@ -120,6 +124,7 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
                 {
+                    {default, default, true},
                     {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Null), true },
                     {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(OptionalState.Undefined), true },
                     {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Undefined), false },
@@ -151,6 +156,7 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
                 {
+                    {default, default, true},
                     {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Null), true },
                     {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(OptionalState.Undefined), true },
                     {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Undefined), false },
@@ -181,6 +187,7 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<string?>, int>
                 {
+                    {default, -1},
                     {new Optional<string?>(OptionalState.Null), 0 },
                     {new Optional<string?>(OptionalState.Undefined), -1 },
                     {new Optional<string?>(String.Empty), String.Empty.GetHashCode() },
@@ -203,12 +210,13 @@ namespace Nness.Text.Json.Tests
             get {
                 var data = new TheoryData<Optional<string?>, string>
                 {
-                    {new Optional<string?>(OptionalState.Null), "null" },
-                    {new Optional<string?>(OptionalState.Undefined), "undefined" },
-                    {new Optional<string?>(String.Empty), String.Empty },
-                    {new Optional<string?>("test"), "test" },
-                    {new Optional<string?>(null), "null" },
-                    {new Optional<string?>("undefined"), "undefined" }
+                    {default, "undefined"},
+                    {new Optional<string?>(OptionalState.Null), "null"},
+                    {new Optional<string?>(OptionalState.Undefined), "undefined"},
+                    {new Optional<string?>(String.Empty), String.Empty},
+                    {new Optional<string?>("test"), "test"},
+                    {new Optional<string?>(null), "null"},
+                    {new Optional<string?>("undefined"), "undefined"}
                 };
                 return data;
             }
