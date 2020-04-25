@@ -26,6 +26,6 @@ namespace Nness.Text.Json
 
     public interface IOptional<T> : IOptional
     {
-        bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out T value);
+        bool HasValue([NotNullWhen(true)]out T value);
     }
 }

@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Nness.Text.Json
 {
     [Serializable]
-    public struct Optional<T> : IOptional<T>
+    public readonly struct Optional<T> : IOptional<T>
     {
         public static readonly Optional<T> Undefined = new Optional<T>(OptionalState.Undefined);
         public static readonly Optional<T> Null = new Optional<T>(OptionalState.Null);
@@ -29,7 +29,7 @@ namespace Nness.Text.Json
             State = state;
         }
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out T value)
+        public bool HasValue([NotNullWhen(true)]out T value)
         {
             value = _value;
             return State == OptionalState.HasValue;
