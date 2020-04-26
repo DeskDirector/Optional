@@ -79,5 +79,53 @@ namespace Nness.Text.Json.Tests
                 return data;
             }
         }
+
+        /// <summary>
+        /// Same HashCode only when reference is same. Thus, Array.Empty has same reference, so it
+        /// can pass.
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(HashCodeSamples))]
+        public void HashCode(OptionalCollection<int> item, int expectHashCode)
+        {
+            int actualHashCode = item.GetHashCode();
+
+            Assert.Equal(expectHashCode, actualHashCode);
+        }
+
+        public static TheoryData<OptionalCollection<int>, int> HashCodeSamples {
+            get {
+                var data = new TheoryData<OptionalCollection<int>, int>
+                {
+                    {default, -1},
+                    {new OptionalCollection<int>(OptionalState.Undefined), -1},
+                    {new OptionalCollection<int>(OptionalState.Null), 0},
+                    {new OptionalCollection<int>(Array.Empty<int>()), Array.Empty<int>().GetHashCode()}
+                };
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(ToStringSamples))]
+        public void ToStringTest(OptionalCollection<int> item, string expectToString)
+        {
+            string actualToString = item.ToString();
+            Assert.Equal(expectToString, actualToString);
+        }
+
+        public static TheoryData<OptionalCollection<int>, string> ToStringSamples {
+            get {
+                var data = new TheoryData<OptionalCollection<int>, string>
+                {
+                    {default, "undefined"},
+                    {new OptionalCollection<int>(OptionalState.Undefined), "undefined"},
+                    {new OptionalCollection<int>(OptionalState.Null), "null"},
+                    {new OptionalCollection<int>(Array.Empty<int>()), Array.Empty<int>().ToString() ?? String.Empty}
+                };
+
+                return data;
+            }
+        }
     }
 }
