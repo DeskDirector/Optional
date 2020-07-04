@@ -11,6 +11,9 @@ namespace Nness.Text.Json.Tests
         {
             [DataMember]
             public Optional<int> Integer { get; set; }
+
+            [DataMember]
+            public Optional<string> String { get; set; }
         }
 
         public static TheoryData<string, TestModel1> DeserializeModel1Samples {
@@ -18,8 +21,22 @@ namespace Nness.Text.Json.Tests
                 var data = new TheoryData<string, TestModel1>
                 {
                     {"{}", new TestModel1()},
-                    {"{\"integer\":null}", new TestModel1 {Integer = new Optional<int>(OptionalState.Null)}},
-                    {"{\"integer\":23}", new TestModel1 {Integer = new Optional<int>(23)}}
+                    {
+                        "{\"integer\":null, \"string\":null}",
+                        new TestModel1
+                        {
+                            Integer = new Optional<int>(OptionalState.Null),
+                            String = new Optional<string>(OptionalState.Null)
+                        }
+                    },
+                    {
+                        "{\"integer\":23, \"string\":\"test\"}",
+                        new TestModel1
+                        {
+                            Integer = new Optional<int>(23),
+                            String = new Optional<string>("test")
+                        }
+                    }
                 };
                 return data;
             }
@@ -38,9 +55,19 @@ namespace Nness.Text.Json.Tests
 
             Assert.NotNull(actualResult);
 
-            Assert.Equal(expectResult.Integer.State, actualResult.Integer.State);
-            Assert.Equal(expectResult.Integer.HasValue(out int expect), actualResult.Integer.HasValue(out int actual));
-            Assert.Equal(expect, actual);
+            EnsureEqual(expectResult.Integer, actualResult.Integer);
+            EnsureEqual(expectResult.String, actualResult.String);
+        }
+
+        private static void EnsureEqual<T>(Optional<T> expect, Optional<T> actual)
+        {
+            Assert.Equal(expect.State, actual.State);
+            Assert.Equal(expect.IsNull(), actual.IsNull());
+            Assert.Equal(expect.IsUndefined(), actual.IsUndefined());
+            Assert.Equal(expect.IsSet(), actual.IsSet());
+            Assert.Equal(expect.HasValue(out T valueE), actual.HasValue(out T valueA));
+
+            Assert.Equal(valueE, valueA);
         }
     }
 }
