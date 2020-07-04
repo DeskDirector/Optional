@@ -31,13 +31,13 @@ namespace Nness.Text.Json
 
         public bool IsSet() => State != OptionalState.Undefined;
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out ICollection<T>? value)
+        public bool HasValue([NotNullWhen(true)]out ICollection<T>? value)
         {
             value = _value;
             return State == OptionalState.HasValue;
         }
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out object? value)
+        public bool HasValue([NotNullWhen(true)]out object? value)
         {
             if (HasValue(out ICollection<T>? items)) {
                 value = items;
