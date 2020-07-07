@@ -29,13 +29,13 @@ namespace Nness.Text.Json
             State = state;
         }
 
-        public bool HasValue([NotNullWhen(true)]out T value)
+        public bool HasValue([NotNullWhen(true)] out T value)
         {
             value = _value;
-            return State == OptionalState.HasValue;
+            return value != null && State == OptionalState.HasValue;
         }
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)]out object? value)
+        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out object? value)
         {
             if (HasValue(out T item)) {
                 value = item;
