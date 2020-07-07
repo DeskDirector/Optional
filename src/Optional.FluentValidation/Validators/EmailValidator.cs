@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation
+namespace Nness.Text.Json.Validation.Validators
 {
     public class EmailValidator : PropertyValidator
     {

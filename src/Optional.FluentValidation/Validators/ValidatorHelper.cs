@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentValidation.Resources;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation
+namespace Nness.Text.Json.Validation.Validators
 {
     public static class ValidatorHelper
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using FluentValidation.Resources;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation
+namespace Nness.Text.Json.Validation.Validators
 {
     public class CountValidator<T> : PropertyValidator, ILengthValidator
     {
