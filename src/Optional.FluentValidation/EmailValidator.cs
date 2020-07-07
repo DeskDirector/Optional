@@ -11,8 +11,8 @@ namespace Nness.Text.Json.Validation
         protected override bool IsValid(PropertyValidatorContext context)
         {
             switch (context.PropertyValue) {
-                case Optional<string> settable:
-                    return IsValid(settable);
+                case Optional<string> optional:
+                    return IsValid(optional);
 
                 case string value:
                     return IsValid(value.AsSpan());
