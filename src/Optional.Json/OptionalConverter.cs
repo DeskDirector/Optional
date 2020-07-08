@@ -63,9 +63,14 @@ namespace Nness.Text.Json
 
             public override void Write(Utf8JsonWriter writer, Optional<TValue> value, JsonSerializerOptions options)
             {
-                if (!value.HasValue(out TValue data)) {
+                if (value.IsUndefined() || value.IsNull()) {
                     writer.WriteNullValue();
                     return;
+                }
+
+                TValue data = value.Value;
+                if (data == null) {
+                    throw new InvalidOperationException("Optional return Null value while the state is HasValue");
                 }
 
                 if (_valueConverter == null) {

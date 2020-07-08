@@ -28,6 +28,9 @@ namespace Nness.Text.Json
     {
         bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out T value);
 
+        /// <summary>
+        /// Return value when value been set, else it should return default value of <see cref="T"/>
+        /// </summary>
         [MaybeNull]
         T Value { get; }
     }

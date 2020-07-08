@@ -24,7 +24,7 @@ namespace Nness.Text.Json.Validation.Validators
 
         private static bool IsValid(Optional<string> settable)
         {
-            return !settable.HasValue(out string value) || IsValid(value.AsSpan());
+            return !settable.HasValue(out string? value) || IsValid(value.AsSpan());
         }
 
         private static bool IsValid(ReadOnlySpan<char> value)

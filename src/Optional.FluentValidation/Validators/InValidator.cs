@@ -30,7 +30,12 @@ namespace Nness.Text.Json.Validation.Validators
 
         private bool IsValid(Optional<T> optional, PropertyValidatorContext context)
         {
-            return !optional.HasValue(out T value) || IsValid(value, context);
+            if (optional.IsUndefined() || optional.IsNull()) {
+                return true;
+            }
+
+            T value = optional.Value;
+            return value != null && IsValid(value, context);
         }
 
         private bool IsValid(T value, PropertyValidatorContext context)
