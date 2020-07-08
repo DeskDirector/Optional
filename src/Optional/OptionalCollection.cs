@@ -14,6 +14,16 @@ namespace Nness.Text.Json
 
         public OptionalState State { get; }
 
+        [MaybeNull]
+        public ICollection<T>? Value {
+            get {
+                if (State == OptionalState.HasValue && _value != null) {
+                    return _value;
+                }
+                return null;
+            }
+        }
+
         public OptionalCollection(ICollection<T> value)
         {
             _value = value;
@@ -31,7 +41,7 @@ namespace Nness.Text.Json
 
         public bool IsSet() => State != OptionalState.Undefined;
 
-        public bool HasValue([NotNullWhen(true)] out ICollection<T>? value)
+        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out ICollection<T>? value)
         {
             value = _value;
             return value != null && State == OptionalState.HasValue;
@@ -39,13 +49,8 @@ namespace Nness.Text.Json
 
         public bool HasValue([NotNullWhen(true)] out object? value)
         {
-            if (HasValue(out ICollection<T>? items)) {
-                value = items;
-                return true;
-            }
-
-            value = default;
-            return false;
+            value = _value;
+            return value != null && State == OptionalState.HasValue;
         }
 
         public bool IsNull() => State == OptionalState.Null;
