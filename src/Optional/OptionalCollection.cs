@@ -9,22 +9,13 @@ namespace Nness.Text.Json
     [Serializable]
     public readonly struct OptionalCollection<T> : IOptional<ICollection<T>?>, IEnumerable<T>
     {
-        [AllowNull]
         private readonly ICollection<T>? _value;
 
         public OptionalState State { get; }
 
-        [MaybeNull]
-        public ICollection<T>? Value {
-            get {
-                if (State == OptionalState.HasValue && _value != null) {
-                    return _value;
-                }
-                return null;
-            }
-        }
+        public ICollection<T>? Value => State == OptionalState.HasValue && _value != null ? _value : null;
 
-        public OptionalCollection(ICollection<T> value)
+        public OptionalCollection(ICollection<T>? value)
         {
             _value = value;
             State = value == null ? OptionalState.Null : OptionalState.HasValue;
@@ -41,7 +32,7 @@ namespace Nness.Text.Json
 
         public bool IsSet() => State != OptionalState.Undefined;
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out ICollection<T>? value)
+        public bool HasValue([NotNullWhen(true)] out ICollection<T>? value)
         {
             value = _value;
             return value != null && State == OptionalState.HasValue;

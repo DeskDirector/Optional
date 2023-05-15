@@ -49,7 +49,7 @@ namespace Nness.Text.Json
             public OptionalCollectionConverterInner(JsonSerializerOptions options)
             {
                 _valueConverter = (JsonConverter<ICollection<TValue>>)options.GetConverter(typeof(ICollection<TValue>));
-                _valueType = typeof(TValue);
+                _valueType = typeof(ICollection<TValue>);
             }
 
             public override OptionalCollection<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -64,10 +64,10 @@ namespace Nness.Text.Json
                     );
                 }
 
-                ICollection<TValue> value = _valueConverter == null
+                ICollection<TValue>? value = _valueConverter == null
                     ? JsonSerializer.Deserialize<TValue[]>(ref reader, options)
                     : _valueConverter.Read(ref reader, _valueType, options);
-                return new OptionalCollection<TValue>(value);
+                return new OptionalCollection<TValue>(value ?? Array.Empty<TValue>());
             }
 
             public override void Write(Utf8JsonWriter writer, OptionalCollection<TValue> value, JsonSerializerOptions options)
