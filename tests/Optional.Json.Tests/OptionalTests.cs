@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json;
-using Nness.Text.Json.Json;
 using Xunit;
 
 namespace Nness.Text.Json.Tests
