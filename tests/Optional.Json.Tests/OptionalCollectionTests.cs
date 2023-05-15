@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json;
+using Nness.Text.Json.Json;
 using Xunit;
 
 namespace Nness.Text.Json.Tests
@@ -17,7 +18,8 @@ namespace Nness.Text.Json.Tests
             public OptionalCollection<string> String { get; set; }
         }
 
-        public static TheoryData<string, TestModel1> DeserializeModel1Samples {
+        public static TheoryData<string, TestModel1> DeserializeModel1Samples
+        {
             get {
                 var data = new TheoryData<string, TestModel1>
                 {
@@ -49,12 +51,16 @@ namespace Nness.Text.Json.Tests
         {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new OptionalCollectionConverter() }
+                Converters = { new OptionalCollectionConverter() },
+                TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
 
             TestModel1? actualResult = JsonSerializer.Deserialize<TestModel1>(json, options);
 
             Assert.NotNull(actualResult);
+            if (actualResult == null) {
+                return;
+            }
 
             EnsureEqual(expectResult.Integer, actualResult.Integer);
             EnsureEqual(expectResult.String, actualResult.String);
@@ -77,11 +83,20 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(valueE, valueA);
         }
 
-        public static TheoryData<TestModel1, string> SerializeModel1Samples {
+        public static TheoryData<TestModel1, string> SerializeModel1Samples
+        {
             get {
                 var data = new TheoryData<TestModel1, string>
                 {
-                    {new TestModel1(), "{\"integer\":null,\"string\":null}"},
+                    { new TestModel1(), "{}" },
+                    {
+                        new TestModel1
+                        {
+                            Integer = new OptionalCollection<int>(OptionalState.Undefined),
+                            String = new OptionalCollection<string>(OptionalState.Undefined)
+                        },
+                        "{}"
+                    },
                     {
                         new TestModel1
                         {
@@ -93,8 +108,8 @@ namespace Nness.Text.Json.Tests
                     {
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>(new[] {23}),
-                            String = new OptionalCollection<string>(new[] {"test"})
+                            Integer = new OptionalCollection<int>(new[] { 23 }),
+                            String = new OptionalCollection<string>(new[] { "test" })
                         },
                         "{\"integer\":[23],\"string\":[\"test\"]}"
                     }
@@ -109,7 +124,8 @@ namespace Nness.Text.Json.Tests
         {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new OptionalCollectionConverter() }
+                Converters = { new OptionalCollectionConverter() },
+                TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
 
             string actualJson = JsonSerializer.Serialize(model, options);

@@ -1,5 +1,6 @@
 using System.Runtime.Serialization;
 using System.Text.Json;
+using Nness.Text.Json.Json;
 using Xunit;
 
 namespace Nness.Text.Json.Tests
@@ -16,7 +17,8 @@ namespace Nness.Text.Json.Tests
             public Optional<string> String { get; set; }
         }
 
-        public static TheoryData<string, TestModel1> DeserializeModel1Samples {
+        public static TheoryData<string, TestModel1> DeserializeModel1Samples
+        {
             get {
                 var data = new TheoryData<string, TestModel1>
                 {
@@ -48,12 +50,16 @@ namespace Nness.Text.Json.Tests
         {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new OptionalConverter() }
+                Converters = { new OptionalConverter() },
+                TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
 
             TestModel1? actualResult = JsonSerializer.Deserialize<TestModel1>(json, options);
 
             Assert.NotNull(actualResult);
+            if (actualResult == null) {
+                return;
+            }
 
             EnsureEqual(expectResult.Integer, actualResult.Integer);
             EnsureEqual(expectResult.String, actualResult.String);
@@ -65,16 +71,25 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(expect.IsNull(), actual.IsNull());
             Assert.Equal(expect.IsUndefined(), actual.IsUndefined());
             Assert.Equal(expect.IsSet(), actual.IsSet());
-            Assert.Equal(expect.HasValue(out T valueE), actual.HasValue(out T valueA));
+            Assert.Equal(expect.HasValue(out T? valueE), actual.HasValue(out T? valueA));
 
             Assert.Equal(valueE, valueA);
         }
 
-        public static TheoryData<TestModel1, string> SerializeModel1Samples {
+        public static TheoryData<TestModel1, string> SerializeModel1Samples
+        {
             get {
                 var data = new TheoryData<TestModel1, string>
                 {
-                    {new TestModel1(), "{\"integer\":null,\"string\":null}"},
+                    { new TestModel1(), "{}" },
+                    {
+                        new TestModel1
+                        {
+                            Integer = new Optional<int>(OptionalState.Undefined),
+                            String = new Optional<string>(OptionalState.Undefined)
+                        },
+                        "{}"
+                    },
                     {
                         new TestModel1
                         {
@@ -102,7 +117,8 @@ namespace Nness.Text.Json.Tests
         {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new OptionalConverter() }
+                Converters = { new OptionalConverter() },
+                TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
 
             string actualJson = JsonSerializer.Serialize(model, options);
