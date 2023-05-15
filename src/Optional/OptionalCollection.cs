@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Nness.Text.Json
 {
-    [Serializable]
+    [Serializable, JsonConverter(typeof(OptionalCollectionConverter))]
     public readonly struct OptionalCollection<T> : IOptional<ICollection<T>?>, IEnumerable<T>
     {
         private readonly ICollection<T>? _value;

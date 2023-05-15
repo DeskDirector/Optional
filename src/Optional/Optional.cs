@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Nness.Text.Json
 {
-    [Serializable]
+    [Serializable, JsonConverter(typeof(OptionalConverter))]
     public readonly struct Optional<T> : IOptional<T>
     {
         public static readonly Optional<T> Undefined = new Optional<T>(OptionalState.Undefined);
@@ -16,7 +17,8 @@ namespace Nness.Text.Json
         public OptionalState State { get; }
 
         [MaybeNull]
-        public T Value {
+        public T Value
+        {
             get {
                 if (State == OptionalState.HasValue && _value != null) {
                     return _value;
@@ -46,7 +48,7 @@ namespace Nness.Text.Json
             return value != null && State == OptionalState.HasValue;
         }
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out object? value)
+        public bool HasValue([NotNullWhen(true)] out object? value)
         {
             value = _value;
             return value != null && State == OptionalState.HasValue;

@@ -49,7 +49,6 @@ namespace Nness.Text.Json.Tests
         {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new OptionalConverter() },
                 TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
 
@@ -116,7 +115,6 @@ namespace Nness.Text.Json.Tests
         {
             var options = new JsonSerializerOptions {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                Converters = { new OptionalConverter() },
                 TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
 
