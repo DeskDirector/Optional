@@ -21,17 +21,16 @@ namespace Nness.Text.Json
 
         OptionalState State { get; }
 
-        bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out object? value);
+        bool HasValue([NotNullWhen(true)] out object? value);
     }
 
     public interface IOptional<T> : IOptional
     {
-        bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out T value);
+        bool HasValue([NotNullWhen(true)] out T? value);
 
         /// <summary>
         /// Return value when value been set, else it should return default value of <see cref="T"/>
         /// </summary>
-        [MaybeNull]
-        T Value { get; }
+        T? Value { get; }
     }
 }

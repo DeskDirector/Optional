@@ -11,13 +11,11 @@ namespace Nness.Text.Json
         public static readonly Optional<T> Undefined = new Optional<T>(OptionalState.Undefined);
         public static readonly Optional<T> Null = new Optional<T>(OptionalState.Null);
 
-        [AllowNull, MaybeNull]
-        private readonly T _value;
+        private readonly T? _value;
 
         public OptionalState State { get; }
 
-        [MaybeNull]
-        public T Value
+        public T? Value
         {
             get {
                 if (State == OptionalState.HasValue && _value != null) {
@@ -27,7 +25,7 @@ namespace Nness.Text.Json
             }
         }
 
-        public Optional(T value)
+        public Optional(T? value)
         {
             _value = value;
             State = value == null ? OptionalState.Null : OptionalState.HasValue;
@@ -42,7 +40,7 @@ namespace Nness.Text.Json
             State = state;
         }
 
-        public bool HasValue([NotNullWhen(true), MaybeNullWhen(false)] out T value)
+        public bool HasValue([NotNullWhen(true)] out T? value)
         {
             value = _value;
             return value != null && State == OptionalState.HasValue;
@@ -60,7 +58,7 @@ namespace Nness.Text.Json
 
         public bool IsUndefined() => State == OptionalState.Undefined;
 
-        public static implicit operator Optional<T>(T value)
+        public static implicit operator Optional<T>(T? value)
         {
             return new Optional<T>(value);
         }
@@ -88,8 +86,16 @@ namespace Nness.Text.Json
                 return false;
             }
 
-            T current = Value;
-            T otherValue = other.Value;
+            T? current = Value;
+            T? otherValue = other.Value;
+
+            if (ReferenceEquals(current, otherValue)) {
+                return true;
+            }
+
+            if (current == null || otherValue == null) {
+                return false;
+            }
 
             EqualityComparer<T> comparer = EqualityComparer<T>.Default;
             return comparer.Equals(current, otherValue);
@@ -105,8 +111,16 @@ namespace Nness.Text.Json
                 return false;
             }
 
-            T current = Value;
-            T otherValue = other.Value;
+            T? current = Value;
+            T? otherValue = other.Value;
+
+            if (ReferenceEquals(current, otherValue)) {
+                return true;
+            }
+
+            if (current == null || otherValue == null) {
+                return false;
+            }
 
             return comparer.Equals(current, otherValue);
         }
@@ -123,7 +137,7 @@ namespace Nness.Text.Json
 
         public override int GetHashCode()
         {
-            T value = Value;
+            T? value = Value;
             if (value != null) {
                 return value.GetHashCode();
             }
@@ -142,7 +156,7 @@ namespace Nness.Text.Json
 
         public override string ToString()
         {
-            T value = Value;
+            T? value = Value;
             if (value != null) {
                 return value.ToString() ?? String.Empty;
             }
