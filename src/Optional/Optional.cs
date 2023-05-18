@@ -8,8 +8,8 @@ namespace Nness.Text.Json
     [Serializable, JsonConverter(typeof(OptionalConverter))]
     public readonly struct Optional<T> : IOptional<T>
     {
-        public static readonly Optional<T> Undefined = new Optional<T>(OptionalState.Undefined);
-        public static readonly Optional<T> Null = new Optional<T>(OptionalState.Null);
+        public static readonly Optional<T> Undefined = new(OptionalState.Undefined);
+        public static readonly Optional<T> Null = new(OptionalState.Null);
 
         private readonly T? _value;
 
@@ -23,6 +23,12 @@ namespace Nness.Text.Json
                 }
                 return default!;
             }
+        }
+
+        public Optional()
+        {
+            _value = default;
+            State = OptionalState.Undefined;
         }
 
         public Optional(T? value)
@@ -53,6 +59,24 @@ namespace Nness.Text.Json
         }
 
         public bool IsSet() => State != OptionalState.Undefined;
+
+        public bool IsSet(out T? value)
+        {
+            value = default;
+
+            switch (State) {
+                case OptionalState.Null:
+                    return true;
+
+                case OptionalState.HasValue:
+                    value = _value;
+                    return true;
+
+                case OptionalState.Undefined:
+                default:
+                    return false;
+            }
+        }
 
         public bool IsNull() => State == OptionalState.Null;
 

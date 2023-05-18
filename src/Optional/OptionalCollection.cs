@@ -33,6 +33,24 @@ namespace Nness.Text.Json
 
         public bool IsSet() => State != OptionalState.Undefined;
 
+        public bool IsSet(out ICollection<T>? value)
+        {
+            value = null;
+
+            switch (State) {
+                case OptionalState.Null:
+                    return true;
+
+                case OptionalState.HasValue:
+                    value = _value;
+                    return true;
+
+                case OptionalState.Undefined:
+                default:
+                    return false;
+            }
+        }
+
         public bool HasValue([NotNullWhen(true)] out ICollection<T>? value)
         {
             value = _value;
