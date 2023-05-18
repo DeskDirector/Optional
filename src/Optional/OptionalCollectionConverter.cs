@@ -72,9 +72,20 @@ namespace Nness.Text.Json
 
             public override void Write(Utf8JsonWriter writer, OptionalCollection<TValue> value, JsonSerializerOptions options)
             {
-                if (!value.HasValue(out ICollection<TValue>? data)) {
+                if (value.IsUndefined()) {
+                    throw new InvalidOperationException(
+                        "Value is undefined, it cannot be serialized. Seek for TypeInfoResolver."
+                    );
+                }
+
+                if (value.IsNull()) {
                     writer.WriteNullValue();
                     return;
+                }
+
+                ICollection<TValue>? data = value.Value;
+                if (data == null) {
+                    throw new InvalidOperationException("Optional return Null value while the state is HasValue");
                 }
 
                 if (_valueConverter == null) {

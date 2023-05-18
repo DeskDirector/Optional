@@ -55,7 +55,7 @@ namespace Nness.Text.Json
                     return new Optional<TValue>(OptionalState.Null);
                 }
 
-                TValue value = _valueConverter == null
+                TValue? value = _valueConverter == null
                     ? JsonSerializer.Deserialize<TValue>(ref reader, options)
                     : _valueConverter.Read(ref reader, _valueType, options);
                 return new Optional<TValue>(value);
@@ -63,12 +63,18 @@ namespace Nness.Text.Json
 
             public override void Write(Utf8JsonWriter writer, Optional<TValue> value, JsonSerializerOptions options)
             {
-                if (value.IsUndefined() || value.IsNull()) {
+                if (value.IsUndefined()) {
+                    throw new InvalidOperationException(
+                        "Value is undefined, it cannot be serialized. Seek for TypeInfoResolver."
+                    );
+                }
+
+                if (value.IsNull()) {
                     writer.WriteNullValue();
                     return;
                 }
 
-                TValue data = value.Value;
+                TValue? data = value.Value;
                 if (data == null) {
                     throw new InvalidOperationException("Optional return Null value while the state is HasValue");
                 }
