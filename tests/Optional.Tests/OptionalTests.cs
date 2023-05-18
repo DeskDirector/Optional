@@ -16,7 +16,8 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(expectValue, actualValue);
         }
 
-        public static TheoryData<Optional<int>, bool, int> ValueTypeHasValueSamples {
+        public static TheoryData<Optional<int>, bool, int> ValueTypeHasValueSamples
+        {
             get {
                 var data = new TheoryData<Optional<int>, bool, int>
                 {
@@ -33,7 +34,7 @@ namespace Nness.Text.Json.Tests
 
         [Theory]
         [MemberData(nameof(StringHasValueSamples))]
-        public void StringHasValue(Optional<string?> item, bool expectHasValue, string? expectValue)
+        public void StringHasValue(Optional<string> item, bool expectHasValue, string? expectValue)
         {
             bool actualHasValue = item.HasValue(out string? actualValue);
 
@@ -41,16 +42,17 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(expectValue, actualValue);
         }
 
-        public static TheoryData<Optional<string?>, bool, string?> StringHasValueSamples {
+        public static TheoryData<Optional<string>, bool, string?> StringHasValueSamples
+        {
             get {
-                var data = new TheoryData<Optional<string?>, bool, string?>
+                var data = new TheoryData<Optional<string>, bool, string?>
                 {
                     {default, false, default},
-                    {new Optional<string?>(OptionalState.Null), false, default},
-                    {new Optional<string?>(OptionalState.Undefined), false, default},
-                    {new Optional<string?>(null), false, null},
-                    {new Optional<string?>(String.Empty), true, String.Empty },
-                    {new Optional<string?>("Test"), true, "Test" }
+                    {new Optional<string>(OptionalState.Null), false, default},
+                    {new Optional<string>(OptionalState.Undefined), false, default},
+                    {new Optional<string>(null), false, null},
+                    {new Optional<string>(String.Empty), true, String.Empty },
+                    {new Optional<string>("Test"), true, "Test" }
                 };
                 return data;
             }
@@ -65,7 +67,8 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(expectIsSet, actualIsSet);
         }
 
-        public static TheoryData<Optional<int>, bool> IsSetSamples {
+        public static TheoryData<Optional<int>, bool> IsSetSamples
+        {
             get {
                 var data = new TheoryData<Optional<int>, bool>
                 {
@@ -89,7 +92,8 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(!expectEqual, actualNotEqual);
         }
 
-        public static TheoryData<Optional<int>, Optional<int>, bool> ValueTypeIsEqualSamples {
+        public static TheoryData<Optional<int>, Optional<int>, bool> ValueTypeIsEqualSamples
+        {
             get {
                 var data = new TheoryData<Optional<int>, Optional<int>, bool>
                 {
@@ -111,7 +115,7 @@ namespace Nness.Text.Json.Tests
 
         [Theory]
         [MemberData(nameof(StringTypeCaseIsEqualSamples))]
-        public void StringTypeCaseEqual(Optional<string?> item1, Optional<string?> item2, bool expectEqual)
+        public void StringTypeCaseEqual(Optional<string> item1, Optional<string> item2, bool expectEqual)
         {
             bool actualEqual = item1 == item2;
             bool actualNotEqual = item1 != item2;
@@ -120,22 +124,23 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(!expectEqual, actualNotEqual);
         }
 
-        public static TheoryData<Optional<string?>, Optional<string?>, bool> StringTypeCaseIsEqualSamples {
+        public static TheoryData<Optional<string>, Optional<string>, bool> StringTypeCaseIsEqualSamples
+        {
             get {
-                var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
+                var data = new TheoryData<Optional<string>, Optional<string>, bool>
                 {
                     {default, default, true},
-                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Null), true },
-                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(OptionalState.Undefined), true },
-                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Undefined), false },
-                    {new Optional<string?>("test"), new Optional<string?>("test"), true },
-                    {new Optional<string?>("test"), new Optional<string?>("Test"), false },
-                    {new Optional<string?>("test"), new Optional<string?>("abc"), false },
-                    {new Optional<string?>(null), new Optional<string?>("Test"), false },
-                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(String.Empty), false },
-                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(String.Empty), false },
-                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Null), false },
-                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Undefined), false }
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Null), true },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(OptionalState.Undefined), true },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Undefined), false },
+                    {new Optional<string>("test"), new Optional<string>("test"), true },
+                    {new Optional<string>("test"), new Optional<string>("Test"), false },
+                    {new Optional<string>("test"), new Optional<string>("abc"), false },
+                    {new Optional<string>(null), new Optional<string>("Test"), false },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Null), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Undefined), false }
                 };
 
                 return data;
@@ -144,7 +149,7 @@ namespace Nness.Text.Json.Tests
 
         [Theory]
         [MemberData(nameof(StringTypeNotCaseEqualSamples))]
-        public void StringTypeNotCaseEqual(Optional<string?> item1, Optional<string?> item2, bool expectEqual)
+        public void StringTypeNotCaseEqual(Optional<string> item1, Optional<string> item2, bool expectEqual)
         {
             IEqualityComparer<string?> comparer = StringComparer.OrdinalIgnoreCase;
             bool actualEqual = item1.Equals(item2, comparer);
@@ -152,22 +157,23 @@ namespace Nness.Text.Json.Tests
             Assert.Equal(expectEqual, actualEqual);
         }
 
-        public static TheoryData<Optional<string?>, Optional<string?>, bool> StringTypeNotCaseEqualSamples {
+        public static TheoryData<Optional<string>, Optional<string>, bool> StringTypeNotCaseEqualSamples
+        {
             get {
-                var data = new TheoryData<Optional<string?>, Optional<string?>, bool>
+                var data = new TheoryData<Optional<string>, Optional<string>, bool>
                 {
                     {default, default, true},
-                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Null), true },
-                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(OptionalState.Undefined), true },
-                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(OptionalState.Undefined), false },
-                    {new Optional<string?>("test"), new Optional<string?>("test"), true },
-                    {new Optional<string?>("test"), new Optional<string?>("Test"), true },
-                    {new Optional<string?>("test"), new Optional<string?>("abc"), false },
-                    {new Optional<string?>(null), new Optional<string?>("Test"), false },
-                    {new Optional<string?>(OptionalState.Null), new Optional<string?>(String.Empty), false },
-                    {new Optional<string?>(OptionalState.Undefined), new Optional<string?>(String.Empty), false },
-                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Null), false },
-                    {new Optional<string?>(String.Empty), new Optional<string?>(OptionalState.Undefined), false }
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Null), true },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(OptionalState.Undefined), true },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Undefined), false },
+                    {new Optional<string>("test"), new Optional<string>("test"), true },
+                    {new Optional<string>("test"), new Optional<string>("Test"), true },
+                    {new Optional<string>("test"), new Optional<string>("abc"), false },
+                    {new Optional<string>(null), new Optional<string>("Test"), false },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Null), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Undefined), false }
                 };
 
                 return data;
@@ -176,23 +182,24 @@ namespace Nness.Text.Json.Tests
 
         [Theory]
         [MemberData(nameof(HashCodeSamples))]
-        public void HashCode(Optional<string?> item, int expectHashCode)
+        public void HashCode(Optional<string> item, int expectHashCode)
         {
             int actualHashCode = item.GetHashCode();
 
             Assert.Equal(expectHashCode, actualHashCode);
         }
 
-        public static TheoryData<Optional<string?>, int> HashCodeSamples {
+        public static TheoryData<Optional<string>, int> HashCodeSamples
+        {
             get {
-                var data = new TheoryData<Optional<string?>, int>
+                var data = new TheoryData<Optional<string>, int>
                 {
                     {default, -1},
-                    {new Optional<string?>(OptionalState.Null), 0 },
-                    {new Optional<string?>(OptionalState.Undefined), -1 },
-                    {new Optional<string?>(String.Empty), String.Empty.GetHashCode() },
-                    {new Optional<string?>("test"), "test".GetHashCode() },
-                    {new Optional<string?>(null), 0 }
+                    {new Optional<string>(OptionalState.Null), 0 },
+                    {new Optional<string>(OptionalState.Undefined), -1 },
+                    {new Optional<string>(String.Empty), String.Empty.GetHashCode() },
+                    {new Optional<string>("test"), "test".GetHashCode() },
+                    {new Optional<string>(null), 0 }
                 };
                 return data;
             }
@@ -200,23 +207,24 @@ namespace Nness.Text.Json.Tests
 
         [Theory]
         [MemberData(nameof(ToStringSamples))]
-        public void ToStringTest(Optional<string?> item, string expectToString)
+        public void ToStringTest(Optional<string> item, string expectToString)
         {
             string actualToString = item.ToString();
             Assert.Equal(expectToString, actualToString);
         }
 
-        public static TheoryData<Optional<string?>, string> ToStringSamples {
+        public static TheoryData<Optional<string>, string> ToStringSamples
+        {
             get {
-                var data = new TheoryData<Optional<string?>, string>
+                var data = new TheoryData<Optional<string>, string>
                 {
                     {default, "undefined"},
-                    {new Optional<string?>(OptionalState.Null), "null"},
-                    {new Optional<string?>(OptionalState.Undefined), "undefined"},
-                    {new Optional<string?>(String.Empty), String.Empty},
-                    {new Optional<string?>("test"), "test"},
-                    {new Optional<string?>(null), "null"},
-                    {new Optional<string?>("undefined"), "undefined"}
+                    {new Optional<string>(OptionalState.Null), "null"},
+                    {new Optional<string>(OptionalState.Undefined), "undefined"},
+                    {new Optional<string>(String.Empty), String.Empty},
+                    {new Optional<string>("test"), "test"},
+                    {new Optional<string>(null), "null"},
+                    {new Optional<string>("undefined"), "undefined"}
                 };
                 return data;
             }
