@@ -15,15 +15,7 @@ namespace Nness.Text.Json
 
         public OptionalState State { get; }
 
-        public T? Value
-        {
-            get {
-                if (State == OptionalState.HasValue && _value != null) {
-                    return _value;
-                }
-                return default!;
-            }
-        }
+        public T? Value => State == OptionalState.HasValue && _value != null ? _value : default;
 
         public Optional()
         {
@@ -127,9 +119,7 @@ namespace Nness.Text.Json
 
         public bool Equals(Optional<T> other, IEqualityComparer<T> comparer)
         {
-            if (comparer == null) {
-                throw new ArgumentNullException(nameof(comparer));
-            }
+            ArgumentNullException.ThrowIfNull(comparer);
 
             if (State != other.State) {
                 return false;
@@ -166,16 +156,11 @@ namespace Nness.Text.Json
                 return value.GetHashCode();
             }
 
-            switch (State) {
-                case OptionalState.Undefined:
-                    return -1;
-
-                case OptionalState.Null:
-                    return 0;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return State switch {
+                OptionalState.Undefined => -1,
+                OptionalState.Null => 0,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         public override string ToString()
@@ -185,16 +170,11 @@ namespace Nness.Text.Json
                 return value.ToString() ?? String.Empty;
             }
 
-            switch (State) {
-                case OptionalState.Undefined:
-                    return "undefined";
-
-                case OptionalState.Null:
-                    return "null";
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return State switch {
+                OptionalState.Undefined => "undefined",
+                OptionalState.Null => "null",
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 }

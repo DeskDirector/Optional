@@ -85,16 +85,11 @@ namespace Nness.Text.Json
                 return value.GetHashCode();
             }
 
-            switch (State) {
-                case OptionalState.Undefined:
-                    return -1;
-
-                case OptionalState.Null:
-                    return 0;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return State switch {
+                OptionalState.Undefined => -1,
+                OptionalState.Null => 0,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         public override string ToString()
@@ -103,16 +98,11 @@ namespace Nness.Text.Json
                 return value.ToString() ?? String.Empty;
             }
 
-            switch (State) {
-                case OptionalState.Undefined:
-                    return "undefined";
-
-                case OptionalState.Null:
-                    return "null";
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return State switch {
+                OptionalState.Undefined => "undefined",
+                OptionalState.Null => "null",
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 }
