@@ -44,7 +44,7 @@ namespace Nness.Text.Json.Validation.Validators
 
         protected override bool IsValid(PropertyValidatorContext context)
         {
-            if (!(context.PropertyValue is IOptional optional)) {
+            if (context.PropertyValue is not IOptional optional) {
                 return true;
             }
 
@@ -75,7 +75,7 @@ namespace Nness.Text.Json.Validation.Validators
                 return true;
             }
 
-            if (!(value is ICollection collection)) {
+            if (value is not ICollection collection) {
                 return true;
             }
 
