@@ -1,33 +1,27 @@
 ﻿using System;
+using FluentValidation;
 using FluentValidation.Validators;
 
 namespace Nness.Text.Json.Validation.Validators
 {
-    public class EmailValidator : PropertyValidator
+    public class EmailValidator<TModel> : PropertyValidator<TModel, IOptional<string>>
     {
-        public EmailValidator() : base("{PropertyName} is invalid email address")
-        { }
+        public override string Name => "OptionalEmailValidator";
 
-        protected override bool IsValid(PropertyValidatorContext context)
+        public override bool IsValid(ValidationContext<TModel> context, IOptional<string>? optional)
         {
-            switch (context.PropertyValue) {
-                case Optional<string> optional:
-                    return IsValid(optional);
-
-                case string value:
-                    return IsValid(value.AsSpan());
-
-                default:
-                    return true;
+            if (optional == null) {
+                return true;
             }
+
+            if (!optional.HasValue(out string? value)) {
+                return true;
+            }
+
+            return IsEmail(value.AsSpan());
         }
 
-        private static bool IsValid(Optional<string> settable)
-        {
-            return !settable.HasValue(out string? value) || IsValid(value.AsSpan());
-        }
-
-        private static bool IsValid(ReadOnlySpan<char> value)
+        private static bool IsEmail(ReadOnlySpan<char> value)
         {
             ReadOnlySpan<char> input = value.IsEmpty ? ReadOnlySpan<char>.Empty : value.Trim();
             if (input.IsEmpty) {
@@ -39,7 +33,7 @@ namespace Nness.Text.Json.Validation.Validators
                 return false;
             }
 
-            int indexOfOtherAt = input.Slice(indexOfAt + 1).IndexOf('@');
+            int indexOfOtherAt = input[(indexOfAt + 1)..].IndexOf('@');
             if (indexOfOtherAt > 0) {
                 return false;
             }
@@ -47,5 +41,8 @@ namespace Nness.Text.Json.Validation.Validators
             int indexOfDoubleDot = input.IndexOf("..");
             return indexOfDoubleDot < 0;
         }
+
+        protected override string GetDefaultMessageTemplate(string errorCode) =>
+            "{PropertyName} has to be email address";
     }
 }
