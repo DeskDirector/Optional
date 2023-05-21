@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using Nness.Text.Json.Validation.Validators;
 
@@ -19,13 +18,13 @@ namespace Nness.Text.Json.Validation
         /// <param name="from">The lowest allowed value</param>
         /// <param name="to">The highest allowed value</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<TProperty>> ExclusiveBetween<T, TProperty>(
-            this IRuleBuilder<T, Optional<TProperty>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<TProperty>> ExclusiveBetween<T, TProperty>(
+            this IRuleBuilder<T, IOptional<TProperty>> ruleBuilder,
             TProperty from,
             TProperty to)
         {
             return ruleBuilder.SetValidator(
-                new ExclusiveBetweenValidator<TProperty>(from, to, Comparer<TProperty>.Default)
+                new ExclusiveBetweenValidator<T, TProperty>(from, to, Comparer<TProperty>.Default)
             );
         }
 
@@ -39,13 +38,13 @@ namespace Nness.Text.Json.Validation
         /// <param name="from">The lowest allowed value</param>
         /// <param name="to">The highest allowed value</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<string>> ExclusiveBetween<T>(
-            this IRuleBuilder<T, Optional<string>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<string>> ExclusiveBetween<T>(
+            this IRuleBuilder<T, IOptional<string>> ruleBuilder,
             string from,
             string to)
         {
             return ruleBuilder.SetValidator(
-                new ExclusiveBetweenValidator<string>(from, to, StringComparer.Ordinal)
+                new ExclusiveBetweenValidator<T, string>(from, to, StringComparer.Ordinal)
             );
         }
 
@@ -60,18 +59,16 @@ namespace Nness.Text.Json.Validation
         /// <param name="to">The highest allowed value</param>
         /// <param name="comparer">String comparer</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<string>> ExclusiveBetween<T>(
-            this IRuleBuilder<T, Optional<string>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<string>> ExclusiveBetween<T>(
+            this IRuleBuilder<T, IOptional<string>> ruleBuilder,
             string from,
             string to,
-            [NotNull] StringComparer comparer)
+            StringComparer comparer)
         {
-            if (comparer == null) {
-                throw new ArgumentNullException(nameof(comparer));
-            }
+            ArgumentNullException.ThrowIfNull(comparer);
 
             return ruleBuilder.SetValidator(
-                new ExclusiveBetweenValidator<string>(from, to, comparer)
+                new ExclusiveBetweenValidator<T, string>(from, to, comparer)
             );
         }
 
@@ -87,18 +84,16 @@ namespace Nness.Text.Json.Validation
         /// <param name="to">The highest allowed value</param>
         /// <param name="comparer">Comparer for TProperty</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<TProperty>> ExclusiveBetween<T, TProperty>(
-            this IRuleBuilder<T, Optional<TProperty>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<TProperty>> ExclusiveBetween<T, TProperty>(
+            this IRuleBuilder<T, IOptional<TProperty>> ruleBuilder,
             TProperty from,
             TProperty to,
-            [NotNull] IComparer<TProperty> comparer)
+            IComparer<TProperty> comparer)
         {
-            if (comparer == null) {
-                throw new ArgumentNullException(nameof(comparer));
-            }
+            ArgumentNullException.ThrowIfNull(comparer);
 
             return ruleBuilder.SetValidator(
-                new ExclusiveBetweenValidator<TProperty>(from, to, comparer)
+                new ExclusiveBetweenValidator<T, TProperty>(from, to, comparer)
             );
         }
     }
