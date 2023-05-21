@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using FluentValidation.Resources;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using FluentValidation.Validators;
 
 namespace Nness.Text.Json.Validation.Validators
 {
-    public class InclusiveBetweenValidator<T> : PropertyValidator
+    public class InclusiveBetweenValidator<TModel, T> : PropertyValidator<TModel, IOptional<T>>
     {
         public T From { get; }
 
@@ -13,52 +12,56 @@ namespace Nness.Text.Json.Validation.Validators
 
         private readonly IComparer<T> _comparer;
 
-        public InclusiveBetweenValidator(T from, T to, IComparer<T> comparer)
-            : base(new LanguageStringSource(nameof(InclusiveBetweenValidator)))
-        {
-            From = from;
-            To = to;
-            _comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
+        public override string Name => "OptionalInclusiveBetweenValidator";
 
-            Options.ErrorCodeSource = ValidatorHelper.ErrorCodeSource(typeof(InclusiveBetweenValidator<>));
+        public InclusiveBetweenValidator(T from, T to, IComparer<T>? comparer)
+        {
+            _comparer = comparer ?? Comparer<T>.Default;
 
             int fromCompareTo = _comparer.Compare(from, to);
-            if (fromCompareTo >= 0) {
-                throw new ArgumentOutOfRangeException(
-                    nameof(to),
-                    $"To should be larger than from. {from} compare to {to} is<{fromCompareTo}>"
-                );
+
+            if (fromCompareTo <= 0) {
+                From = from;
+                To = to;
+            } else {
+                From = to;
+                To = from;
             }
         }
 
-        protected override bool IsValid(PropertyValidatorContext context)
+        public override bool IsValid(ValidationContext<TModel> context, IOptional<T>? optional)
         {
-            if (!(context.PropertyValue is Optional<T> optional)) {
+            if (optional == null) {
                 return true;
             }
 
-            if (!optional.HasValue(out T _)) {
+            if (!optional.HasValue(out T? value)) {
                 return true;
             }
 
-            T value = optional.Value;
-            if (value == null) {
-                throw new InvalidOperationException("Optional return Null value while the state is HasValue");
-            }
-
-            int compareToFrom = _comparer.Compare(value, From);
-            int compareToTo = _comparer.Compare(value, To);
-            if (compareToFrom >= 0 &&
-                compareToTo <= 0) {
+            if (IsBiggerAndEqualToFrom(value) && IsLessAndEqualToTo(value)) {
                 return true;
             }
 
             context.MessageFormatter
                 .AppendArgument("From", From)
-                .AppendArgument("To", To)
-                .AppendArgument("Value", context.PropertyValue);
+                .AppendArgument("To", To);
 
             return false;
         }
+
+        private bool IsBiggerAndEqualToFrom(T value)
+        {
+            int compareToFrom = _comparer.Compare(value, From);
+            return compareToFrom > 0;
+        }
+
+        private bool IsLessAndEqualToTo(T value)
+        {
+            int compareToTo = _comparer.Compare(value, To);
+            return compareToTo < 0;
+        }
+
+        protected override string GetDefaultMessageTemplate(string errorCode) => "{PropertyName} has to be inclusively between {From} and {To}.";
     }
 }
