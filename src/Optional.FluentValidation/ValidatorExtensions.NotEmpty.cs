@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentValidation;
 using Nness.Text.Json.Validation.Validators;
 
@@ -16,6 +17,8 @@ namespace Nness.Text.Json.Validation
         public static IRuleBuilderOptions<T, IOptional<string>> NotEmpty<T>(
             this IRuleBuilder<T, IOptional<string>> ruleBuilder)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(new NotEmptyValidator<T, string, char>());
         }
 
@@ -30,6 +33,8 @@ namespace Nness.Text.Json.Validation
         public static IRuleBuilderOptions<T, IOptional<ICollection<TItem>>> NotEmpty<T, TItem>(
             this IRuleBuilder<T, IOptional<ICollection<TItem>>> ruleBuilder)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(new NotEmptyValidator<T, ICollection<TItem>, TItem>());
         }
     }

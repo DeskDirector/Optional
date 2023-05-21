@@ -23,6 +23,8 @@ namespace Nness.Text.Json.Validation
             TProperty from,
             TProperty to)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(
                 new ExclusiveBetweenValidator<T, TProperty>(from, to, Comparer<TProperty>.Default)
             );
@@ -43,6 +45,8 @@ namespace Nness.Text.Json.Validation
             string from,
             string to)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(
                 new ExclusiveBetweenValidator<T, string>(from, to, StringComparer.Ordinal)
             );
@@ -65,6 +69,7 @@ namespace Nness.Text.Json.Validation
             string to,
             StringComparer comparer)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
             ArgumentNullException.ThrowIfNull(comparer);
 
             return ruleBuilder.SetValidator(
@@ -90,6 +95,7 @@ namespace Nness.Text.Json.Validation
             TProperty to,
             IComparer<TProperty> comparer)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
             ArgumentNullException.ThrowIfNull(comparer);
 
             return ruleBuilder.SetValidator(

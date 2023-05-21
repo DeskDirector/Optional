@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Nness.Text.Json.Validation.Validators;
 
 namespace Nness.Text.Json.Validation
@@ -20,6 +21,8 @@ namespace Nness.Text.Json.Validation
             int min,
             int max)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(new LengthValidator(min, max));
         }
 
@@ -35,6 +38,8 @@ namespace Nness.Text.Json.Validation
             this IRuleBuilder<T, Optional<string>> ruleBuilder,
             int exactLength)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(new ExactLengthValidator(exactLength));
         }
 
@@ -50,6 +55,8 @@ namespace Nness.Text.Json.Validation
             this IRuleBuilder<T, Optional<string>> ruleBuilder,
             int maximumLength)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(new MaximumLengthValidator(maximumLength));
         }
 
@@ -65,6 +72,8 @@ namespace Nness.Text.Json.Validation
             this IRuleBuilder<T, Optional<string>> ruleBuilder,
             int minimumLength)
         {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
             return ruleBuilder.SetValidator(new MinimumLengthValidator(minimumLength));
         }
     }

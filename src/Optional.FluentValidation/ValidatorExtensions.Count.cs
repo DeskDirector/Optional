@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using FluentValidation;
 using Nness.Text.Json.Validation.Validators;
@@ -7,29 +6,7 @@ using Nness.Text.Json.Validation.Validators;
 namespace Nness.Text.Json.Validation
 {
     public static partial class ValidatorExtensions
-    {/// <summary>
-     /// Defines a count validator on the current rule builder, but only for <see
-     /// cref="ICollection{T}"/> properties Validation will fail if the count of the collection is
-     /// outside of the specified range, The range is inclusive.
-     /// </summary>
-     /// <typeparam name="T">Type of object being validated</typeparam>
-     /// <typeparam name="TProperty">Type of object inside collection</typeparam>
-     /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
-     /// <param name="min"></param>
-     /// <param name="max"></param>
-     /// <returns></returns>
-        public static IRuleBuilderOptions<T, OptionalCollection<TProperty>> Count<T, TProperty>(
-            this IRuleBuilder<T, OptionalCollection<TProperty>> ruleBuilder,
-            int min,
-            int max)
-        {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
-            return ruleBuilder.SetValidator(new CountValidator<TProperty>(min: min, max: max));
-        }
-
+    {
         /// <summary>
         /// Defines a count validator on the current rule builder, but only for <see
         /// cref="ICollection{T}"/> properties Validation will fail if the count of the collection is
@@ -37,22 +14,22 @@ namespace Nness.Text.Json.Validation
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <typeparam name="TCollection">Type of object that is collection of TProperty</typeparam>
-        /// <typeparam name="TProperty">Type of object inside collection</typeparam>
+        /// <typeparam name="TItem">Type of object inside collection</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<TCollection>> Count<T, TCollection, TProperty>(
-            this IRuleBuilder<T, Optional<TCollection>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<TCollection>> Count<T, TCollection, TItem>(
+            this IRuleBuilder<T, IOptional<TCollection>> ruleBuilder,
             int min,
             int max)
-            where TCollection : ICollection<TProperty>
+            where TCollection : ICollection<TItem>
         {
             if (ruleBuilder == null) {
                 throw new ArgumentNullException(nameof(ruleBuilder));
             }
 
-            return ruleBuilder.SetValidator(new CountValidator<TProperty>(min: min, max: max));
+            return ruleBuilder.SetValidator(new CountValidator<T, TCollection, TItem>(min: min, max: max));
         }
 
         /// <summary>
@@ -61,41 +38,19 @@ namespace Nness.Text.Json.Validation
         /// larger than the count specified.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <typeparam name="TProperty">Type of object inside collection</typeparam>
-        /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
-        /// <param name="maximumCount"></param>
-        /// <returns></returns>
-        public static IRuleBuilderOptions<T, OptionalCollection<TProperty>> MaximumCount<T, TProperty>(
-            this IRuleBuilder<T, OptionalCollection<TProperty>> ruleBuilder,
-            int maximumCount)
-        {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
-            return ruleBuilder.SetValidator(new MaximumCountValidator<TProperty>(maximumCount));
-        }
-
-        /// <summary>
-        /// Defines a count validator on the current rule builder, but only for <see
-        /// cref="ICollection{T}"/> properties. Validation will fail if the count of the collection is
-        /// larger than the count specified.
-        /// </summary>
-        /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <typeparam name="TProperty">Type of object inside collection</typeparam>
         /// <typeparam name="TCollection">Type of object that is collection of TProperty</typeparam>
+        /// <typeparam name="TItem">Type of object inside collection</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="maximumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<TCollection>> MaximumCount<T, TCollection, TProperty>(
-            this IRuleBuilder<T, Optional<TCollection>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<TCollection>> MaximumCount<T, TCollection, TItem>(
+            this IRuleBuilder<T, IOptional<TCollection>> ruleBuilder,
             int maximumCount)
+            where TCollection : ICollection<TItem>
         {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new MaximumCountValidator<TProperty>(maximumCount));
+            return ruleBuilder.SetValidator(new MaximumCountValidator<T, TCollection, TItem>(maximumCount));
         }
 
         /// <summary>
@@ -104,103 +59,19 @@ namespace Nness.Text.Json.Validation
         /// less than the count specified.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <typeparam name="TProperty">Type of object inside collection</typeparam>
-        /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
-        /// <param name="maximumCount"></param>
-        /// <returns></returns>
-        public static IRuleBuilderOptions<T, OptionalCollection<TProperty>> MinimumCount<T, TProperty>(
-            this IRuleBuilder<T, OptionalCollection<TProperty>> ruleBuilder,
-            int maximumCount)
-        {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
-            return ruleBuilder.SetValidator(new MinimumCountValidator<TProperty>(maximumCount));
-        }
-
-        /// <summary>
-        /// Defines a count validator on the current rule builder, but only for <see
-        /// cref="ICollection{T}"/> properties. Validation will fail if the count of the collection is
-        /// less than the count specified.
-        /// </summary>
-        /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <typeparam name="TProperty">Type of object inside collection</typeparam>
+        /// <typeparam name="TItem">Type of object inside collection</typeparam>
         /// <typeparam name="TCollection">Type of object that is collection of TProperty</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="maximumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, Optional<TCollection>> MinimumCount<T, TCollection, TProperty>(
-            this IRuleBuilder<T, Optional<TCollection>> ruleBuilder,
+        public static IRuleBuilderOptions<T, IOptional<TCollection>> MinimumCount<T, TCollection, TItem>(
+            this IRuleBuilder<T, IOptional<TCollection>> ruleBuilder,
             int maximumCount)
+            where TCollection : ICollection<TItem>
         {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new MinimumCountValidator<TProperty>(maximumCount));
-        }
-
-        /// <summary>
-        /// Defines a count validator on the current rule builder, but only for <see cref="ICollection"/>
-        /// properties Validation will fail if the count of the collection is outside of the
-        /// specified range, The range is inclusive.
-        /// </summary>
-        /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <returns></returns>
-        public static IRuleBuilderOptions<T, ICollection> Count<T>(
-            this IRuleBuilder<T, ICollection> ruleBuilder,
-            int min,
-            int max)
-        {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
-            return ruleBuilder.SetValidator(new CountValidator<T>(min: min, max: max));
-        }
-
-        /// <summary>
-        /// Defines a count validator on the current rule builder, but only for <see
-        /// cref="ICollection"/> properties. Validation will fail if the count of the collection is
-        /// larger than the count specified.
-        /// </summary>
-        /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
-        /// <param name="maximumCount"></param>
-        /// <returns></returns>
-        public static IRuleBuilderOptions<T, ICollection> MaximumCount<T>(
-            this IRuleBuilder<T, ICollection> ruleBuilder,
-            int maximumCount)
-        {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
-            return ruleBuilder.SetValidator(new MaximumCountValidator<T>(maximumCount));
-        }
-
-        /// <summary>
-        /// Defines a count validator on the current rule builder, but only for <see
-        /// cref="ICollection"/> properties. Validation will fail if the count of the collection is less
-        /// than the count specified.
-        /// </summary>
-        /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
-        /// <param name="minimumCount"></param>
-        /// <returns></returns>
-        public static IRuleBuilderOptions<T, ICollection> MinimumCount<T>(
-            this IRuleBuilder<T, ICollection> ruleBuilder,
-            int minimumCount)
-        {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
-            return ruleBuilder.SetValidator(new MinimumCountValidator<T>(minimumCount));
+            return ruleBuilder.SetValidator(new MinimumCountValidator<T, TCollection, TItem>(maximumCount));
         }
     }
 }
