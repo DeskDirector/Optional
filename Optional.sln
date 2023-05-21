@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optional.Json.Tests", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Optional.FluentValidation", "src\Optional.FluentValidation\Optional.FluentValidation.csproj", "{7C2D9851-DDA0-4443-BBAF-6C86DC1F6284}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optional.FluentValidation.Tests", "Optional.FluentValidation.Tests\Optional.FluentValidation.Tests.csproj", "{586A48A6-2276-4C48-988A-A85ABA987F90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{7C2D9851-DDA0-4443-BBAF-6C86DC1F6284}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C2D9851-DDA0-4443-BBAF-6C86DC1F6284}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C2D9851-DDA0-4443-BBAF-6C86DC1F6284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586A48A6-2276-4C48-988A-A85ABA987F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586A48A6-2276-4C48-988A-A85ABA987F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586A48A6-2276-4C48-988A-A85ABA987F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586A48A6-2276-4C48-988A-A85ABA987F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{90D4BA41-5D9F-4C3F-9A53-66AE98F80E68} = {8D438EDD-CFD2-4BF4-A474-69301FBBEF14}
 		{F7E2A37C-4C14-444E-8917-474E678511D9} = {8D438EDD-CFD2-4BF4-A474-69301FBBEF14}
 		{7C2D9851-DDA0-4443-BBAF-6C86DC1F6284} = {CDC2656A-5296-49A8-A2D0-F7FCECE39D9E}
+		{586A48A6-2276-4C48-988A-A85ABA987F90} = {8D438EDD-CFD2-4BF4-A474-69301FBBEF14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1ACB2FD-46FF-4644-B8E8-619CB7FDB864}
