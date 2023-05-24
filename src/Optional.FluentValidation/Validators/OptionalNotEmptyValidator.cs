@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using FluentValidation;
 using FluentValidation.Validators;
 
 namespace Nness.Text.Json.Validation.Validators
 {
-    public class OptionalNotEmptyValidator<TModel, TProperty> : PropertyValidator<TModel, TProperty>
-        where TProperty : IOptional
+    public class OptionalNotEmptyValidator<TModel, TProperty, TItem> : PropertyValidator<TModel, TProperty>
+        where TProperty : IOptional<TItem>
     {
         public override string Name => "OptionalNotEmptyValidator";
 
@@ -20,7 +21,7 @@ namespace Nness.Text.Json.Validation.Validators
                 return true;
             }
 
-            if (!optional.HasValue(out object? value)) {
+            if (!optional.HasValue(out TItem? value)) {
                 return false;
             }
 
@@ -33,7 +34,7 @@ namespace Nness.Text.Json.Validation.Validators
                     return false;
             }
 
-            return true;
+            return !EqualityComparer<TItem>.Default.Equals(value, default);
         }
 
         protected override string GetDefaultMessageTemplate(string errorCode) => "{PropertyName} cannot be empty.";
