@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentValidation;
 using Nness.Text.Json.Validation.Validators;
 
@@ -18,7 +19,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, Optional<string>>());
+            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, Optional<string>, string>());
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, Optional<TProperty>>());
+            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, Optional<TProperty>, TProperty>());
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, OptionalCollection<TProperty>>());
+            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, OptionalCollection<TProperty>, ICollection<TProperty>>());
         }
     }
 }
