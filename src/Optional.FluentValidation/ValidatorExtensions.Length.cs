@@ -23,7 +23,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new LengthValidator(min, max));
+            return ruleBuilder.SetValidator(new OptionalLengthValidator<T>(min, max));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new ExactLengthValidator(exactLength));
+            return ruleBuilder.SetValidator(new ExactLengthValidator<T>(exactLength));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new MaximumLengthValidator(maximumLength));
+            return ruleBuilder.SetValidator(new MaximumLengthValidator<T>(maximumLength));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Nness.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new MinimumLengthValidator(minimumLength));
+            return ruleBuilder.SetValidator(new MinimumLengthValidator<T>(minimumLength));
         }
     }
 }
