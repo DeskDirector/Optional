@@ -20,6 +20,7 @@ namespace Optional.FluentValidation.Tests
         {
             public ModelValidator()
             {
+                RuleFor(model => model.List).NotEmpty();
             }
         }
 
