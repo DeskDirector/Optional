@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using FluentValidation;
 using Nness.Text.Json.Validation.Validators;
 
@@ -14,12 +13,12 @@ namespace Nness.Text.Json.Validation
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<string>> NotEmpty<T>(
-            this IRuleBuilder<T, IOptional<string>> ruleBuilder)
+        public static IRuleBuilderOptions<T, Optional<string>> NotEmpty<T>(
+            this IRuleBuilder<T, Optional<string>> ruleBuilder)
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new NotEmptyValidator<T, string, char>());
+            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, Optional<string>>());
         }
 
         /// <summary>
@@ -27,15 +26,31 @@ namespace Nness.Text.Json.Validation
         /// property empty collection or null. It is used for required field. Either undefined or required.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
-        /// <typeparam name="TItem">Type of property being validated</typeparam>
+        /// <typeparam name="TProperty">Type of T's property</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<ICollection<TItem>>> NotEmpty<T, TItem>(
-            this IRuleBuilder<T, IOptional<ICollection<TItem>>> ruleBuilder)
+        public static IRuleBuilderOptions<T, Optional<TProperty>> NotEmpty<T, TProperty>(
+            this IRuleBuilder<T, Optional<TProperty>> ruleBuilder)
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new NotEmptyValidator<T, ICollection<TItem>, TItem>());
+            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, Optional<TProperty>>());
+        }
+
+        /// <summary>
+        /// Defines a 'not empty' validator on the current rule builder. Validation will fail if the
+        /// property empty collection or null. It is used for required field. Either undefined or required.
+        /// </summary>
+        /// <typeparam name="T">Type of object being validated</typeparam>
+        /// <typeparam name="TProperty">Type of T's property</typeparam>
+        /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
+        /// <returns></returns>
+        public static IRuleBuilderOptions<T, OptionalCollection<TProperty>> NotEmpty<T, TProperty>(
+            this IRuleBuilder<T, OptionalCollection<TProperty>> ruleBuilder)
+        {
+            ArgumentNullException.ThrowIfNull(ruleBuilder);
+
+            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, OptionalCollection<TProperty>>());
         }
     }
 }

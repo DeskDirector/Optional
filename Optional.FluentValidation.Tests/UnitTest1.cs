@@ -1,5 +1,6 @@
 using FluentValidation;
 using Nness.Text.Json;
+using Nness.Text.Json.Validation;
 
 namespace Optional.FluentValidation.Tests
 {
@@ -20,7 +21,10 @@ namespace Optional.FluentValidation.Tests
         {
             public ModelValidator()
             {
-                RuleFor(model => model.List).NotEmpty();
+                RuleFor(model => model.List).NotEmpty().NotNull();
+                RuleFor(model => model.Alternative).NotEmpty().NotNull();
+                RuleFor(model => model.Alternative).NotEmpty().NotNull();
+                RuleFor(model => model.Collection).NotEmpty().NotNull();
             }
         }
 
