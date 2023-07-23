@@ -3,6 +3,7 @@
   <PropertyGroup>
 	  <LangVersion>latest</LangVersion>
     <TargetFramework>net7.0</TargetFramework>
+	  <Version>1.0.0</Version>
     <Nullable>enable</Nullable>
     <RootNamespace>Nness.Text.Json</RootNamespace>
   </PropertyGroup>
