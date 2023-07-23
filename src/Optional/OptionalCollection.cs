@@ -10,6 +10,10 @@ namespace Nness.Text.Json
     [Serializable, JsonConverter(typeof(OptionalCollectionConverter))]
     public readonly struct OptionalCollection<T> : IOptional<ICollection<T>>, IEnumerable<T>
     {
+        public static readonly OptionalCollection<T> Undefined = new(OptionalState.Undefined);
+
+        public static readonly OptionalCollection<T> Null = new(OptionalState.Null);
+
         private readonly ICollection<T>? _value;
 
         public OptionalState State { get; }

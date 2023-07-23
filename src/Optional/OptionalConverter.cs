@@ -34,7 +34,7 @@ namespace Nness.Text.Json
                 throw new InvalidOperationException($"Unable to to create converter for Optional<{type.Name}>");
             }
 
-            var converter = (JsonConverter)converterObj;
+            JsonConverter converter = (JsonConverter)converterObj;
             return converter;
         }
 

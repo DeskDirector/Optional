@@ -37,7 +37,7 @@ namespace Nness.Text.Json
                 );
             }
 
-            var converter = (JsonConverter)converterObj;
+            JsonConverter converter = (JsonConverter)converterObj;
             return converter;
         }
 
