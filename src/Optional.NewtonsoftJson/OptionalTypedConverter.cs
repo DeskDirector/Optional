@@ -4,7 +4,7 @@ using Nness.Text.Json;
 
 namespace Optional.NewtonsoftJson
 {
-    public class OptionalCollectionTypedConverter
+    public static class OptionalTypedConverter
     {
         private static readonly ConcurrentDictionary<Type, IOptionalTypedConverter> Converters = new();
 
@@ -17,21 +17,18 @@ namespace Optional.NewtonsoftJson
             }
 
             if (!IsOptionalType(objectType)) {
-                throw new ArgumentException(
-                    $"Type ({objectType.FullName}) is not OptionalCollection<T>.",
-                    nameof(objectType)
-                );
+                throw new ArgumentException($"Type ({objectType.FullName}) is not Optional<T>.", nameof(objectType));
             }
 
             Type valueType = ResolveOptionalTypeParameter(objectType);
 
             object? instance = Activator.CreateInstance(
-                typeof(OptionalCollectionTypedConverter<>).MakeGenericType(valueType)
+                typeof(OptionalTypedConverter<>).MakeGenericType(valueType)
             );
 
             if (instance is not IOptionalTypedConverter typedConverter) {
                 throw new InvalidOperationException(
-                    $"Failed initialize to {nameof(OptionalCollectionTypedConverter)}<{valueType.Name}>"
+                    $"Failed to initialize {nameof(OptionalTypedConverter)}<{valueType.Name}>"
                 );
             }
 
@@ -46,7 +43,7 @@ namespace Optional.NewtonsoftJson
             }
 
             throw new ArgumentException(
-                $"Type ({optionalType.FullName}) is not OptionalCollection<T>.",
+                $"Type is {optionalType.FullName}, it is not Optional<T>.",
                 nameof(optionalType)
             );
         }
@@ -64,7 +61,7 @@ namespace Optional.NewtonsoftJson
 
             Type itemType = optionalType.GetGenericArguments().First();
             if (typeof(IOptional).IsAssignableFrom(itemType)) {
-                throw new InvalidOperationException("OptionalCollection's child type cannot be Optional.");
+                throw new InvalidOperationException("Optional type parameter cannot be another optional.");
             }
 
             valueType = itemType;
@@ -75,7 +72,7 @@ namespace Optional.NewtonsoftJson
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            return type.IsGenericType && typeof(OptionalCollection<>) == type.GetGenericTypeDefinition();
+            return type.IsGenericType && typeof(Optional<>) == type.GetGenericTypeDefinition();
         }
     }
 }
