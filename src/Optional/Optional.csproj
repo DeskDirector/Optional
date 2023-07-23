@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
     <RootNamespace>Nness.Text.Json</RootNamespace>
   </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+	</PropertyGroup>
 </Project>
