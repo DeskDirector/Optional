@@ -13,7 +13,9 @@ namespace Nness.Text.Json
         public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
         {
             JsonTypeInfo jsonTypeInfo = base.GetTypeInfo(type, options);
-            if (typeof(IOptional).IsAssignableFrom(type) || jsonTypeInfo.Kind != JsonTypeInfoKind.Object || jsonTypeInfo.Properties.Count == 0) {
+            if (typeof(IOptional).IsAssignableFrom(type) ||
+                jsonTypeInfo.Kind != JsonTypeInfoKind.Object ||
+                jsonTypeInfo.Properties.Count == 0) {
                 return jsonTypeInfo;
             }
 

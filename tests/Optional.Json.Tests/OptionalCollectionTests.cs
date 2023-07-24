@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using Xunit;
@@ -48,7 +49,7 @@ namespace Nness.Text.Json.Tests
         [MemberData(nameof(DeserializeModel1Samples))]
         public void DeserializeModel1(string json, TestModel1 expectResult)
         {
-            var options = new JsonSerializerOptions {
+            JsonSerializerOptions options = new() {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
@@ -120,7 +121,7 @@ namespace Nness.Text.Json.Tests
         [MemberData(nameof(SerializeModel1Samples))]
         public void SerializeModel1(TestModel1 model, string expectJson)
         {
-            var options = new JsonSerializerOptions {
+            JsonSerializerOptions options = new() {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
@@ -128,6 +129,39 @@ namespace Nness.Text.Json.Tests
             string actualJson = JsonSerializer.Serialize(model, options);
 
             Assert.Equal(expectJson, actualJson);
+        }
+
+        public static TheoryData<Type, bool> OptionalCollectionTypeSamples
+        {
+            get {
+                var data = new TheoryData<Type, bool> {
+                    { typeof(OptionalCollection<int>), true },
+                    { typeof(OptionalCollection<string>), true },
+                    { typeof(OptionalCollection<DateTime>), true },
+                    { typeof(OptionalCollection<object>), true },
+                    { typeof(OptionalCollection<TestModel1>), true },
+                    { typeof(Optional<int>), false },
+                    { typeof(Optional<string>), false },
+                    { typeof(Optional<DateTime>), false },
+                    { typeof(Optional<object>), false },
+                    { typeof(Optional<TestModel1>), false },
+                    { typeof(TestModel1), false },
+                    { typeof(int), false },
+                    { typeof(int?), false },
+                    { typeof(string), false },
+                    { typeof(DateTime), false }
+                };
+
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(OptionalCollectionTypeSamples))]
+        public void IsSettableCollection(Type type, bool expected)
+        {
+            bool actual = OptionalCollectionConverter.IsOptional(type);
+            Assert.Equal(expected, actual);
         }
     }
 }

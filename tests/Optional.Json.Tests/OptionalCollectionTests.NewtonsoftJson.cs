@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Optional.NewtonsoftJson;
 using Xunit;
 
@@ -36,6 +37,14 @@ namespace Nness.Text.Json.Tests
             string actualJson = JsonConvert.SerializeObject(model, settings);
 
             Assert.Equal(expectJson, actualJson);
+        }
+
+        [Theory]
+        [MemberData(nameof(OptionalCollectionTypeSamples))]
+        public void IsSettableCollectionByNewtonsoft(Type type, bool expected)
+        {
+            bool actual = OptionalCollectionTypedConverter.IsOptionalType(type);
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using Xunit;
@@ -121,6 +122,39 @@ namespace Nness.Text.Json.Tests
             string actualJson = JsonSerializer.Serialize(model, options);
 
             Assert.Equal(expectJson, actualJson);
+        }
+
+        public static TheoryData<Type, bool> OptionalTypeSamples
+        {
+            get {
+                var data = new TheoryData<Type, bool> {
+                    { typeof(OptionalCollection<int>), false },
+                    { typeof(OptionalCollection<string>), false },
+                    { typeof(OptionalCollection<DateTime>), false },
+                    { typeof(OptionalCollection<object>), false },
+                    { typeof(OptionalCollection<TestModel1>), false },
+                    { typeof(Optional<int>), true },
+                    { typeof(Optional<string>), true },
+                    { typeof(Optional<DateTime>), true },
+                    { typeof(Optional<object>), true },
+                    { typeof(Optional<TestModel1>), true },
+                    { typeof(TestModel1), false },
+                    { typeof(int), false },
+                    { typeof(int?), false },
+                    { typeof(string), false },
+                    { typeof(DateTime), false }
+                };
+
+                return data;
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(OptionalTypeSamples))]
+        public void IsOptional(Type type, bool expected)
+        {
+            bool actual = OptionalConverter.IsOptional(type);
+            Assert.Equal(expected, actual);
         }
     }
 }

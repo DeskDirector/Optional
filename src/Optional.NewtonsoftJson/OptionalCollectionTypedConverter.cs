@@ -75,7 +75,7 @@ namespace Optional.NewtonsoftJson
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            return type.IsGenericType && typeof(OptionalCollection<>) == type.GetGenericTypeDefinition();
+            return OptionalCollectionConverter.IsOptional(type);
         }
     }
 }

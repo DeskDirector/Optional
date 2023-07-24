@@ -9,13 +9,18 @@ namespace Nness.Text.Json
 {
     public class OptionalCollectionConverter : JsonConverterFactory
     {
+        /// <param name="type"><see cref="OptionalCollection{T}"/> type</param>
+        /// <returns>Is <see cref="type"/> <see cref="OptionalCollection{T}"/></returns>
+        public static bool IsOptional(Type type)
+        {
+            ArgumentNullException.ThrowIfNull(type);
+
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(OptionalCollection<>);
+        }
+
         public override bool CanConvert(Type typeToConvert)
         {
-            if (!typeToConvert.IsGenericType) {
-                return false;
-            }
-
-            return typeToConvert.GetGenericTypeDefinition() == typeof(OptionalCollection<>);
+            return IsOptional(typeToConvert);
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)

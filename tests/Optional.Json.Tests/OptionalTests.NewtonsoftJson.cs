@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Optional.NewtonsoftJson;
 using Xunit;
 
@@ -36,6 +37,14 @@ namespace Nness.Text.Json.Tests
             string actualJson = JsonConvert.SerializeObject(model, settings);
 
             Assert.Equal(expectJson, actualJson);
+        }
+
+        [Theory]
+        [MemberData(nameof(OptionalTypeSamples))]
+        public void IsOptionalByNewtonSoft(Type type, bool expected)
+        {
+            bool actual = OptionalTypedConverter.IsOptionalType(type);
+            Assert.Equal(expected, actual);
         }
     }
 }
