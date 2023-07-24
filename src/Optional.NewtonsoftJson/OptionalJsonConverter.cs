@@ -48,7 +48,7 @@ namespace Optional.NewtonsoftJson
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(Optional<>).IsAssignableFrom(objectType);
+            return OptionalTypedConverter.IsOptionalType(objectType);
         }
     }
 }
