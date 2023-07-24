@@ -34,5 +34,16 @@ namespace Optional.NewtonsoftJson
                 $"Optional with state {value.State} is either not supported or it doesn't contain value."
             );
         }
+
+        public static JsonSerializerSettings AppendIOptionalConverters(
+            this JsonSerializerSettings settings)
+        {
+            ArgumentNullException.ThrowIfNull(settings);
+
+            settings.Converters.Add(new OptionalJsonConverter());
+            settings.Converters.Add(new OptionalCollectionJsonConverter());
+
+            return settings;
+        }
     }
 }

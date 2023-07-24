@@ -47,11 +47,7 @@ namespace Optional.NewtonsoftJson
 
             property.ShouldSerialize = ShouldSerialize(property);
 
-            if (OptionalTypedConverter.IsOptionalType(property.PropertyType)) {
-                property.Converter = OptionalJsonConverter.Default;
-            } else if (OptionalCollectionTypedConverter.IsOptionalType(property.PropertyType)) {
-                property.Converter = OptionalCollectionJsonConverter.Default;
-            }
+            AssignOptionalConverter(property);
 
             if (IsOptionalType(property.PropertyType)) {
                 return true;
@@ -59,6 +55,21 @@ namespace Optional.NewtonsoftJson
 
             property.ShouldDeserialize = _ => false;
             return true;
+        }
+
+        public static void AssignOptionalConverter(JsonProperty property)
+        {
+            ArgumentNullException.ThrowIfNull(property);
+
+            if (property.Converter != null || property.PropertyType == null) {
+                return;
+            }
+
+            if (OptionalTypedConverter.IsOptionalType(property.PropertyType)) {
+                property.Converter = OptionalJsonConverter.Default;
+            } else if (OptionalCollectionTypedConverter.IsOptionalType(property.PropertyType)) {
+                property.Converter = OptionalCollectionJsonConverter.Default;
+            }
         }
 
         private static bool HasOptionalInterface([NotNullWhen(true)] Type? type)

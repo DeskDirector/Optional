@@ -10,9 +10,9 @@ namespace Nness.Text.Json.Tests
         [MemberData(nameof(DeserializeModel1Samples))]
         public void DeserializeModel1ByNewtonsoft(string json, TestModel1 expectResult)
         {
-            JsonSerializerSettings settings = new() {
+            JsonSerializerSettings settings = new JsonSerializerSettings {
                 ContractResolver = new OptionalContractResolver()
-            };
+            }.AppendIOptionalConverters();
 
             TestModel1? actualResult = JsonConvert.DeserializeObject<TestModel1>(json, settings);
 
@@ -29,9 +29,9 @@ namespace Nness.Text.Json.Tests
         [MemberData(nameof(SerializeModel1Samples))]
         public void SerializeModel1ByNewtonsoft(TestModel1 model, string expectJson)
         {
-            JsonSerializerSettings settings = new() {
+            JsonSerializerSettings settings = new JsonSerializerSettings {
                 ContractResolver = new OptionalContractResolver()
-            };
+            }.AppendIOptionalConverters();
 
             string actualJson = JsonConvert.SerializeObject(model, settings);
 
