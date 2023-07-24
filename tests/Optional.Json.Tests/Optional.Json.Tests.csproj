@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Optional.NewtonsoftJson\Optional.NewtonsoftJson.csproj" />
     <ProjectReference Include="..\..\src\Optional\Optional.csproj" />
   </ItemGroup>
 </Project>
