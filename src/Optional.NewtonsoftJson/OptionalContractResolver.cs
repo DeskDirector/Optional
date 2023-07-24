@@ -9,7 +9,7 @@ namespace Optional.NewtonsoftJson
     public class OptionalContractResolver : DefaultContractResolver
     {
         /// <param name="namingStrategy">Default to <see cref="CamelCaseNamingStrategy"/></param>
-        public OptionalContractResolver(NamingStrategy? namingStrategy)
+        public OptionalContractResolver(NamingStrategy? namingStrategy = null)
         {
             NamingStrategy = namingStrategy ?? new CamelCaseNamingStrategy();
         }
@@ -33,18 +33,32 @@ namespace Optional.NewtonsoftJson
         {
             JsonProperty property = base.CreateProperty(member, memberSerialization);
 
+            bool _ = TryAdjustForIOptional(property);
+            return property;
+        }
+
+        public static bool TryAdjustForIOptional(JsonProperty property)
+        {
+            ArgumentNullException.ThrowIfNull(property);
+
             if (!HasOptionalInterface(property.PropertyType)) {
-                return property;
+                return false;
             }
 
             property.ShouldSerialize = ShouldSerialize(property);
 
+            if (OptionalTypedConverter.IsOptionalType(property.PropertyType)) {
+                property.Converter = OptionalJsonConverter.Default;
+            } else if (OptionalCollectionTypedConverter.IsOptionalType(property.PropertyType)) {
+                property.Converter = OptionalCollectionJsonConverter.Default;
+            }
+
             if (IsOptionalType(property.PropertyType)) {
-                return property;
+                return true;
             }
 
             property.ShouldDeserialize = _ => false;
-            return property;
+            return true;
         }
 
         private static bool HasOptionalInterface([NotNullWhen(true)] Type? type)

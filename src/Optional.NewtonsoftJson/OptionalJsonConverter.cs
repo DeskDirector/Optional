@@ -6,6 +6,8 @@ namespace Optional.NewtonsoftJson
 {
     public class OptionalJsonConverter : JsonConverter
     {
+        public static readonly OptionalJsonConverter Default = new();
+
         private static readonly JToken NullToken = new JValue((object?)null);
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
