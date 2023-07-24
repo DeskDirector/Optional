@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Nness.Text.Json.Tests
 {
-    public class OptionalCollectionTests
+    public partial class OptionalCollectionTests
     {
         [DataContract]
         public class TestModel1
@@ -44,7 +44,7 @@ namespace Nness.Text.Json.Tests
             }
         }
 
-        [Theory]
+        [Theory(DisplayName = "System.Text.Json Deserialize OptionalCollection")]
         [MemberData(nameof(DeserializeModel1Samples))]
         public void DeserializeModel1(string json, TestModel1 expectResult)
         {
@@ -116,7 +116,7 @@ namespace Nness.Text.Json.Tests
             }
         }
 
-        [Theory]
+        [Theory(DisplayName = "System.Text.Json Serialize OptionalCollection")]
         [MemberData(nameof(SerializeModel1Samples))]
         public void SerializeModel1(TestModel1 model, string expectJson)
         {
