@@ -14,6 +14,13 @@ namespace Nness.Text.Json
 
         public static readonly OptionalCollection<T> Null = new(OptionalState.Null);
 
+        public static OptionalCollection<T> WithValue(ICollection<T> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+
+            return new OptionalCollection<T>(value);
+        }
+
         private readonly ICollection<T>? _value;
 
         public OptionalState State { get; }
@@ -85,27 +92,28 @@ namespace Nness.Text.Json
 
         public override int GetHashCode()
         {
-            if (HasValue(out ICollection<T>? value)) {
-                return value.GetHashCode();
-            }
+            ICollection<T>? value = Value;
 
             return State switch {
-                OptionalState.Undefined => -1,
-                OptionalState.Null => 0,
-                _ => throw new ArgumentOutOfRangeException()
+                OptionalState.Undefined => OptionalState.Undefined.GetHashCode(),
+                OptionalState.Null => OptionalState.Null.GetHashCode(),
+                OptionalState.HasValue => value != null
+                    ? HashCode.Combine(OptionalState.HasValue, value)
+                    : throw new InvalidOperationException("State is HasValue, but value is NULL."),
+                _ => throw new NotSupportedException($"State {State} is not supported.")
             };
         }
 
         public override string ToString()
         {
-            if (HasValue(out ICollection<T>? value)) {
-                return value.ToString() ?? String.Empty;
-            }
+            ICollection<T>? value = Value;
 
             return State switch {
                 OptionalState.Undefined => "undefined",
                 OptionalState.Null => "null",
-                _ => throw new ArgumentOutOfRangeException()
+                OptionalState.HasValue => value?.ToString() ??
+                                          throw new InvalidOperationException("State is HasValue, but value is NULL."),
+                _ => throw new NotSupportedException($"State {State} is not supported.")
             };
         }
     }

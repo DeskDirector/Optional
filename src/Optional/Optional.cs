@@ -11,6 +11,13 @@ namespace Nness.Text.Json
         public static readonly Optional<T> Undefined = new(OptionalState.Undefined);
         public static readonly Optional<T> Null = new(OptionalState.Null);
 
+        public static Optional<T> WithValue([NotNull] T value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+
+            return new Optional<T>(value);
+        }
+
         private readonly T? _value;
 
         public OptionalState State { get; }
@@ -98,23 +105,7 @@ namespace Nness.Text.Json
 
         public bool Equals(Optional<T> other)
         {
-            if (State != other.State) {
-                return false;
-            }
-
-            T? current = Value;
-            T? otherValue = other.Value;
-
-            if (ReferenceEquals(current, otherValue)) {
-                return true;
-            }
-
-            if (current == null || otherValue == null) {
-                return false;
-            }
-
-            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
-            return comparer.Equals(current, otherValue);
+            return Equals(other, EqualityComparer<T>.Default);
         }
 
         public bool Equals(Optional<T> other, IEqualityComparer<T> comparer)
@@ -152,28 +143,27 @@ namespace Nness.Text.Json
         public override int GetHashCode()
         {
             T? value = Value;
-            if (value != null) {
-                return value.GetHashCode();
-            }
 
             return State switch {
-                OptionalState.Undefined => -1,
-                OptionalState.Null => 0,
-                _ => throw new ArgumentOutOfRangeException()
+                OptionalState.Undefined => OptionalState.Undefined.GetHashCode(),
+                OptionalState.Null => OptionalState.Null.GetHashCode(),
+                OptionalState.HasValue => value != null
+                    ? HashCode.Combine(OptionalState.HasValue, value)
+                    : throw new InvalidOperationException("State is HasValue, but value is NULL."),
+                _ => throw new NotSupportedException($"State {State} is not supported.")
             };
         }
 
         public override string ToString()
         {
             T? value = Value;
-            if (value != null) {
-                return value.ToString() ?? String.Empty;
-            }
 
             return State switch {
                 OptionalState.Undefined => "undefined",
                 OptionalState.Null => "null",
-                _ => throw new ArgumentOutOfRangeException()
+                OptionalState.HasValue => value?.ToString() ??
+                                          throw new InvalidOperationException("State is HasValue, but value is NULL."),
+                _ => throw new NotSupportedException($"State {State} is not supported.")
             };
         }
     }
