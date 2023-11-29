@@ -6,6 +6,7 @@
 	  <Version>1.1.0</Version>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <RootNamespace>Nness.Text.Json.NewtonsoftJson</RootNamespace>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">

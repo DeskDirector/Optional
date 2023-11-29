@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Optional.NewtonsoftJson;
+using Nness.Text.Json.NewtonsoftJson;
 using Xunit;
 
 namespace Nness.Text.Json.Tests

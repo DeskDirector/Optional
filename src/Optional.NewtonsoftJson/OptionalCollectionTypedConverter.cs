@@ -1,8 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
-using Nness.Text.Json;
 
-namespace Optional.NewtonsoftJson
+namespace Nness.Text.Json.NewtonsoftJson
 {
     public class OptionalCollectionTypedConverter
     {

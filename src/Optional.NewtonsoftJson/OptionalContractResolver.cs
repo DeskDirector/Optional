@@ -2,9 +2,8 @@
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Nness.Text.Json;
 
-namespace Optional.NewtonsoftJson
+namespace Nness.Text.Json.NewtonsoftJson
 {
     public class OptionalContractResolver : DefaultContractResolver
     {

@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Nness.Text.Json;
 
-namespace Optional.NewtonsoftJson
+namespace Nness.Text.Json.NewtonsoftJson
 {
     public class OptionalJsonConverter : JsonConverter
     {
