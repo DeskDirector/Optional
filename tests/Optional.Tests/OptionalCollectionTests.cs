@@ -18,13 +18,13 @@ namespace Nness.Text.Json.Tests
 
         public static TheoryData<OptionalCollection<int>, bool, ICollection<int>?> HasValueSamples {
             get {
-                var data = new TheoryData<OptionalCollection<int>, bool, ICollection<int>?>
+                TheoryData<OptionalCollection<int>, bool, ICollection<int>?> data = new()
                 {
                     {default, false, default},
-                    {new OptionalCollection<int>(OptionalState.Null), false, default},
-                    {new OptionalCollection<int>(OptionalState.Undefined), false, default},
-                    {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
-                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
+                    {new(OptionalState.Null), false, default},
+                    {new(OptionalState.Undefined), false, default},
+                    {new(Array.Empty<int>()), true, Array.Empty<int>()},
+                    {new(new[] {1}), true, new[] {1}}
                 };
 
                 return data;
@@ -42,13 +42,13 @@ namespace Nness.Text.Json.Tests
 
         public static TheoryData<OptionalCollection<int>, bool> IsSetSamples {
             get {
-                var data = new TheoryData<OptionalCollection<int>, bool>
+                TheoryData<OptionalCollection<int>, bool> data = new()
                 {
                     { default, false },
-                    { new OptionalCollection<int>(OptionalState.Null), true },
-                    { new OptionalCollection<int>(OptionalState.Undefined), false},
-                    { new OptionalCollection<int>(Array.Empty<int>()), true },
-                    { new OptionalCollection<int>(new[] {1}), true },
+                    { new(OptionalState.Null), true },
+                    { new(OptionalState.Undefined), false},
+                    { new(Array.Empty<int>()), true },
+                    { new(new[] {1}), true },
                 };
 
                 return data;
@@ -67,13 +67,13 @@ namespace Nness.Text.Json.Tests
 
         public static TheoryData<OptionalCollection<int>, bool, IEnumerable<int>> EnumerableSamples {
             get {
-                var data = new TheoryData<OptionalCollection<int>, bool, IEnumerable<int>>
+                TheoryData<OptionalCollection<int>, bool, IEnumerable<int>> data = new()
                 {
                     {default, false, Array.Empty<int>()},
-                    {new OptionalCollection<int>(OptionalState.Null), false, Array.Empty<int>()},
-                    {new OptionalCollection<int>(OptionalState.Undefined), false, Array.Empty<int>()},
-                    {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
-                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
+                    {new(OptionalState.Null), false, Array.Empty<int>()},
+                    {new(OptionalState.Undefined), false, Array.Empty<int>()},
+                    {new(Array.Empty<int>()), true, Array.Empty<int>()},
+                    {new(new[] {1}), true, new[] {1}}
                 };
 
                 return data;
@@ -94,13 +94,17 @@ namespace Nness.Text.Json.Tests
         }
 
         public static TheoryData<OptionalCollection<int>, int> HashCodeSamples {
-            get {
-                var data = new TheoryData<OptionalCollection<int>, int>
+            get
+            {
+                TheoryData<OptionalCollection<int>, int> data = new()
                 {
-                    {default, -1},
-                    {new OptionalCollection<int>(OptionalState.Undefined), -1},
-                    {new OptionalCollection<int>(OptionalState.Null), 0},
-                    {new OptionalCollection<int>(Array.Empty<int>()), Array.Empty<int>().GetHashCode()}
+                    { default, OptionalState.Undefined.GetHashCode() },
+                    { new(OptionalState.Undefined), OptionalState.Undefined.GetHashCode() },
+                    { new(OptionalState.Null), OptionalState.Null.GetHashCode() },
+                    {
+                        new(Array.Empty<int>()),
+                        System.HashCode.Combine(OptionalState.HasValue, Array.Empty<int>().GetHashCode())
+                    }
                 };
                 return data;
             }
@@ -116,12 +120,12 @@ namespace Nness.Text.Json.Tests
 
         public static TheoryData<OptionalCollection<int>, string> ToStringSamples {
             get {
-                var data = new TheoryData<OptionalCollection<int>, string>
+                TheoryData<OptionalCollection<int>, string> data = new()
                 {
                     {default, "undefined"},
-                    {new OptionalCollection<int>(OptionalState.Undefined), "undefined"},
-                    {new OptionalCollection<int>(OptionalState.Null), "null"},
-                    {new OptionalCollection<int>(Array.Empty<int>()), Array.Empty<int>().ToString() ?? String.Empty}
+                    {new(OptionalState.Undefined), "undefined"},
+                    {new(OptionalState.Null), "null"},
+                    {new(Array.Empty<int>()), Array.Empty<int>().ToString() ?? String.Empty}
                 };
 
                 return data;
