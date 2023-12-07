@@ -2,7 +2,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class EmailValidator<TModel> : PropertyValidator<TModel, IOptional<string>>
     {

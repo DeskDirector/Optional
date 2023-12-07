@@ -2,9 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using FluentValidation;
-using Nness.Text.Json.Validation.Validators;
+using DeskDirector.Text.Json.Validation.Validators;
 
-namespace Nness.Text.Json.Validation
+namespace DeskDirector.Text.Json.Validation
 {
     public static partial class ValidatorExtensions
     {

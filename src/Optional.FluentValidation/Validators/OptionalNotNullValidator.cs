@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class OptionalNotNullValidator<TModel, TProperty> : PropertyValidator<TModel, TProperty>
       where TProperty : IOptional

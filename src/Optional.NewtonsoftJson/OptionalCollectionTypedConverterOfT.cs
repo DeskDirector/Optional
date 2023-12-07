@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Nness.Text.Json.NewtonsoftJson
+namespace DeskDirector.Text.Json.NewtonsoftJson
 {
     public class OptionalCollectionTypedConverter<T> : IOptionalTypedConverter
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nness.Text.Json.NewtonsoftJson
+namespace DeskDirector.Text.Json.NewtonsoftJson
 {
     public static class OptionalTypedConverter
     {

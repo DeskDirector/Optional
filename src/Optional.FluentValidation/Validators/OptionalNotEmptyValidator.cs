@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class OptionalNotEmptyValidator<TModel, TProperty, TItem> : PropertyValidator<TModel, TProperty>
         where TProperty : IOptional<TItem>

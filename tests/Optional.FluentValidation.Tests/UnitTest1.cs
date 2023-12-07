@@ -1,6 +1,6 @@
 using FluentValidation;
-using Nness.Text.Json;
-using Nness.Text.Json.Validation;
+using DeskDirector.Text.Json;
+using DeskDirector.Text.Json.Validation;
 
 namespace Optional.FluentValidation.Tests
 {

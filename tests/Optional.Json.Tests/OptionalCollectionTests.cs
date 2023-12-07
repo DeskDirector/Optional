@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using Xunit;
 
-namespace Nness.Text.Json.Tests
+namespace DeskDirector.Text.Json.Tests
 {
     public partial class OptionalCollectionTests
     {

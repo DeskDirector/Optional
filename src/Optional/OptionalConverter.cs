@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Nness.Text.Json
+namespace DeskDirector.Text.Json
 {
     public class OptionalConverter : JsonConverterFactory
     {

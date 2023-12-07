@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nness.Text.Json.Validation
+namespace DeskDirector.Text.Json.Validation
 {
     internal class ReadOnlyHashSet<T> : ISet<T>
     {

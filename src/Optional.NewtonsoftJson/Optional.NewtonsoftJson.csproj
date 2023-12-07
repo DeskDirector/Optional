@@ -6,8 +6,8 @@
 	  <Version>1.1.0</Version>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Nness.Text.Json.NewtonsoftJson</RootNamespace>
-	  <PackageId>Nness.$(AssemblyName)</PackageId>
+	  <RootNamespace>DeskDirector.Text.Json.NewtonsoftJson</RootNamespace>
+	  <PackageId>DeskDirector.$(AssemblyName)</PackageId>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>

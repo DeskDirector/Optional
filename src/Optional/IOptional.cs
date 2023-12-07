@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Nness.Text.Json
+namespace DeskDirector.Text.Json
 {
     public interface IOptional
     {

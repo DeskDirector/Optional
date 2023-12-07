@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace Nness.Text.Json
+namespace DeskDirector.Text.Json
 {
     [Serializable, JsonConverter(typeof(OptionalConverter))]
     public readonly struct Optional<T> : IOptional<T>

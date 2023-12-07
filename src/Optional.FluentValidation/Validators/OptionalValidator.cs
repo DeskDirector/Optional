@@ -2,7 +2,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class OptionalValidator<T> : AbstractValidator<Optional<T>>
     {

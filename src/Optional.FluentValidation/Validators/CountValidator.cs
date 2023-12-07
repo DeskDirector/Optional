@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class CountValidator<TModel, TCollection, T> : PropertyValidator<TModel, IOptional<TCollection>>, ILengthValidator
         where TCollection : ICollection<T>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Nness.Text.Json.Tests
+namespace DeskDirector.Text.Json.Tests
 {
     public class OptionalCollectionTests
     {

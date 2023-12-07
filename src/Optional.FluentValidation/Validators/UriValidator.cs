@@ -4,7 +4,7 @@ using System.Linq;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class UriValidator<TModel, TProperty> : PropertyValidator<TModel, TProperty>
     {

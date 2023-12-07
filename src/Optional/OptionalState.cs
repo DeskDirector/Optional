@@ -1,4 +1,4 @@
-﻿namespace Nness.Text.Json
+﻿namespace DeskDirector.Text.Json
 {
     public enum OptionalState
     {

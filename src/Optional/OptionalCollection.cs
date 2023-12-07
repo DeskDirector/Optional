@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace Nness.Text.Json
+namespace DeskDirector.Text.Json
 {
     [Serializable, JsonConverter(typeof(OptionalCollectionConverter))]
     public readonly struct OptionalCollection<T> : IOptional<ICollection<T>>, IEnumerable<T>

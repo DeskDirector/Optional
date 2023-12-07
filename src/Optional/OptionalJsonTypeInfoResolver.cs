@@ -4,7 +4,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 
-namespace Nness.Text.Json
+namespace DeskDirector.Text.Json
 {
     public class OptionalJsonTypeInfoResolver : DefaultJsonTypeInfoResolver
     {

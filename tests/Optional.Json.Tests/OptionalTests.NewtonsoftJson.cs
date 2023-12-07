@@ -1,9 +1,9 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Nness.Text.Json.NewtonsoftJson;
+using DeskDirector.Text.Json.NewtonsoftJson;
 using Xunit;
 
-namespace Nness.Text.Json.Tests
+namespace DeskDirector.Text.Json.Tests
 {
     public partial class OptionalTests
     {

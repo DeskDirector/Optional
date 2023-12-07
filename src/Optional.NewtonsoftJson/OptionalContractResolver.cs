@@ -3,7 +3,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Nness.Text.Json.NewtonsoftJson
+namespace DeskDirector.Text.Json.NewtonsoftJson
 {
     public class OptionalContractResolver : DefaultContractResolver
     {

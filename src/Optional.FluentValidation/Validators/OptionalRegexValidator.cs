@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class OptionalRegexValidator<TModel> : PropertyValidator<TModel, Optional<string>>
     {

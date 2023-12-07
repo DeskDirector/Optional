@@ -2,7 +2,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Nness.Text.Json.Validation.Validators
+namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class OptionalLengthValidator<TModel> : PropertyValidator<TModel, Optional<string>>, ILengthValidator
     {
