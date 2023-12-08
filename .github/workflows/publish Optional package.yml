@@ -30,4 +30,4 @@ jobs:
     - name: Test
       run: dotnet test "tests/Optional.Tests/Optional.Tests.csproj" --configuration Release --no-restore --verbosity normal
     - name: Publish to GPR
-      run: dotnet nuget push "${{ env.Project }}/bin/Release/*.snupkg"
+      run: dotnet nuget push "${{ env.Project }}/bin/Release/*.snupkg" -s https://nuget.pkg.github.com/deskdirector/index.json
