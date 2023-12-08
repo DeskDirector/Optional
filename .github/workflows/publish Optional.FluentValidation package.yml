@@ -24,6 +24,6 @@ jobs:
     - name: Build
       run: dotnet build "src/Optional.FluentValidation" --configuration Release --no-restore
     - name: Test
-      run: dotnet test "tests/Optional.FluentValidation.Tests" --no-build --verbosity normal
+      run: dotnet test "tests/Optional.FluentValidation.Tests" --configuration Release --no-build --verbosity normal
     - name: Publish to GPR
       run: dotnet nuget push "src/Optional.FluentValidation/bin/Release/*.symbols.nupkg"
