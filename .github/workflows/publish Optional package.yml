@@ -5,6 +5,10 @@ on:
     tags:
       - 'Optional-*'
 
+
+env:
+  Project: src/Optional
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,8 +26,8 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build "src/Optional" --configuration Release --no-restore
+      run: dotnet build ${{ env.Project }} --configuration Release --no-restore
     - name: Test
       run: dotnet test "tests/Optional.Tests/Optional.Tests.csproj" --configuration Release --no-restore --verbosity normal
     - name: Publish to GPR
-      run: dotnet nuget push "src/Optional/bin/Release/*.symbols.nupkg"
+      run: dotnet nuget push "${{ env.Project }}/bin/Release/*.snupkg"
