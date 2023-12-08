@@ -7,7 +7,6 @@
     <Nullable>enable</Nullable>
     <RootNamespace>DeskDirector.Text.Json</RootNamespace>
     <PackageId>DeskDirector.$(AssemblyName)</PackageId>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
@@ -15,10 +14,7 @@
     <PackageReadmeFile></PackageReadmeFile>
     <Description>JSON Merge Patch with type safe</Description>
     <PackageTags>JSON;rfc7386;MergePatch</PackageTags>
-  </PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
-	</PropertyGroup>
+  </PropertyGroup>
 </Project>

@@ -8,19 +8,15 @@
     <Nullable>enable</Nullable>
 	  <RootNamespace>DeskDirector.Text.Json.NewtonsoftJson</RootNamespace>
 	  <PackageId>DeskDirector.$(AssemblyName)</PackageId>
-	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
 	  <Copyright>Copyright (c) CanXing He</Copyright>
 	  <Description>JSON Merge Patch with type safe</Description>
 	  <PackageTags>JSON;rfc7386;MergePatch</PackageTags>
-  </PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
-	</PropertyGroup>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
