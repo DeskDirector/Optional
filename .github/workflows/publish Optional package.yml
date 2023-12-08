@@ -24,6 +24,6 @@ jobs:
     - name: Build
       run: dotnet build "src/Optional" --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test "tests/Optional.Tests" --no-build --verbosity normal
     - name: Publish to GPR
       run: dotnet nuget push "src/Optional/bin/Release/*.symbols.nupkg"
