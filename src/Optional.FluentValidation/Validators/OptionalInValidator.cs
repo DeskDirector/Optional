@@ -5,14 +5,11 @@ using FluentValidation.Validators;
 
 namespace DeskDirector.Text.Json.Validation.Validators
 {
-    public class OptionalInValidator<TModel, TOptional, T> : PropertyValidator<TModel, TOptional>
-        where TOptional : IOptional<T>
+    public abstract class InValidatorBase<TModel, TProperty, T> : PropertyValidator<TModel, TProperty?>
     {
         internal ReadOnlyHashSet<T> ValidSet { get; }
 
-        public override string Name => "OptionalInValidator";
-
-        public OptionalInValidator(HashSet<T> validSet)
+        public InValidatorBase(HashSet<T> validSet)
         {
             ArgumentNullException.ThrowIfNull(validSet);
 
@@ -22,13 +19,9 @@ namespace DeskDirector.Text.Json.Validation.Validators
         protected override string GetDefaultMessageTemplate(string errorCode) =>
             "{PropertyName} has invalid value '{PropertyValue}', Valid value set is: [{ValidSet}]";
 
-        public override bool IsValid(ValidationContext<TModel> context, TOptional? optional)
+        protected bool IsInSet(ValidationContext<TModel> context, T? value)
         {
-            if (optional == null) {
-                return true;
-            }
-
-            if (!optional.HasValue(out T? value)) {
+            if (value is null) {
                 return true;
             }
 
@@ -41,6 +34,39 @@ namespace DeskDirector.Text.Json.Validation.Validators
                 .AppendArgument("ValidSet", String.Join(", ", ValidSet));
 
             return false;
+        }
+    }
+
+    public class OptionalInValidator<TModel, TOptional, T>(HashSet<T> validSet) : InValidatorBase<TModel, TOptional, T>(validSet)
+        where TOptional : IOptional<T>
+    {
+        public override string Name => "OptionalInValidator";
+
+        public override bool IsValid(ValidationContext<TModel> context, TOptional? optional)
+        {
+            if (optional == null) {
+                return true;
+            }
+
+            if (!optional.HasValue(out T? value)) {
+                return true;
+            }
+
+            return IsInSet(context, value);
+        }
+    }
+
+    public class InValidator<TModel, T>(HashSet<T> validSet) : InValidatorBase<TModel, T, T>(validSet)
+    {
+        public override string Name => "InValidator";
+
+        public override bool IsValid(ValidationContext<TModel> context, T? value)
+        {
+            if (value is null) {
+                return true;
+            }
+
+            return IsInSet(context, value);
         }
     }
 }
