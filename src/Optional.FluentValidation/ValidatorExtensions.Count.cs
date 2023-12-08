@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using FluentValidation;
-using DeskDirector.Text.Json.Validation.Validators;
 using System.Collections;
+using System.Collections.Generic;
+using DeskDirector.Text.Json.Validation.Validators;
+using FluentValidation;
 
 namespace DeskDirector.Text.Json.Validation
 {
@@ -35,6 +35,23 @@ namespace DeskDirector.Text.Json.Validation
             int max)
         {
             return ruleBuilder.SetValidator(new CountValidator<T, TItem>(min: min, max: max));
+        }
+
+        public static IRuleBuilderOptions<T, TProperty?> Count<T, TProperty>(
+            this IRuleBuilder<T, TProperty?> ruleBuilder,
+            int min,
+            int max)
+            where TProperty : ICollection
+        {
+            return ruleBuilder.SetValidator(new CollectionCountValidator<T, TProperty>(min: min, max: max));
+        }
+
+        public static IRuleBuilderOptions<T, ICollection<TItem>?> Count<T, TItem>(
+            this IRuleBuilder<T, ICollection<TItem>?> ruleBuilder,
+            int min,
+            int max)
+        {
+            return ruleBuilder.SetValidator(new GenericCollectionCountValidator<T, TItem>(min: min, max: max));
         }
 
         /// <summary>
