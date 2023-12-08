@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentValidation;
 using DeskDirector.Text.Json.Validation.Validators;
+using System.Collections;
 
 namespace DeskDirector.Text.Json.Validation
 {
@@ -19,17 +20,21 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<TCollection>> Count<T, TCollection, TItem>(
-            this IRuleBuilder<T, IOptional<TCollection>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<TCollection>> Count<T, TCollection, TItem>(
+            this IRuleBuilder<T, Optional<TCollection>> ruleBuilder,
             int min,
             int max)
             where TCollection : ICollection<TItem>
         {
-            if (ruleBuilder == null) {
-                throw new ArgumentNullException(nameof(ruleBuilder));
-            }
-
             return ruleBuilder.SetValidator(new CountValidator<T, TCollection, TItem>(min: min, max: max));
+        }
+
+        public static IRuleBuilderOptions<T, OptionalCollection<TItem>> Count<T, TItem>(
+            this IRuleBuilder<T, OptionalCollection<TItem>> ruleBuilder,
+            int min,
+            int max)
+        {
+            return ruleBuilder.SetValidator(new CountValidator<T, TItem>(min: min, max: max));
         }
 
         /// <summary>
@@ -43,8 +48,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="maximumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<TCollection>> MaximumCount<T, TCollection, TItem>(
-            this IRuleBuilder<T, IOptional<TCollection>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<TCollection>> MaximumCount<T, TCollection, TItem>(
+            this IRuleBuilder<T, Optional<TCollection>> ruleBuilder,
             int maximumCount)
             where TCollection : ICollection<TItem>
         {
@@ -64,8 +69,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="maximumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<TCollection>> MinimumCount<T, TCollection, TItem>(
-            this IRuleBuilder<T, IOptional<TCollection>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<TCollection>> MinimumCount<T, TCollection, TItem>(
+            this IRuleBuilder<T, Optional<TCollection>> ruleBuilder,
             int maximumCount)
             where TCollection : ICollection<TItem>
         {

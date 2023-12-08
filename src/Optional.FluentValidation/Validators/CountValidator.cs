@@ -5,8 +5,7 @@ using FluentValidation.Validators;
 
 namespace DeskDirector.Text.Json.Validation.Validators
 {
-    public class CountValidator<TModel, TCollection, T> : PropertyValidator<TModel, IOptional<TCollection>>, ILengthValidator
-        where TCollection : ICollection<T>
+    public abstract class CountValidatorBase<TModel, TProperty> : PropertyValidator<TModel, TProperty>, ILengthValidator
     {
         public int Min { get; }
 
@@ -14,7 +13,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
 
         public override string Name => "OptionalListCountValidator";
 
-        internal CountValidator(int min, int max)
+        protected CountValidatorBase(int min, int max)
         {
             Max = max;
             Min = min;
@@ -28,16 +27,8 @@ namespace DeskDirector.Text.Json.Validation.Validators
             }
         }
 
-        public override bool IsValid(ValidationContext<TModel> context, IOptional<TCollection>? optional)
+        protected bool IsCollectionValid<TItem>(ValidationContext<TModel> context, ICollection<TItem> value)
         {
-            if (optional == null) {
-                return true;
-            }
-
-            if (!optional.HasValue(out TCollection? value)) {
-                return true;
-            }
-
             int count = value.Count;
             if (count >= Min && (Max == -1 || count <= Max)) {
                 return true;
@@ -68,19 +59,47 @@ namespace DeskDirector.Text.Json.Validation.Validators
         }
     }
 
-    public class MaximumCountValidator<TModel, TCollection, T> : CountValidator<TModel, TCollection, T>
-        where TCollection : ICollection<T>
+    public class CountValidator<TModel, TCollection, TItem>(int min, int max)
+        : CountValidatorBase<TModel, Optional<TCollection>>(min, max), ILengthValidator
+        where TCollection : ICollection<TItem>
     {
-        public MaximumCountValidator(int max)
-            : base(min: 0, max: max)
-        { }
+        public override bool IsValid(ValidationContext<TModel> context, Optional<TCollection> property)
+        {
+            IOptional<TCollection>? optional = property;
+            if (optional == null) {
+                return true;
+            }
+
+            if (!optional.HasValue(out TCollection? value)) {
+                return true;
+            }
+
+            return IsCollectionValid(context, value);
+        }
     }
 
-    public class MinimumCountValidator<TModel, TCollection, T> : CountValidator<TModel, TCollection, T>
-        where TCollection : ICollection<T>
+    public class CountValidator<TModel, TItem>(int min, int max)
+        : CountValidatorBase<TModel, OptionalCollection<TItem>>(min, max), ILengthValidator
     {
-        public MinimumCountValidator(int min)
-            : base(min: min, max: -1)
-        { }
+        public override bool IsValid(ValidationContext<TModel> context, OptionalCollection<TItem> property)
+        {
+            if (!property.HasValue(out ICollection<TItem>? value)) {
+                return true;
+            }
+
+            return IsCollectionValid(context, value);
+        }
+    }
+
+    public class MaximumCountValidator<TModel, TCollection, TItem>(int max)
+        : CountValidator<TModel, TCollection, TItem>(min: 0, max: max)
+        where TCollection : ICollection<TItem>
+    {
+    }
+
+    public class MinimumCountValidator<TModel, TCollection, TItem>(int min)
+        : CountValidator<TModel, TCollection, TItem>(min: min, max: -1)
+        where TCollection : ICollection<TItem>
+    {
     }
 }
