@@ -5,8 +5,8 @@ name: Commit
 
 on:
   push:
-    tags-ignore:
-      - '*'
+    branches:
+      - '**'
 
 jobs:
   build:
