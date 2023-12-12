@@ -11,7 +11,7 @@ namespace DeskDirector.Text.Json.Validation
         /// <summary>
         /// Defines a count validator on the current rule builder, but only for <see
         /// cref="ICollection{T}"/> properties Validation will fail if the count of the collection is
-        /// outside of the specified range, The range is inclusive.
+        /// outside the specified range, The range is inclusive.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <typeparam name="TCollection">Type of object that is collection of TProperty</typeparam>

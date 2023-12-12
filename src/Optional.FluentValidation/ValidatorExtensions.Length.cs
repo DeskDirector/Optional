@@ -8,7 +8,7 @@ namespace DeskDirector.Text.Json.Validation
     {
         /// <summary>
         /// Defines a length validator on the current rule builder, but only for string properties.
-        /// Validation will fail if the length of the string is outside of the specified range. The
+        /// Validation will fail if the length of the string is outside the specified range. The
         /// range is inclusive.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>

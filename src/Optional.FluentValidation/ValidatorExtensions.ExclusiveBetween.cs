@@ -10,7 +10,7 @@ namespace DeskDirector.Text.Json.Validation
         /// <summary>
         /// Defines an 'exclusive between' validator on the current rule builder, but only for
         /// properties of types that implement IComparable. Validation will fail if the value of the
-        /// property is outside of the specified range. The range is exclusive.
+        /// property is outside the specified range. The range is exclusive.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <typeparam name="TProperty">Type of property being validated</typeparam>
@@ -33,7 +33,7 @@ namespace DeskDirector.Text.Json.Validation
         /// <summary>
         /// Defines an 'exclusive between' validator on the current rule builder, but only for
         /// properties of types that implement IComparable. Validation will fail if the value of the
-        /// property is outside of the specified range. The range is exclusive.
+        /// property is outside the specified range. The range is exclusive.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
@@ -55,7 +55,7 @@ namespace DeskDirector.Text.Json.Validation
         /// <summary>
         /// Defines an 'exclusive between' validator on the current rule builder, but only for
         /// properties of types that implement IComparable. Validation will fail if the value of the
-        /// property is outside of the specified range. The range is exclusive.
+        /// property is outside the specified range. The range is exclusive.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
@@ -80,7 +80,7 @@ namespace DeskDirector.Text.Json.Validation
         /// <summary>
         /// Defines an 'exclusive between' validator on the current rule builder, but only for
         /// properties of types that implement IComparable. Validation will fail if the value of the
-        /// property is outside of the specified range. The range is exclusive.
+        /// property is outside the specified range. The range is exclusive.
         /// </summary>
         /// <typeparam name="T">Type of object being validated</typeparam>
         /// <typeparam name="TProperty">Type of property being validated</typeparam>
