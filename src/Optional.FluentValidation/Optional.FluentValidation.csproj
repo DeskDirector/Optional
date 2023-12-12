@@ -9,7 +9,7 @@
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
-	  <Copyright>Copyright (c) CanXing He</Copyright>
+	  <Copyright>Copyright (c) DeskDirector</Copyright>
 	  <Description>JSON Merge Patch with type safe</Description>
 	  <PackageTags>JSON;rfc7386;MergePatch</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
