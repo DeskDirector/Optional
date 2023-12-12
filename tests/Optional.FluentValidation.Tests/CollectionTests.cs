@@ -21,61 +21,61 @@
             }
         }
 
-        private readonly ModelValidator _validator = new ModelValidator();
+        private readonly ModelValidator _validator = new();
 
         [Fact]
         public void Should_Have_Error_When_List_Is_Null()
         {
-            var model = new Model { List = null };
-            var result = _validator.TestValidate(model);
+            Model model = new() { List = null };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.List);
         }
 
         [Fact]
         public void Should_Have_Error_When_Alternative_Is_Null()
         {
-            var model = new Model { Collection = null };
-            var result = _validator.TestValidate(model);
+            Model model = new() { Collection = null };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.Collection);
         }
 
         [Fact]
         public void Should_Have_Error_When_Array_Is_Null()
         {
-            var model = new Model { Array = null };
-            var result = _validator.TestValidate(model);
+            Model model = new() { Array = null };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.Array);
         }
 
         [Fact]
         public void Should_Have_Error_When_List_Is_Empty()
         {
-            var model = new Model { List = new List<string>() };
-            var result = _validator.TestValidate(model);
+            Model model = new() { List = new List<string>() };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.List);
         }
 
         [Fact]
         public void Should_Have_Error_When_Alternative_Is_Empty()
         {
-            var model = new Model { Collection = new List<string>() };
-            var result = _validator.TestValidate(model);
+            Model model = new() { Collection = new List<string>() };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.Collection);
         }
 
         [Fact]
         public void Should_Have_Error_When_Array_Is_Empty()
         {
-            var model = new Model { Array = new string[] { } };
-            var result = _validator.TestValidate(model);
+            Model model = new() { Array = new string[] { } };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.Array);
         }
 
         [Fact]
         public void Should_Have_Error_When_Collection_Is_Empty()
         {
-            var model = new Model { Collection = new List<string>() };
-            var result = _validator.TestValidate(model);
+            Model model = new() { Collection = new List<string>() };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.Collection);
         }
 
@@ -85,8 +85,8 @@
         [InlineData(3)] // More than 2 elements
         public void Should_Have_Error_When_List_Count_Is_Invalid(int count)
         {
-            var model = new Model { List = Enumerable.Repeat("Item", count).ToList() };
-            var result = _validator.TestValidate(model);
+            Model model = new() { List = Enumerable.Repeat("Item", count).ToList() };
+            TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.List);
         }
 
@@ -96,10 +96,10 @@
         [Fact]
         public void Should_Not_Have_Error_When_Valid()
         {
-            var model = new Model {
+            Model model = new() {
                 List = new List<string> { "Item1" },
                 Collection = new List<string> { "Item1" },
-                Array = new string[] { "Item1" }
+                Array = new[] { "Item1" }
             };
 
             TestValidationResult<Model> result = _validator.TestValidate(model);

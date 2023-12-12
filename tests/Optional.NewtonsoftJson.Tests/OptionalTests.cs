@@ -20,8 +20,7 @@ namespace DeskDirector.Text.Json.Tests
         public static TheoryData<string, TestModel1> DeserializeModel1Samples
         {
             get {
-                var data = new TheoryData<string, TestModel1>
-                {
+                TheoryData<string, TestModel1> data = new() {
                     {"{}", new TestModel1()},
                     {
                         "{\"integer\":null, \"string\":null}",
@@ -48,7 +47,7 @@ namespace DeskDirector.Text.Json.Tests
         [MemberData(nameof(DeserializeModel1Samples))]
         public void DeserializeModel1(string json, TestModel1 expectResult)
         {
-            var options = new JsonSerializerOptions {
+            JsonSerializerOptions options = new() {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
@@ -78,8 +77,7 @@ namespace DeskDirector.Text.Json.Tests
         public static TheoryData<TestModel1, string> SerializeModel1Samples
         {
             get {
-                var data = new TheoryData<TestModel1, string>
-                {
+                TheoryData<TestModel1, string> data = new() {
                     { new TestModel1(), "{}" },
                     {
                         new TestModel1
@@ -114,7 +112,7 @@ namespace DeskDirector.Text.Json.Tests
         [MemberData(nameof(SerializeModel1Samples))]
         public void SerializeModel1(TestModel1 model, string expectJson)
         {
-            var options = new JsonSerializerOptions {
+            JsonSerializerOptions options = new() {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 TypeInfoResolver = OptionalJsonTypeInfoResolver.Default
             };
@@ -127,7 +125,7 @@ namespace DeskDirector.Text.Json.Tests
         public static TheoryData<Type, bool> OptionalTypeSamples
         {
             get {
-                var data = new TheoryData<Type, bool> {
+                TheoryData<Type, bool> data = new() {
                     { typeof(OptionalCollection<int>), false },
                     { typeof(OptionalCollection<string>), false },
                     { typeof(OptionalCollection<DateTime>), false },

@@ -21,10 +21,10 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<OptionalCollection<int>, bool, ICollection<int>?> data = new()
                 {
                     {default, false, default},
-                    {new(OptionalState.Null), false, default},
-                    {new(OptionalState.Undefined), false, default},
-                    {new(Array.Empty<int>()), true, Array.Empty<int>()},
-                    {new(new[] {1}), true, new[] {1}}
+                    {new OptionalCollection<int>(OptionalState.Null), false, default},
+                    {new OptionalCollection<int>(OptionalState.Undefined), false, default},
+                    {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
+                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
                 };
 
                 return data;
@@ -45,10 +45,10 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<OptionalCollection<int>, bool> data = new()
                 {
                     { default, false },
-                    { new(OptionalState.Null), true },
-                    { new(OptionalState.Undefined), false},
-                    { new(Array.Empty<int>()), true },
-                    { new(new[] {1}), true },
+                    { new OptionalCollection<int>(OptionalState.Null), true },
+                    { new OptionalCollection<int>(OptionalState.Undefined), false},
+                    { new OptionalCollection<int>(Array.Empty<int>()), true },
+                    { new OptionalCollection<int>(new[] {1}), true },
                 };
 
                 return data;
@@ -70,10 +70,10 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<OptionalCollection<int>, bool, IEnumerable<int>> data = new()
                 {
                     {default, false, Array.Empty<int>()},
-                    {new(OptionalState.Null), false, Array.Empty<int>()},
-                    {new(OptionalState.Undefined), false, Array.Empty<int>()},
-                    {new(Array.Empty<int>()), true, Array.Empty<int>()},
-                    {new(new[] {1}), true, new[] {1}}
+                    {new OptionalCollection<int>(OptionalState.Null), false, Array.Empty<int>()},
+                    {new OptionalCollection<int>(OptionalState.Undefined), false, Array.Empty<int>()},
+                    {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
+                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
                 };
 
                 return data;
@@ -99,10 +99,10 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<OptionalCollection<int>, int> data = new()
                 {
                     { default, OptionalState.Undefined.GetHashCode() },
-                    { new(OptionalState.Undefined), OptionalState.Undefined.GetHashCode() },
-                    { new(OptionalState.Null), OptionalState.Null.GetHashCode() },
+                    { new OptionalCollection<int>(OptionalState.Undefined), OptionalState.Undefined.GetHashCode() },
+                    { new OptionalCollection<int>(OptionalState.Null), OptionalState.Null.GetHashCode() },
                     {
-                        new(Array.Empty<int>()),
+                        new OptionalCollection<int>(Array.Empty<int>()),
                         System.HashCode.Combine(OptionalState.HasValue, Array.Empty<int>().GetHashCode())
                     }
                 };
@@ -123,9 +123,9 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<OptionalCollection<int>, string> data = new()
                 {
                     {default, "undefined"},
-                    {new(OptionalState.Undefined), "undefined"},
-                    {new(OptionalState.Null), "null"},
-                    {new(Array.Empty<int>()), Array.Empty<int>().ToString() ?? String.Empty}
+                    {new OptionalCollection<int>(OptionalState.Undefined), "undefined"},
+                    {new OptionalCollection<int>(OptionalState.Null), "null"},
+                    {new OptionalCollection<int>(Array.Empty<int>()), Array.Empty<int>().ToString() ?? String.Empty}
                 };
 
                 return data;

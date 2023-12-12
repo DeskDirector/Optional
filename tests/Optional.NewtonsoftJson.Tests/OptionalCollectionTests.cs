@@ -21,8 +21,7 @@ namespace DeskDirector.Text.Json.Tests
         public static TheoryData<string, TestModel1> DeserializeModel1Samples
         {
             get {
-                var data = new TheoryData<string, TestModel1>
-                {
+                TheoryData<string, TestModel1> data = new() {
                     {"{}", new TestModel1()},
                     {
                         "{\"integer\":null,\"string\":null}",
@@ -85,8 +84,7 @@ namespace DeskDirector.Text.Json.Tests
         public static TheoryData<TestModel1, string> SerializeModel1Samples
         {
             get {
-                var data = new TheoryData<TestModel1, string>
-                {
+                TheoryData<TestModel1, string> data = new() {
                     { new TestModel1(), "{}" },
                     {
                         new TestModel1
@@ -134,7 +132,7 @@ namespace DeskDirector.Text.Json.Tests
         public static TheoryData<Type, bool> OptionalCollectionTypeSamples
         {
             get {
-                var data = new TheoryData<Type, bool> {
+                TheoryData<Type, bool> data = new() {
                     { typeof(OptionalCollection<int>), true },
                     { typeof(OptionalCollection<string>), true },
                     { typeof(OptionalCollection<DateTime>), true },

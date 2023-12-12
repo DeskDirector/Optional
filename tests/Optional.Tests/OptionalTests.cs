@@ -21,11 +21,11 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<int>, bool, int> data = new()
                 {
                     {default, false, default},
-                    {new(OptionalState.Null), false, default},
-                    {new(OptionalState.Undefined), false, default},
-                    {new(0), true, 0},
-                    {new(-1), true, -1 },
-                    {new(1), true, 1 }
+                    {new Optional<int>(OptionalState.Null), false, default},
+                    {new Optional<int>(OptionalState.Undefined), false, default},
+                    {new Optional<int>(0), true, 0},
+                    {new Optional<int>(-1), true, -1 },
+                    {new Optional<int>(1), true, 1 }
                 };
                 return data;
             }
@@ -46,11 +46,11 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<string>, bool, string?> data = new()
                 {
                     {default, false, default},
-                    {new(OptionalState.Null), false, default},
-                    {new(OptionalState.Undefined), false, default},
-                    {new(null), false, null},
-                    {new(String.Empty), true, String.Empty },
-                    {new("Test"), true, "Test" }
+                    {new Optional<string>(OptionalState.Null), false, default},
+                    {new Optional<string>(OptionalState.Undefined), false, default},
+                    {new Optional<string>(null), false, null},
+                    {new Optional<string>(String.Empty), true, String.Empty },
+                    {new Optional<string>("Test"), true, "Test" }
                 };
                 return data;
             }
@@ -70,9 +70,9 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<int>, bool> data = new()
                 {
                     {default, false},
-                    {new(OptionalState.Null), true},
-                    {new(OptionalState.Undefined), false},
-                    {new(0), true}
+                    {new Optional<int>(OptionalState.Null), true},
+                    {new Optional<int>(OptionalState.Undefined), false},
+                    {new Optional<int>(0), true}
                 };
                 return data;
             }
@@ -94,15 +94,15 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<int>, Optional<int>, bool> data = new()
                 {
                     {default, default, true},
-                    {new(OptionalState.Null), new(OptionalState.Null), true },
-                    {new(OptionalState.Undefined), new(OptionalState.Undefined), true },
-                    {new(OptionalState.Null), new(OptionalState.Undefined), false },
-                    {new(0), new(0), true },
-                    {new(0), new(-1), false },
-                    {new(OptionalState.Null), new(0), false },
-                    {new(OptionalState.Undefined), new(0), false },
-                    {new(0), new(OptionalState.Null), false },
-                    {new(0), new(OptionalState.Undefined), false }
+                    {new Optional<int>(OptionalState.Null), new Optional<int>(OptionalState.Null), true },
+                    {new Optional<int>(OptionalState.Undefined), new Optional<int>(OptionalState.Undefined), true },
+                    {new Optional<int>(OptionalState.Null), new Optional<int>(OptionalState.Undefined), false },
+                    {new Optional<int>(0), new Optional<int>(0), true },
+                    {new Optional<int>(0), new Optional<int>(-1), false },
+                    {new Optional<int>(OptionalState.Null), new Optional<int>(0), false },
+                    {new Optional<int>(OptionalState.Undefined), new Optional<int>(0), false },
+                    {new Optional<int>(0), new Optional<int>(OptionalState.Null), false },
+                    {new Optional<int>(0), new Optional<int>(OptionalState.Undefined), false }
                 };
 
                 return data;
@@ -125,17 +125,17 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<string>, Optional<string>, bool> data = new()
                 {
                     {default, default, true},
-                    {new(OptionalState.Null), new(OptionalState.Null), true },
-                    {new(OptionalState.Undefined), new(OptionalState.Undefined), true },
-                    {new(OptionalState.Null), new(OptionalState.Undefined), false },
-                    {new("test"), new("test"), true },
-                    {new("test"), new("Test"), false },
-                    {new("test"), new("abc"), false },
-                    {new(null), new("Test"), false },
-                    {new(OptionalState.Null), new(String.Empty), false },
-                    {new(OptionalState.Undefined), new(String.Empty), false },
-                    {new(String.Empty), new(OptionalState.Null), false },
-                    {new(String.Empty), new(OptionalState.Undefined), false }
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Null), true },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(OptionalState.Undefined), true },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Undefined), false },
+                    {new Optional<string>("test"), new Optional<string>("test"), true },
+                    {new Optional<string>("test"), new Optional<string>("Test"), false },
+                    {new Optional<string>("test"), new Optional<string>("abc"), false },
+                    {new Optional<string>(null), new Optional<string>("Test"), false },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Null), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Undefined), false }
                 };
 
                 return data;
@@ -157,17 +157,17 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<string>, Optional<string>, bool> data = new()
                 {
                     {default, default, true},
-                    {new(OptionalState.Null), new(OptionalState.Null), true },
-                    {new(OptionalState.Undefined), new(OptionalState.Undefined), true },
-                    {new(OptionalState.Null), new(OptionalState.Undefined), false },
-                    {new("test"), new("test"), true },
-                    {new("test"), new("Test"), true },
-                    {new("test"), new("abc"), false },
-                    {new(null), new("Test"), false },
-                    {new(OptionalState.Null), new(String.Empty), false },
-                    {new(OptionalState.Undefined), new(String.Empty), false },
-                    {new(String.Empty), new(OptionalState.Null), false },
-                    {new(String.Empty), new(OptionalState.Undefined), false }
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Null), true },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(OptionalState.Undefined), true },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(OptionalState.Undefined), false },
+                    {new Optional<string>("test"), new Optional<string>("test"), true },
+                    {new Optional<string>("test"), new Optional<string>("Test"), true },
+                    {new Optional<string>("test"), new Optional<string>("abc"), false },
+                    {new Optional<string>(null), new Optional<string>("Test"), false },
+                    {new Optional<string>(OptionalState.Null), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(OptionalState.Undefined), new Optional<string>(String.Empty), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Null), false },
+                    {new Optional<string>(String.Empty), new Optional<string>(OptionalState.Undefined), false }
                 };
 
                 return data;
@@ -188,11 +188,11 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<string>, int> data = new()
                 {
                     {default, OptionalState.Undefined.GetHashCode()},
-                    {new(OptionalState.Null), OptionalState.Null.GetHashCode() },
-                    {new(OptionalState.Undefined), OptionalState.Undefined.GetHashCode() },
-                    {new(String.Empty), System.HashCode.Combine(OptionalState.HasValue, String.Empty) },
-                    {new("test"), System.HashCode.Combine(OptionalState.HasValue, "test") },
-                    {new(null), OptionalState.Null.GetHashCode() }
+                    {new Optional<string>(OptionalState.Null), OptionalState.Null.GetHashCode() },
+                    {new Optional<string>(OptionalState.Undefined), OptionalState.Undefined.GetHashCode() },
+                    {new Optional<string>(String.Empty), System.HashCode.Combine(OptionalState.HasValue, String.Empty) },
+                    {new Optional<string>("test"), System.HashCode.Combine(OptionalState.HasValue, "test") },
+                    {new Optional<string>(null), OptionalState.Null.GetHashCode() }
                 };
                 return data;
             }
@@ -211,12 +211,12 @@ namespace DeskDirector.Text.Json.Tests
                 TheoryData<Optional<string>, string> data = new()
                 {
                     {default, "undefined"},
-                    {new(OptionalState.Null), "null"},
-                    {new(OptionalState.Undefined), "undefined"},
-                    {new(String.Empty), String.Empty},
-                    {new("test"), "test"},
-                    {new(null), "null"},
-                    {new("undefined"), "undefined"}
+                    {new Optional<string>(OptionalState.Null), "null"},
+                    {new Optional<string>(OptionalState.Undefined), "undefined"},
+                    {new Optional<string>(String.Empty), String.Empty},
+                    {new Optional<string>("test"), "test"},
+                    {new Optional<string>(null), "null"},
+                    {new Optional<string>("undefined"), "undefined"}
                 };
                 return data;
             }
