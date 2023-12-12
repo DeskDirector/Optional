@@ -30,11 +30,28 @@ namespace DeskDirector.Text.Json.Validation.Validators
                 case string s when String.IsNullOrWhiteSpace(s):
                 case ICollection { Count: 0 }:
                 case Array { Length: 0 }:
-                case IEnumerable e when !e.GetEnumerator().MoveNext():
                     return false;
+
+                case IEnumerable e:
+                    return HasElement(e);
             }
 
             return !EqualityComparer<TItem>.Default.Equals(value, default);
+        }
+
+        private static bool HasElement(IEnumerable e)
+        {
+            // ReSharper disable once NotDisposedResource
+            IEnumerator enumerator = e.GetEnumerator();
+
+            bool hasElement = enumerator.MoveNext();
+
+            // IEnumerator<T> is disposable
+            if (enumerator is IDisposable disposable) {
+                disposable.Dispose();
+            }
+
+            return hasElement;
         }
 
         protected override string GetDefaultMessageTemplate(string errorCode) => "{PropertyName} cannot be empty.";
