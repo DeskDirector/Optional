@@ -5,12 +5,8 @@ name: Commit
 
 on:
   push:
-    branches:
-      - '**'
     tags-ignore:
-      - 'Optional-*'
-      - 'Optional.FluentValidation-*'
-      - 'Optional.NewtonsoftJson-*'
+      - '*'
 
 jobs:
   build:
