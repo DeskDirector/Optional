@@ -9,7 +9,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
     {
         internal ReadOnlyHashSet<T> ValidSet { get; }
 
-        public InValidatorBase(HashSet<T> validSet)
+        protected InValidatorBase(HashSet<T> validSet)
         {
             ArgumentNullException.ThrowIfNull(validSet);
 
