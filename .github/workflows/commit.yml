@@ -3,14 +3,7 @@
 
 name: Commit
 
-on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '!Optional-*'
-      - '!Optional.FluentValidation-*'
-      - '!Optional.NewtonsoftJson-*'
+on: push
 
 jobs:
   build:
