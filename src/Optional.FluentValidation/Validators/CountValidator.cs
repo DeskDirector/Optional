@@ -60,16 +60,11 @@ namespace DeskDirector.Text.Json.Validation.Validators
     }
 
     public class CountValidator<TModel, TCollection, TItem>(int min, int max)
-        : CountValidatorBase<TModel, Optional<TCollection>>(min, max), ILengthValidator
+        : CountValidatorBase<TModel, Optional<TCollection>>(min, max)
         where TCollection : ICollection<TItem>
     {
-        public override bool IsValid(ValidationContext<TModel> context, Optional<TCollection> property)
+        public override bool IsValid(ValidationContext<TModel> context, Optional<TCollection> optional)
         {
-            IOptional<TCollection>? optional = property;
-            if (optional == null) {
-                return true;
-            }
-
             if (!optional.HasValue(out TCollection? value)) {
                 return true;
             }
@@ -79,7 +74,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
     }
 
     public class CountValidator<TModel, TItem>(int min, int max)
-        : CountValidatorBase<TModel, OptionalCollection<TItem>>(min, max), ILengthValidator
+        : CountValidatorBase<TModel, OptionalCollection<TItem>>(min, max)
     {
         public override bool IsValid(ValidationContext<TModel> context, OptionalCollection<TItem> property)
         {
@@ -92,7 +87,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
     }
 
     public class CollectionCountValidator<TModel, TProperty>(int min, int max)
-        : CountValidatorBase<TModel, TProperty>(min, max), ILengthValidator
+        : CountValidatorBase<TModel, TProperty>(min, max)
         where TProperty : ICollection
     {
         public override bool IsValid(ValidationContext<TModel> context, TProperty? value)
@@ -106,7 +101,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
     }
 
     public class GenericCollectionCountValidator<TModel, TItem>(int min, int max)
-        : CountValidatorBase<TModel, ICollection<TItem>?>(min, max), ILengthValidator
+        : CountValidatorBase<TModel, ICollection<TItem>?>(min, max)
     {
         public override bool IsValid(ValidationContext<TModel> context, ICollection<TItem>? value)
         {
@@ -120,13 +115,9 @@ namespace DeskDirector.Text.Json.Validation.Validators
 
     public class MaximumCountValidator<TModel, TCollection, TItem>(int max)
         : CountValidator<TModel, TCollection, TItem>(min: 0, max: max)
-        where TCollection : ICollection<TItem>
-    {
-    }
+        where TCollection : ICollection<TItem>;
 
     public class MinimumCountValidator<TModel, TCollection, TItem>(int min)
         : CountValidator<TModel, TCollection, TItem>(min: min, max: -1)
-        where TCollection : ICollection<TItem>
-    {
-    }
+        where TCollection : ICollection<TItem>;
 }
