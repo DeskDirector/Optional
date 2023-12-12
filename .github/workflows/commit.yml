@@ -7,8 +7,10 @@ on:
   push:
     branches:
       - '**'
-    tags-ignore:
-      - '**'
+    tags:
+      - '!Optional-*'
+      - '!Optional.FluentValidation-*'
+      - '!Optional.NewtonsoftJson-*'
 
 jobs:
   build:
