@@ -9,7 +9,7 @@ namespace DeskDirector.Text.Json
     public class OptionalConverter : JsonConverterFactory
     {
         /// <param name="type"><see cref="Optional{T}"/> type</param>
-        /// <returns>Is <see cref="type"/> <see cref="Optional{T}"/>.</returns>
+        /// <returns>Is <see cref="Type"/> <see cref="Optional{T}"/>.</returns>
         public static bool IsOptional(Type type)
         {
             ArgumentNullException.ThrowIfNull(type);

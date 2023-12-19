@@ -31,7 +31,7 @@ namespace DeskDirector.Text.Json
         bool HasValue([NotNullWhen(true)] out T? value);
 
         /// <summary>
-        /// Return value when value been set, else it should return default value of <see cref="T"/>
+        /// Return value when value been set, else it should return default value of type
         /// </summary>
         T? Value { get; }
     }

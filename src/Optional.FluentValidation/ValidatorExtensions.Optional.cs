@@ -1,6 +1,6 @@
 ﻿using System;
-using FluentValidation;
 using DeskDirector.Text.Json.Validation.Validators;
+using FluentValidation;
 
 namespace DeskDirector.Text.Json.Validation
 {
@@ -26,20 +26,6 @@ namespace DeskDirector.Text.Json.Validation
 
             OptionalValidator<TProperty> optional = new(validator);
             return ruleBuilder.SetValidator(optional, ruleSets);
-        }
-
-        public static void WhenHasValue<T, TProperty>(
-            this AbstractValidator<T> validator,
-            Func<T, Optional<TProperty>> select,
-            Action<IRuleBuilder<T, TProperty?>> validate)
-        {
-            ArgumentNullException.ThrowIfNull(validate);
-            ArgumentNullException.ThrowIfNull(select);
-            ArgumentNullException.ThrowIfNull(validate);
-
-            validator.When(t => select(t).HasValue(out TProperty? _), () => {
-                validate(validator.Transform(r => select(r), s => s.HasValue(out TProperty? value) ? value : default));
-            });
         }
     }
 }
