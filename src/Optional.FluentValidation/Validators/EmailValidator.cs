@@ -4,11 +4,11 @@ using FluentValidation.Validators;
 
 namespace DeskDirector.Text.Json.Validation.Validators
 {
-    public class EmailValidator<TModel> : PropertyValidator<TModel, IOptional<string>>
+    public class EmailValidator<TModel> : PropertyValidator<TModel, Optional<string>>
     {
         public override string Name => "OptionalEmailValidator";
 
-        public override bool IsValid(ValidationContext<TModel> context, IOptional<string>? optional)
+        public override bool IsValid(ValidationContext<TModel> context, Optional<string> optional)
         {
             if (optional == null) {
                 return true;

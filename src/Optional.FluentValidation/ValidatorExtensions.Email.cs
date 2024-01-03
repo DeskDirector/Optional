@@ -1,6 +1,6 @@
 ﻿using System;
-using FluentValidation;
 using DeskDirector.Text.Json.Validation.Validators;
+using FluentValidation;
 
 namespace DeskDirector.Text.Json.Validation
 {
@@ -9,8 +9,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <summary>
         /// Email validator without using Regex
         /// </summary>
-        public static IRuleBuilderOptions<T, IOptional<string>> Email<T>(
-            this IRuleBuilder<T, IOptional<string>> ruleBuilder)
+        public static IRuleBuilderOptions<T, Optional<string>> Email<T>(
+            this IRuleBuilder<T, Optional<string>> ruleBuilder)
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
