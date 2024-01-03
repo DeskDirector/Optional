@@ -137,8 +137,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="maximumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, TCollection> MaximumCount<T, TCollection>(
-            this IRuleBuilder<T, TCollection> ruleBuilder,
+        public static IRuleBuilderOptions<T, TCollection?> MaximumCount<T, TCollection>(
+            this IRuleBuilder<T, TCollection?> ruleBuilder,
             int maximumCount)
             where TCollection : ICollection
         {
@@ -157,8 +157,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="maximumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, ICollection<TItem>> MaximumCount<T, TItem>(
-            this IRuleBuilder<T, ICollection<TItem>> ruleBuilder,
+        public static IRuleBuilderOptions<T, ICollection<TItem>?> MaximumCount<T, TItem>(
+            this IRuleBuilder<T, ICollection<TItem>?> ruleBuilder,
             int maximumCount)
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
@@ -216,8 +216,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="minimumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, TCollection> MinimumCount<T, TCollection>(
-            this IRuleBuilder<T, TCollection> ruleBuilder,
+        public static IRuleBuilderOptions<T, TCollection?> MinimumCount<T, TCollection>(
+            this IRuleBuilder<T, TCollection?> ruleBuilder,
             int minimumCount)
             where TCollection : ICollection
         {
@@ -236,8 +236,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
         /// <param name="minimumCount"></param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, ICollection<TItem>> MinimumCount<T, TItem>(
-            this IRuleBuilder<T, ICollection<TItem>> ruleBuilder,
+        public static IRuleBuilderOptions<T, ICollection<TItem>?> MinimumCount<T, TItem>(
+            this IRuleBuilder<T, ICollection<TItem>?> ruleBuilder,
             int minimumCount)
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);

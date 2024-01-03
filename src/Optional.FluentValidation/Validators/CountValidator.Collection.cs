@@ -4,7 +4,7 @@ using FluentValidation;
 namespace DeskDirector.Text.Json.Validation.Validators
 {
     public class CollectionCountValidator<TModel, TProperty>
-        : AbstractCountValidator<TModel, TProperty>
+        : AbstractCountValidator<TModel, TProperty?>
         where TProperty : ICollection
     {
         public CollectionCountValidator(int min, int max)
