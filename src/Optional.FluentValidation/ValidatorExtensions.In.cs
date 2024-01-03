@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using FluentValidation;
+using System.Collections.Frozen;
 using DeskDirector.Text.Json.Validation.Validators;
+using FluentValidation;
 
 namespace DeskDirector.Text.Json.Validation
 {
@@ -18,7 +18,7 @@ namespace DeskDirector.Text.Json.Validation
         /// <returns></returns>
         public static IRuleBuilderOptions<T, Optional<TProperty>> In<T, TProperty>(
             this IRuleBuilder<T, Optional<TProperty>> ruleBuilder,
-             HashSet<TProperty> validSet)
+            FrozenSet<TProperty> validSet)
         {
             if (ruleBuilder == null) {
                 throw new ArgumentNullException(nameof(ruleBuilder));
@@ -28,12 +28,12 @@ namespace DeskDirector.Text.Json.Validation
                 throw new ArgumentNullException(nameof(validSet));
             }
 
-            return ruleBuilder.SetValidator(new OptionalInValidator<T, Optional<TProperty>, TProperty>(validSet));
+            return ruleBuilder.SetValidator(new InValidator<T, Optional<TProperty>, TProperty>(validSet));
         }
 
         public static IRuleBuilderOptions<T, TProperty?> In<T, TProperty>(
             this IRuleBuilder<T, TProperty?> ruleBuilder,
-             HashSet<TProperty> validSet)
+             FrozenSet<TProperty> validSet)
         {
             if (ruleBuilder == null) {
                 throw new ArgumentNullException(nameof(ruleBuilder));
@@ -43,7 +43,7 @@ namespace DeskDirector.Text.Json.Validation
                 throw new ArgumentNullException(nameof(validSet));
             }
 
-            return ruleBuilder.SetValidator(new InValidator<T, TProperty>(validSet));
+            return ruleBuilder.SetValidator(new InValidator<T, TProperty?, TProperty>(validSet));
         }
     }
 }
