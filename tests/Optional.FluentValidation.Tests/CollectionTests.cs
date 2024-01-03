@@ -66,7 +66,7 @@
         [Fact]
         public void Should_Have_Error_When_Array_Is_Empty()
         {
-            Model model = new() { Array = new string[] { } };
+            Model model = new() { Array = [] };
             TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.Array);
         }
@@ -99,7 +99,7 @@
             Model model = new() {
                 List = new List<string> { "Item1" },
                 Collection = new List<string> { "Item1" },
-                Array = new[] { "Item1" }
+                Array = ["Item1"]
             };
 
             TestValidationResult<Model> result = _validator.TestValidate(model);

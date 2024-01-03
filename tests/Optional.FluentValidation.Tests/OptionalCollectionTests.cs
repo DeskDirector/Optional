@@ -22,9 +22,9 @@ namespace Optional.FluentValidation.Tests
                 RuleFor(model => model.Array).NotEmpty().NotNull();
                 RuleFor(model => model.Collection).NotEmpty().NotNull();
 
-                RuleFor(model => model.List).Count<Model, List<string>, string>(1, 2);
-                RuleFor(model => model.Alternative).Count<Model, ICollection<string>, string>(1, 2);
-                RuleFor(model => model.Array).Count<Model, string[], string>(1, 2);
+                RuleFor(model => model.List).Count(1, 2);
+                RuleFor(model => model.Alternative).Count(1, 2);
+                RuleFor(model => model.Array).Count(1, 2);
                 RuleFor(model => model.Collection).Count(1, 2);
             }
         }

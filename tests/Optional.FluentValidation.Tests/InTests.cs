@@ -1,4 +1,6 @@
-﻿namespace Optional.FluentValidation.Tests
+﻿using System.Collections.Frozen;
+
+namespace Optional.FluentValidation.Tests
 {
     public class InTests
     {
@@ -15,9 +17,10 @@
         {
             public ModelValidator()
             {
-                RuleFor(model => model.Id).In([1, 2]);
-                RuleFor(model => model.NullableId).In([1, 2]);
-                RuleFor(model => model.OptionalId).In(new HashSet<int> { 1, 2 });
+                FrozenSet<int> set = new[] { 1, 2 }.ToFrozenSet();
+                RuleFor(model => model.Id).In(set);
+                RuleFor(model => model.NullableId).In(set);
+                RuleFor(model => model.OptionalId).In(set);
             }
         }
 

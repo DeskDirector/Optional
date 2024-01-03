@@ -45,5 +45,21 @@ namespace DeskDirector.Text.Json.Validation
 
             return ruleBuilder.SetValidator(new InValidator<T, TProperty?, TProperty>(validSet));
         }
+
+        public static IRuleBuilderOptions<T, TProperty?> In<T, TProperty>(
+            this IRuleBuilder<T, TProperty?> ruleBuilder,
+            FrozenSet<TProperty> validSet)
+            where TProperty : struct
+        {
+            if (ruleBuilder == null) {
+                throw new ArgumentNullException(nameof(ruleBuilder));
+            }
+
+            if (validSet == null) {
+                throw new ArgumentNullException(nameof(validSet));
+            }
+
+            return ruleBuilder.SetValidator(new InValidator<T, TProperty?, TProperty>(validSet));
+        }
     }
 }

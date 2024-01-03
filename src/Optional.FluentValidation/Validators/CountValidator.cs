@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using FluentValidation;
 using FluentValidation.Validators;
 
 namespace DeskDirector.Text.Json.Validation.Validators
 {
-    public abstract class AbstractCountValidator<TModel, TProperty> : PropertyValidator<TModel, TProperty?>, ILengthValidator
+    public class CountValidator<TModel, TProperty> : PropertyValidator<TModel, TProperty>, ILengthValidator
     {
         public int Min { get; }
 
@@ -12,7 +13,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
 
         public override string Name => "CollectionCountValidator";
 
-        protected AbstractCountValidator(int min, int max)
+        public CountValidator(int min, int max)
         {
             Max = max;
             Min = min;
@@ -26,7 +27,34 @@ namespace DeskDirector.Text.Json.Validation.Validators
             }
         }
 
-        protected bool IsCollectionValid(ValidationContext<TModel> context, int count)
+        public override bool IsValid(ValidationContext<TModel> context, TProperty value)
+        {
+            int? count = value switch {
+                IOptional optional => GetCount(optional),
+                ICollection collection => collection.Count,
+                _ => null
+            };
+
+            if (count == null) {
+                return true;
+            }
+
+            return IsCollectionValid(context, count.Value);
+        }
+
+        private static int? GetCount(IOptional optional)
+        {
+            if (!optional.HasValue(out object? value)) {
+                return null;
+            }
+
+            return value switch {
+                ICollection collection => collection.Count,
+                _ => null
+            };
+        }
+
+        private bool IsCollectionValid(ValidationContext<TModel> context, int count)
         {
             if (count >= Min && (Max == -1 || count <= Max)) {
                 return true;
@@ -55,5 +83,19 @@ namespace DeskDirector.Text.Json.Validation.Validators
 
             return "{PropertyName} must not contain more than {MaxElements} items and at least {MinElements} items";
         }
+    }
+
+    public sealed class MaximumCountValidator<TModel, TProperty> : CountValidator<TModel, TProperty>
+    {
+        public MaximumCountValidator(int max)
+            : base(min: 0, max: max)
+        { }
+    }
+
+    public sealed class MinimumCountValidator<TModel, TProperty> : CountValidator<TModel, TProperty>
+    {
+        public MinimumCountValidator(int min)
+            : base(min: min, max: -1)
+        { }
     }
 }
