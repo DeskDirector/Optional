@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentValidation;
 using DeskDirector.Text.Json.Validation.Validators;
+using FluentValidation;
 
 namespace DeskDirector.Text.Json.Validation
 {
@@ -18,8 +18,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="from">The lowest allowed value</param>
         /// <param name="to">The highest allowed value</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<TProperty>> ExclusiveBetween<T, TProperty>(
-            this IRuleBuilder<T, IOptional<TProperty>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<TProperty>> ExclusiveBetween<T, TProperty>(
+            this IRuleBuilder<T, Optional<TProperty>> ruleBuilder,
             TProperty from,
             TProperty to)
         {
@@ -40,8 +40,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="from">The lowest allowed value</param>
         /// <param name="to">The highest allowed value</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<string>> ExclusiveBetween<T>(
-            this IRuleBuilder<T, IOptional<string>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<string>> ExclusiveBetween<T>(
+            this IRuleBuilder<T, Optional<string>> ruleBuilder,
             string from,
             string to)
         {
@@ -63,8 +63,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="to">The highest allowed value</param>
         /// <param name="comparer">String comparer</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<string>> ExclusiveBetween<T>(
-            this IRuleBuilder<T, IOptional<string>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<string>> ExclusiveBetween<T>(
+            this IRuleBuilder<T, Optional<string>> ruleBuilder,
             string from,
             string to,
             StringComparer comparer)
@@ -89,8 +89,8 @@ namespace DeskDirector.Text.Json.Validation
         /// <param name="to">The highest allowed value</param>
         /// <param name="comparer">Comparer for TProperty</param>
         /// <returns></returns>
-        public static IRuleBuilderOptions<T, IOptional<TProperty>> ExclusiveBetween<T, TProperty>(
-            this IRuleBuilder<T, IOptional<TProperty>> ruleBuilder,
+        public static IRuleBuilderOptions<T, Optional<TProperty>> ExclusiveBetween<T, TProperty>(
+            this IRuleBuilder<T, Optional<TProperty>> ruleBuilder,
             TProperty from,
             TProperty to,
             IComparer<TProperty> comparer)

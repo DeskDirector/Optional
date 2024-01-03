@@ -4,7 +4,7 @@ using FluentValidation.Validators;
 
 namespace DeskDirector.Text.Json.Validation.Validators
 {
-    public class InclusiveBetweenValidator<TModel, T> : PropertyValidator<TModel, IOptional<T>>
+    public class InclusiveBetweenValidator<TModel, T> : PropertyValidator<TModel, Optional<T>>
     {
         public T From { get; }
 
@@ -29,12 +29,8 @@ namespace DeskDirector.Text.Json.Validation.Validators
             }
         }
 
-        public override bool IsValid(ValidationContext<TModel> context, IOptional<T>? optional)
+        public override bool IsValid(ValidationContext<TModel> context, Optional<T> optional)
         {
-            if (optional == null) {
-                return true;
-            }
-
             if (!optional.HasValue(out T? value)) {
                 return true;
             }

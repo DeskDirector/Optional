@@ -42,7 +42,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
             return indexOfDoubleDot < 0;
         }
 
-        protected override string GetDefaultMessageTemplate(string errorCode) =>
-            "{PropertyName} has to be email address";
+        protected override string GetDefaultMessageTemplate(string errorCode)
+            => "{PropertyName} has to be email address";
     }
 }
