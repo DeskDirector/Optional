@@ -49,13 +49,13 @@ namespace DeskDirector.Text.Json.Validation.Validators
         private bool IsBiggerAndEqualToFrom(T value)
         {
             int compareToFrom = _comparer.Compare(value, From);
-            return compareToFrom > 0;
+            return compareToFrom >= 0;
         }
 
         private bool IsLessAndEqualToTo(T value)
         {
             int compareToTo = _comparer.Compare(value, To);
-            return compareToTo < 0;
+            return compareToTo <= 0;
         }
 
         protected override string GetDefaultMessageTemplate(string errorCode) => "{PropertyName} has to be inclusively between {From} and {To}.";
