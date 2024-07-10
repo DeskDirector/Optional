@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-	  <LangVersion>latest</LangVersion>
-	  <TargetFramework>net8.0</TargetFramework>
-	  <Version>1.4.4</Version>
-    <Nullable>enable</Nullable>
-    <RootNamespace>DeskDirector.Text.Json.Validation</RootNamespace>
-    <PackageId>DeskDirector.$(AssemblyName)</PackageId>
-	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
-	  <RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
-	  <Copyright>Copyright (c) DeskDirector</Copyright>
-	  <Description>JSON Merge Patch with type safe</Description>
-	  <PackageTags>JSON;rfc7386;MergePatch</PackageTags>
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<TargetFramework>net8.0</TargetFramework>
+		<Version>1.4.5</Version>
+		<Nullable>enable</Nullable>
+		<RootNamespace>DeskDirector.Text.Json.Validation</RootNamespace>
+		<PackageId>DeskDirector.$(AssemblyName)</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
+		<Copyright>Copyright (c) DeskDirector</Copyright>
+		<Description>JSON Merge Patch with type safe</Description>
+		<PackageTags>JSON;rfc7386;MergePatch</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
-	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
-  </PropertyGroup>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
 		<NoWarn>1701;1702;1591</NoWarn>
@@ -24,11 +24,11 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
 		<NoWarn>1701;1702;1591</NoWarn>
 	</PropertyGroup>
-  
+
 	<ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.9.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Optional\Optional.csproj" />
-  </ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.9.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Optional\Optional.csproj" />
+	</ItemGroup>
 </Project>
