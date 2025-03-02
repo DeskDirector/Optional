@@ -35,8 +35,8 @@ namespace DeskDirector.Text.Json.Tests
                         "{\"integer\":[23],\"string\":[\"test\"]}",
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>(new []{23}),
-                            String = new OptionalCollection<string>(new[]{"test"})
+                            Integer = new OptionalCollection<int>([23]),
+                            String = new OptionalCollection<string>(["test"])
                         }
                     }
                 };
@@ -105,8 +105,8 @@ namespace DeskDirector.Text.Json.Tests
                     {
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>(new[] { 23 }),
-                            String = new OptionalCollection<string>(new[] { "test" })
+                            Integer = new OptionalCollection<int>([23]),
+                            String = new OptionalCollection<string>(["test"])
                         },
                         "{\"integer\":[23],\"string\":[\"test\"]}"
                     }

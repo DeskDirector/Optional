@@ -31,7 +31,7 @@ namespace DeskDirector.Text.Json
                 typeof(OptionalConverterInner<>).MakeGenericType(type),
                 BindingFlags.Instance | BindingFlags.Public,
                 null,
-                new object[] { options },
+                [options],
                 null
             );
             if (converterObj == null) {

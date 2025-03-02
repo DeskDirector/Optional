@@ -33,7 +33,7 @@ namespace DeskDirector.Text.Json.Validation
 
         public static implicit operator ReadOnlyHashSet<T>(HashSet<T>? value)
         {
-            return new ReadOnlyHashSet<T>(value ?? new HashSet<T>());
+            return new ReadOnlyHashSet<T>(value ?? []);
         }
 
         private HashSet<T> HashSet { get; }

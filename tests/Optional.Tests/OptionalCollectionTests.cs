@@ -24,7 +24,7 @@ namespace DeskDirector.Text.Json.Tests
                     {new OptionalCollection<int>(OptionalState.Null), false, default},
                     {new OptionalCollection<int>(OptionalState.Undefined), false, default},
                     {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
-                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
+                    {new OptionalCollection<int>([1]), true, [1] }
                 };
 
                 return data;
@@ -48,7 +48,7 @@ namespace DeskDirector.Text.Json.Tests
                     { new OptionalCollection<int>(OptionalState.Null), true },
                     { new OptionalCollection<int>(OptionalState.Undefined), false},
                     { new OptionalCollection<int>(Array.Empty<int>()), true },
-                    { new OptionalCollection<int>(new[] {1}), true },
+                    { new OptionalCollection<int>([1]), true },
                 };
 
                 return data;
@@ -73,7 +73,7 @@ namespace DeskDirector.Text.Json.Tests
                     {new OptionalCollection<int>(OptionalState.Null), false, Array.Empty<int>()},
                     {new OptionalCollection<int>(OptionalState.Undefined), false, Array.Empty<int>()},
                     {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
-                    {new OptionalCollection<int>(new[] {1}), true, new[] {1}}
+                    {new OptionalCollection<int>([1]), true, [1] }
                 };
 
                 return data;

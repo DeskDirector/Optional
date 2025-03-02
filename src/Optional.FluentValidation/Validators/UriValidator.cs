@@ -115,7 +115,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
             return (source & target) == target;
         }
 
-        internal static readonly IReadOnlyCollection<Func<UriScheme, string, bool>> Checks = new[] {
+        internal static readonly IReadOnlyCollection<Func<UriScheme, string, bool>> Checks = [
             EnsureHttp,
             EnsureHttps,
             EnsureData,
@@ -124,7 +124,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
             EnsureMailTo,
             EnsureWebSocket,
             EnsureWebSocketSecure
-        };
+        ];
 
         private static bool EnsureHttp(UriScheme scheme, string value)
         {

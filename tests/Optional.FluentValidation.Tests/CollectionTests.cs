@@ -50,7 +50,7 @@
         [Fact]
         public void Should_Have_Error_When_List_Is_Empty()
         {
-            Model model = new() { List = new List<string>() };
+            Model model = new() { List = [] };
             TestValidationResult<Model>? result = _validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(m => m.List);
         }
@@ -97,7 +97,7 @@
         public void Should_Not_Have_Error_When_Valid()
         {
             Model model = new() {
-                List = new List<string> { "Item1" },
+                List = ["Item1"],
                 Collection = new List<string> { "Item1" },
                 Array = ["Item1"]
             };
