@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Frozen;
+﻿using System.Collections.Frozen;
 using DeskDirector.Text.Json.Validation.Validators;
 using FluentValidation;
 

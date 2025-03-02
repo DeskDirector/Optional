@@ -3,12 +3,13 @@
 		<LangVersion>latest</LangVersion>
 		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<Version>1.4.5</Version>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>DeskDirector.Text.Json.Validation</RootNamespace>
 		<PackageId>DeskDirector.$(AssemblyName)</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/DeskDirector/Optional</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/DeskDirector/Optional</RepositoryUrl>
 		<Copyright>Copyright (c) DeskDirector</Copyright>
 		<Description>JSON Merge Patch with type safe</Description>
 		<PackageTags>JSON;rfc7386;MergePatch</PackageTags>

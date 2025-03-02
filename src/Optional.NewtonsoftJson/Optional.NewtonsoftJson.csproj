@@ -9,8 +9,8 @@
 		<RootNamespace>DeskDirector.Text.Json.NewtonsoftJson</RootNamespace>
 		<PackageId>DeskDirector.$(AssemblyName)</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/Nness/Optional</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/Nness/Optional</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/DeskDirector/Optional</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/DeskDirector/Optional</RepositoryUrl>
 		<Copyright>Copyright (c) DeskDirector</Copyright>
 		<Description>JSON Merge Patch with type safe</Description>
 		<PackageTags>JSON;rfc7386;MergePatch</PackageTags>

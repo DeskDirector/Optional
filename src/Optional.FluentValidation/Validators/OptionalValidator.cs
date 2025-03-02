@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 
 namespace DeskDirector.Text.Json.Validation.Validators
