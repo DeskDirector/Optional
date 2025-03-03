@@ -28,7 +28,7 @@ namespace DeskDirector.Text.Json.Tests
         public void SerializeModel1ByNewtonsoft(TestModel1 model, string expectJson)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings {
-                ContractResolver = new OptionalContractResolver()
+                ContractResolver = new OptionalContractResolver(),
             }.AppendIOptionalConverters();
 
             string actualJson = JsonConvert.SerializeObject(model, settings);

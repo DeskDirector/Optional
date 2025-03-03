@@ -56,7 +56,7 @@ namespace DeskDirector.Text.Json.NewtonsoftJson
         {
             ArgumentNullException.ThrowIfNull(optionalType);
 
-            valueType = default;
+            valueType = null;
             if (!IsOptionalType(optionalType)) {
                 return false;
             }

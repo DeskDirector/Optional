@@ -16,27 +16,40 @@ namespace DeskDirector.Text.Json.Tests
 
             [DataMember]
             public OptionalCollection<string> String { get; set; }
+
+            [DataMember]
+            public OptionalCollection<TestObject> Object { get; set; }
         }
 
-        public static TheoryData<string, TestModel1> DeserializeModel1Samples
+        public class TestObject
         {
+            public string? Value { get; set; }
+        }
+
+        public static TheoryData<string, TestModel1> DeserializeModel1Samples {
             get {
                 TheoryData<string, TestModel1> data = new() {
                     {"{}", new TestModel1()},
                     {
-                        "{\"integer\":null,\"string\":null}",
+                        """
+                        {"integer":null, "string":null, "object":null}
+                        """,
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>(OptionalState.Null),
-                            String = new OptionalCollection<string>(OptionalState.Null)
+                            Integer = OptionalCollection<int>.Null,
+                            String = OptionalCollection<string>.Null,
+                            Object = OptionalCollection<TestObject>.Null
                         }
                     },
                     {
-                        "{\"integer\":[23],\"string\":[\"test\"]}",
+                        """
+                        {"integer":[23], "string":["test"], "object":[{"value":"this is object"}]}
+                        """,
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>([23]),
-                            String = new OptionalCollection<string>(["test"])
+                            Integer = OptionalCollection<int>.WithValue([23]),
+                            String = OptionalCollection<string>.WithValue(["test"]),
+                            Object = OptionalCollection<TestObject>.WithValue([new TestObject { Value = "this is object" }])
                         }
                     }
                 };
@@ -78,34 +91,40 @@ namespace DeskDirector.Text.Json.Tests
             Assert.Equal(valueE, valueA);
         }
 
-        public static TheoryData<TestModel1, string> SerializeModel1Samples
-        {
+        public static TheoryData<TestModel1, string> SerializeModel1Samples {
             get {
                 TheoryData<TestModel1, string> data = new() {
                     { new TestModel1(), "{}" },
                     {
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>(OptionalState.Undefined),
-                            String = new OptionalCollection<string>(OptionalState.Undefined)
+                            Integer = OptionalCollection<int>.Undefined,
+                            String = OptionalCollection<string>.Undefined,
+                            Object = OptionalCollection<TestObject>.Undefined
                         },
                         "{}"
                     },
                     {
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>(OptionalState.Null),
-                            String = new OptionalCollection<string>(OptionalState.Null)
+                            Integer = OptionalCollection<int>.Null,
+                            String = OptionalCollection<string>.Null,
+                            Object = OptionalCollection<TestObject>.Null
                         },
-                        "{\"integer\":null,\"string\":null}"
+                        """
+                        {"integer":null,"string":null,"object":null}
+                        """
                     },
                     {
                         new TestModel1
                         {
-                            Integer = new OptionalCollection<int>([23]),
-                            String = new OptionalCollection<string>(["test"])
+                            Integer = OptionalCollection<int>.WithValue([23]),
+                            String = OptionalCollection<string>.WithValue(["test"]),
+                            Object = OptionalCollection<TestObject>.WithValue([new TestObject { Value = "this is object" }])
                         },
-                        "{\"integer\":[23],\"string\":[\"test\"]}"
+                        """
+                        {"integer":[23],"string":["test"],"object":[{"value":"this is object"}]}
+                        """
                     }
                 };
                 return data;
@@ -126,8 +145,7 @@ namespace DeskDirector.Text.Json.Tests
             Assert.Equal(expectJson, actualJson);
         }
 
-        public static TheoryData<Type, bool> OptionalCollectionTypeSamples
-        {
+        public static TheoryData<Type, bool> OptionalCollectionTypeSamples {
             get {
                 TheoryData<Type, bool> data = new() {
                     { typeof(OptionalCollection<int>), true },

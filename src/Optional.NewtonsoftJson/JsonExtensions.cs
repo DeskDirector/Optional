@@ -13,10 +13,10 @@ namespace DeskDirector.Text.Json.NewtonsoftJson
         {
             ArgumentNullException.ThrowIfNull(value);
 
-            token = default;
+            token = null;
 
             if (value.HasValue(out object? model)) {
-                token = JToken.FromObject(model);
+                token = JToken.FromObject(model, serializer);
                 return true;
             }
 

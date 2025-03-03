@@ -15,30 +15,36 @@ namespace DeskDirector.Text.Json.Tests
 
             [DataMember]
             public Optional<string> String { get; set; }
+
+            [DataMember]
+            public Optional<TestObject> Object { get; set; }
+        }
+
+        public class TestObject
+        {
+            public string? Value { get; set; }
         }
 
         public static TheoryData<string, TestModel1> DeserializeModel1Samples {
             get {
                 TheoryData<string, TestModel1> data = new() {
-                    {"{}", new TestModel1()},
-                    {
+                    { "{}", new TestModel1() }, {
                         """
-                        {"integer":null, "string":null}
+                        {"integer":null, "string":null, "object":null}
                         """,
-                        new TestModel1
-                        {
-                            Integer = new Optional<int>(OptionalState.Null),
-                            String = new Optional<string>(OptionalState.Null)
+                        new TestModel1 {
+                            Integer = Optional<int>.Null,
+                            String = Optional<string>.Null,
+                            Object = Optional<TestObject>.Null
                         }
-                    },
-                    {
+                    }, {
                         """
-                        {"integer":23, "string":"test"}
+                        {"integer":23, "string":"test", "object":{"value":"this is object"}}
                         """,
-                        new TestModel1
-                        {
-                            Integer = new Optional<int>(23),
-                            String = new Optional<string>("test")
+                        new TestModel1 {
+                            Integer = Optional<int>.WithValue(23),
+                            String = Optional<string>.WithValue("test"),
+                            Object = Optional<TestObject>.WithValue(new TestObject { Value = "this is object" })
                         }
                     }
                 };
@@ -81,26 +87,31 @@ namespace DeskDirector.Text.Json.Tests
                     {
                         new TestModel1
                         {
-                            Integer = new Optional<int>(OptionalState.Undefined),
-                            String = new Optional<string>(OptionalState.Undefined)
+                            Integer = Optional<int>.Undefined,
+                            String = Optional<string>.Undefined,
+                            Object = Optional<TestObject>.Undefined
                         },
                         "{}"
                     },
                     {
-                        new TestModel1
-                        {
-                            Integer = new Optional<int>(OptionalState.Null),
-                            String = new Optional<string>(OptionalState.Null)
+                        new TestModel1 {
+                            Integer = Optional<int>.Null,
+                            String = Optional<string>.Null,
+                            Object = Optional<TestObject>.Null
                         },
-                        "{\"integer\":null,\"string\":null}"
+                        """
+                        {"integer":null,"string":null,"object":null}
+                        """
                     },
                     {
-                        new TestModel1
-                        {
-                            Integer = new Optional<int>(23),
-                            String = new Optional<string>("test")
+                        new TestModel1 {
+                            Integer = Optional<int>.WithValue(23),
+                            String = Optional<string>.WithValue("test"),
+                            Object = Optional<TestObject>.WithValue(new TestObject { Value = "this is object" })
                         },
-                        "{\"integer\":23,\"string\":\"test\"}"
+                        """
+                        {"integer":23,"string":"test","object":{"value":"this is object"}}
+                        """
                     }
                 };
                 return data;
