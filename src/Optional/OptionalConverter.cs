@@ -44,7 +44,7 @@ namespace DeskDirector.Text.Json
 
         private class OptionalConverterInner<TValue> : JsonConverter<Optional<TValue>>
         {
-            private readonly JsonConverter<TValue>? _valueConverter;
+            private readonly JsonConverter<TValue> _valueConverter;
             private readonly Type _valueType;
 
             public OptionalConverterInner(JsonSerializerOptions options)
@@ -59,9 +59,7 @@ namespace DeskDirector.Text.Json
                     return new Optional<TValue>(OptionalState.Null);
                 }
 
-                TValue? value = _valueConverter == null
-                    ? JsonSerializer.Deserialize<TValue>(ref reader, options)
-                    : _valueConverter.Read(ref reader, _valueType, options);
+                TValue? value = _valueConverter.Read(ref reader, _valueType, options);
                 return new Optional<TValue>(value);
             }
 
@@ -83,11 +81,7 @@ namespace DeskDirector.Text.Json
                     throw new InvalidOperationException("Optional return Null value while the state is HasValue");
                 }
 
-                if (_valueConverter == null) {
-                    JsonSerializer.Serialize(writer, data, options);
-                } else {
-                    _valueConverter.Write(writer, data, options);
-                }
+                _valueConverter.Write(writer, data, options);
             }
         }
     }
