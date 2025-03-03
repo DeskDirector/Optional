@@ -1,0 +1,36 @@
+name: Optional ASP.Net Core
+
+on:
+  push:
+    tags:
+      - 'optional.aspnet-*'
+
+env:
+  Project: src/Optional.AspNetCore
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+            8.0.x
+            9.0.x
+        source-url: https://nuget.pkg.github.com/deskdirector/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build ${{ env.Project }} --configuration Release --no-restore
+    - name: Test
+      run: |
+        dotnet test "tests/Optional.Tests/Optional.Tests.csproj" --configuration Release --no-restore --verbosity normal
+        dotnet test "tests/Optional.AspNetCore.Tests/Optional.AspNetCore.Tests.csproj" --configuration Release --no-restore --verbosity normal
+    - name: Publish to GPR
+      run: dotnet nuget push "${{ env.Project }}/bin/Release/*.symbols.nupkg"
