@@ -17,13 +17,14 @@ namespace DeskDirector.Text.Json.Tests
             public Optional<string> String { get; set; }
         }
 
-        public static TheoryData<string, TestModel1> DeserializeModel1Samples
-        {
+        public static TheoryData<string, TestModel1> DeserializeModel1Samples {
             get {
                 TheoryData<string, TestModel1> data = new() {
                     {"{}", new TestModel1()},
                     {
-                        "{\"integer\":null, \"string\":null}",
+                        """
+                        {"integer":null, "string":null}
+                        """,
                         new TestModel1
                         {
                             Integer = new Optional<int>(OptionalState.Null),
@@ -31,7 +32,9 @@ namespace DeskDirector.Text.Json.Tests
                         }
                     },
                     {
-                        "{\"integer\":23, \"string\":\"test\"}",
+                        """
+                        {"integer":23, "string":"test"}
+                        """,
                         new TestModel1
                         {
                             Integer = new Optional<int>(23),
@@ -55,9 +58,6 @@ namespace DeskDirector.Text.Json.Tests
             TestModel1? actualResult = JsonSerializer.Deserialize<TestModel1>(json, options);
 
             Assert.NotNull(actualResult);
-            if (actualResult == null) {
-                return;
-            }
 
             EnsureEqual(expectResult.Integer, actualResult.Integer);
             EnsureEqual(expectResult.String, actualResult.String);
@@ -74,8 +74,7 @@ namespace DeskDirector.Text.Json.Tests
             Assert.Equal(valueE, valueA);
         }
 
-        public static TheoryData<TestModel1, string> SerializeModel1Samples
-        {
+        public static TheoryData<TestModel1, string> SerializeModel1Samples {
             get {
                 TheoryData<TestModel1, string> data = new() {
                     { new TestModel1(), "{}" },
@@ -122,8 +121,7 @@ namespace DeskDirector.Text.Json.Tests
             Assert.Equal(expectJson, actualJson);
         }
 
-        public static TheoryData<Type, bool> OptionalTypeSamples
-        {
+        public static TheoryData<Type, bool> OptionalTypeSamples {
             get {
                 TheoryData<Type, bool> data = new() {
                     { typeof(OptionalCollection<int>), false },

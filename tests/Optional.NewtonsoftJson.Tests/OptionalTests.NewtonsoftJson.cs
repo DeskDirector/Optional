@@ -18,9 +18,6 @@ namespace DeskDirector.Text.Json.Tests
             TestModel1? actualResult = JsonConvert.DeserializeObject<TestModel1>(json, settings);
 
             Assert.NotNull(actualResult);
-            if (actualResult == null) {
-                return;
-            }
 
             EnsureEqual(expectResult.Integer, actualResult.Integer);
             EnsureEqual(expectResult.String, actualResult.String);

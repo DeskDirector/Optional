@@ -20,9 +20,9 @@ namespace DeskDirector.Text.Json.Tests
             get {
                 TheoryData<Optional<int>, bool, int> data = new()
                 {
-                    {default, false, default},
-                    {new Optional<int>(OptionalState.Null), false, default},
-                    {new Optional<int>(OptionalState.Undefined), false, default},
+                    {default, false, 0},
+                    {new Optional<int>(OptionalState.Null), false, 0},
+                    {new Optional<int>(OptionalState.Undefined), false, 0},
                     {new Optional<int>(0), true, 0},
                     {new Optional<int>(-1), true, -1 },
                     {new Optional<int>(1), true, 1 }
@@ -45,9 +45,9 @@ namespace DeskDirector.Text.Json.Tests
             get {
                 TheoryData<Optional<string>, bool, string?> data = new()
                 {
-                    {default, false, default},
-                    {new Optional<string>(OptionalState.Null), false, default},
-                    {new Optional<string>(OptionalState.Undefined), false, default},
+                    {default, false, null},
+                    {new Optional<string>(OptionalState.Null), false, null},
+                    {new Optional<string>(OptionalState.Undefined), false, null},
                     {new Optional<string>(null), false, null},
                     {new Optional<string>(String.Empty), true, String.Empty },
                     {new Optional<string>("Test"), true, "Test" }

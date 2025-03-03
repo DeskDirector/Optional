@@ -20,9 +20,9 @@ namespace DeskDirector.Text.Json.Tests
             get {
                 TheoryData<OptionalCollection<int>, bool, ICollection<int>?> data = new()
                 {
-                    {default, false, default},
-                    {new OptionalCollection<int>(OptionalState.Null), false, default},
-                    {new OptionalCollection<int>(OptionalState.Undefined), false, default},
+                    {default, false, null},
+                    {new OptionalCollection<int>(OptionalState.Null), false, null},
+                    {new OptionalCollection<int>(OptionalState.Undefined), false, null},
                     {new OptionalCollection<int>(Array.Empty<int>()), true, Array.Empty<int>()},
                     {new OptionalCollection<int>([1]), true, [1] }
                 };

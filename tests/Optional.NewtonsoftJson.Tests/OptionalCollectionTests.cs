@@ -56,9 +56,6 @@ namespace DeskDirector.Text.Json.Tests
             TestModel1? actualResult = JsonSerializer.Deserialize<TestModel1>(json, options);
 
             Assert.NotNull(actualResult);
-            if (actualResult == null) {
-                return;
-            }
 
             EnsureEqual(expectResult.Integer, actualResult.Integer);
             EnsureEqual(expectResult.String, actualResult.String);
