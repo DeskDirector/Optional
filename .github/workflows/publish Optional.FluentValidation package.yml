@@ -3,7 +3,7 @@ name: Optional FluentValidation
 on:
   push:
     tags:
-      - 'Optional.FluentValidation-*'
+      - 'optional.fluent-*'
 
 env:
   Project: src/Optional.FluentValidation

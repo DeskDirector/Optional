@@ -3,7 +3,7 @@ name: Optional NewtonsoftJson
 on:
   push:
     tags:
-      - 'Optional.NewtonsoftJson-*'
+      - 'optional.newtonsoft-*'
 
 env:
   Project: src/Optional.NewtonsoftJson

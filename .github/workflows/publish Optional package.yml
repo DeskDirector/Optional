@@ -3,7 +3,7 @@ name: Optional
 on:
   push:
     tags:
-      - 'Optional-*'
+      - 'optional-*'
 
 
 env:
