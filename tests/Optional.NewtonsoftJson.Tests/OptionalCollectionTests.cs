@@ -80,7 +80,10 @@ namespace DeskDirector.Text.Json.Tests
             Assert.Equal(expect.IsNull(), actual.IsNull());
             Assert.Equal(expect.IsUndefined(), actual.IsUndefined());
             Assert.Equal(expect.IsSet(), actual.IsSet());
-            Assert.Equal(expect.HasValue(out ICollection<T>? valueE), actual.HasValue(out ICollection<T>? valueA));
+            Assert.Equal(
+                expect.HasValue(out IReadOnlyCollection<T>? valueE),
+                actual.HasValue(out IReadOnlyCollection<T>? valueA)
+            );
 
             if (valueE == null) {
                 Assert.Null(valueA);

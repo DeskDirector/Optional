@@ -29,7 +29,7 @@
         {
             ArgumentNullException.ThrowIfNull(map);
 
-            if (!input.IsSet(out ICollection<T>? value)) {
+            if (!input.IsSet(out IReadOnlyCollection<T>? value)) {
                 return OptionalCollection<TTarget>.Undefined;
             }
 

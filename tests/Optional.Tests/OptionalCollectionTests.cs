@@ -10,7 +10,7 @@ namespace DeskDirector.Text.Json.Tests
         [MemberData(nameof(HasValueSamples))]
         public void HasValue(OptionalCollection<int> list, bool expectHasValue, ICollection<int>? expectValue)
         {
-            bool actualHasValue = list.HasValue(out ICollection<int>? actualValue);
+            bool actualHasValue = list.HasValue(out IReadOnlyCollection<int>? actualValue);
 
             Assert.Equal(expectHasValue, actualHasValue);
             Assert.Equal(expectValue, actualValue);
@@ -59,7 +59,7 @@ namespace DeskDirector.Text.Json.Tests
         [MemberData(nameof(EnumerableSamples))]
         public void EnumerableTest(OptionalCollection<int> list, bool expectHasValue, IEnumerable<int> expectValue)
         {
-            bool actualHasValue = list.HasValue(out ICollection<int>? _);
+            bool actualHasValue = list.HasValue(out IReadOnlyCollection<int>? _);
 
             Assert.Equal(expectHasValue, actualHasValue);
             Assert.Equal(expectValue, list);

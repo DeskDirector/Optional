@@ -18,7 +18,7 @@ namespace DeskDirector.Text.Json.NewtonsoftJson
                 return Null;
             }
 
-            ICollection<T>? value = token.ToObject<ICollection<T>>();
+            IReadOnlyCollection<T>? value = token.ToObject<IReadOnlyCollection<T>>();
             if (value == null) {
                 throw new InvalidOperationException(
                     $"token type is ({token.Type}) but unable convert to ICollection<{typeof(T).Name}>"

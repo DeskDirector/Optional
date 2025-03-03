@@ -5,26 +5,26 @@ using System.Text.Json.Serialization;
 namespace DeskDirector.Text.Json
 {
     [Serializable, JsonConverter(typeof(OptionalCollectionConverter))]
-    public readonly struct OptionalCollection<T> : IOptional<ICollection<T>>, IEnumerable<T>
+    public readonly struct OptionalCollection<T> : IOptional<IReadOnlyCollection<T>>, IEnumerable<T>
     {
         public static readonly OptionalCollection<T> Undefined = new(OptionalState.Undefined);
 
         public static readonly OptionalCollection<T> Null = new(OptionalState.Null);
 
-        public static OptionalCollection<T> WithValue(ICollection<T> value)
+        public static OptionalCollection<T> WithValue(IReadOnlyCollection<T> value)
         {
             ArgumentNullException.ThrowIfNull(value);
 
             return new OptionalCollection<T>(value);
         }
 
-        private readonly ICollection<T>? _value;
+        private readonly IReadOnlyCollection<T>? _value;
 
         public OptionalState State { get; }
 
-        public ICollection<T>? Value => State == OptionalState.HasValue && _value != null ? _value : null;
+        public IReadOnlyCollection<T>? Value => State == OptionalState.HasValue && _value != null ? _value : null;
 
-        public OptionalCollection(ICollection<T>? value)
+        public OptionalCollection(IReadOnlyCollection<T>? value)
         {
             _value = value;
             State = value == null ? OptionalState.Null : OptionalState.HasValue;
@@ -41,7 +41,7 @@ namespace DeskDirector.Text.Json
 
         public bool IsSet() => State != OptionalState.Undefined;
 
-        public bool IsSet(out ICollection<T>? value)
+        public bool IsSet(out IReadOnlyCollection<T>? value)
         {
             value = null;
 
@@ -59,7 +59,7 @@ namespace DeskDirector.Text.Json
             }
         }
 
-        public bool HasValue([NotNullWhen(true)] out ICollection<T>? value)
+        public bool HasValue([NotNullWhen(true)] out IReadOnlyCollection<T>? value)
         {
             value = _value;
             return value != null && State == OptionalState.HasValue;
@@ -89,7 +89,7 @@ namespace DeskDirector.Text.Json
 
         public override int GetHashCode()
         {
-            ICollection<T>? value = Value;
+            IReadOnlyCollection<T>? value = Value;
 
             return State switch {
                 OptionalState.Undefined => OptionalState.Undefined.GetHashCode(),
@@ -103,7 +103,7 @@ namespace DeskDirector.Text.Json
 
         public override string ToString()
         {
-            ICollection<T>? value = Value;
+            IReadOnlyCollection<T>? value = Value;
 
             return State switch {
                 OptionalState.Undefined => "undefined",

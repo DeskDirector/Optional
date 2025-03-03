@@ -49,7 +49,9 @@ namespace DeskDirector.Text.Json.Validation
         {
             ArgumentNullException.ThrowIfNull(ruleBuilder);
 
-            return ruleBuilder.SetValidator(new OptionalNotEmptyValidator<T, OptionalCollection<TProperty>, ICollection<TProperty>>());
+            OptionalNotEmptyValidator<T, OptionalCollection<TProperty>, IReadOnlyCollection<TProperty>> validator =
+                new();
+            return ruleBuilder.SetValidator(validator);
         }
     }
 }
