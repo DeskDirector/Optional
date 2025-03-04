@@ -21,7 +21,7 @@ namespace DeskDirector.Text.Json.AspNetCore
             ApplyInnerType(schema, context, child);
         }
 
-        private static void ApplyInnerType(
+        private void ApplyInnerType(
             OpenApiSchema schema,
             SchemaFilterContext context,
             Type type)
@@ -34,6 +34,8 @@ namespace DeskDirector.Text.Json.AspNetCore
             );
 
             schema.PopulateWith(from);
+
+            ModifySchema(schema, context);
 
             MemberInfo? memberInfo = context.MemberInfo;
             NullableAttribute? attribute = memberInfo?.GetCustomAttribute<NullableAttribute>();
@@ -90,5 +92,8 @@ namespace DeskDirector.Text.Json.AspNetCore
             value = itemType;
             return true;
         }
+
+        protected virtual void ModifySchema(OpenApiSchema schema, SchemaFilterContext context)
+        { }
     }
 }
