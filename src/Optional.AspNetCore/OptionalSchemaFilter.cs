@@ -1,16 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DeskDirector.Text.Json.AspNetCore
 {
     public class OptionalSchemaFilter : ISchemaFilter
     {
-        public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+        public void Apply(IOpenApiSchema schema, SchemaFilterContext context)
         {
+            if (schema is not OpenApiSchema concrete) {
+                return;
+            }
+
             if (IsOptionalCollection(context.Type, out Type? child)) {
-                ApplyInnerType(schema, context, child.MakeArrayType());
+                ApplyInnerType(concrete, context, child.MakeArrayType());
                 return;
             }
 
@@ -18,7 +22,7 @@ namespace DeskDirector.Text.Json.AspNetCore
                 return;
             }
 
-            ApplyInnerType(schema, context, child);
+            ApplyInnerType(concrete, context, child);
         }
 
         private void ApplyInnerType(
@@ -26,7 +30,7 @@ namespace DeskDirector.Text.Json.AspNetCore
             SchemaFilterContext context,
             Type type)
         {
-            OpenApiSchema from = context.SchemaGenerator.GenerateSchema(
+            IOpenApiSchema from = context.SchemaGenerator.GenerateSchema(
                 type,
                 context.SchemaRepository,
                 context.MemberInfo,
@@ -40,9 +44,43 @@ namespace DeskDirector.Text.Json.AspNetCore
             MemberInfo? memberInfo = context.MemberInfo;
             NullableAttribute? attribute = memberInfo?.GetCustomAttribute<NullableAttribute>();
 
-            if (attribute != null) {
-                schema.Nullable = true;
+            if (attribute == null) {
+                return;
             }
+
+            if (schema.Type != null) {
+                if (!schema.Type.Value.HasFlag(JsonSchemaType.Null)) {
+                    schema.Type |= JsonSchemaType.Null;
+                }
+                return;
+            }
+
+            if (IsAllOfWithoutNull(schema, out IList<IOpenApiSchema>? allOf)) {
+                schema.OneOf = [.. allOf, new OpenApiSchema { Type = JsonSchemaType.Null }];
+                schema.AllOf = null;
+            }
+
+            if (IsOneOfWithoutNull(schema, out IList<IOpenApiSchema>? oneOf)) {
+                schema.OneOf = [.. oneOf, new OpenApiSchema { Type = JsonSchemaType.Null }];
+            }
+        }
+
+        private static bool IsOneOfWithoutNull(
+            IOpenApiSchema schema,
+            [NotNullWhen(true)] out IList<IOpenApiSchema>? oneOf)
+        {
+            oneOf = schema.OneOf;
+
+            return oneOf != null && oneOf.All(s => s.Type != JsonSchemaType.Null);
+        }
+
+        private static bool IsAllOfWithoutNull(
+            IOpenApiSchema schema,
+            [NotNullWhen(true)] out IList<IOpenApiSchema>? allOf)
+        {
+            allOf = schema.AllOf;
+
+            return allOf is [{ Type: null }];
         }
 
         private static bool IsOptionalCollection(

@@ -1,23 +1,22 @@
 ﻿using System.Reflection;
+using Microsoft.OpenApi;
 
 namespace DeskDirector.Text.Json.AspNetCore
 {
     internal static class AutoMapExtensions
     {
-        internal static T PopulateWith<T>(this T to, T from)
+        internal static void PopulateWith(this OpenApiSchema to, IOpenApiSchema from)
         {
             ArgumentNullException.ThrowIfNull(to);
             ArgumentNullException.ThrowIfNull(from);
 
-            Type type = typeof(T);
+            Type type = typeof(OpenApiSchema);
 
             foreach (PropertyInfo property in type.GetPublicProperties()
                          .Where(p => p is { CanRead: true, CanWrite: true } && p.CanPublicRead() && p.CanPublicSet())) {
                 object? propertyValue = property.GetValue(from);
                 property.SetValue(to, propertyValue);
             }
-
-            return to;
         }
 
         internal static IEnumerable<PropertyInfo> GetPublicProperties(this Type type)
