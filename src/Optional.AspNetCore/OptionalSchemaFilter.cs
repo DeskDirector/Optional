@@ -13,16 +13,11 @@ namespace DeskDirector.Text.Json.AspNetCore
                 return;
             }
 
-            if (IsOptionalCollection(context.Type, out Type? child)) {
-                ApplyInnerType(concrete, context, child.MakeArrayType());
+            if (!OptionalReflection.IsOptional(context.Type, out Type? effectiveType)) {
                 return;
             }
 
-            if (!IsOptional(context.Type, out child)) {
-                return;
-            }
-
-            ApplyInnerType(concrete, context, child);
+            ApplyInnerType(concrete, context, effectiveType);
         }
 
         private void ApplyInnerType(
@@ -37,7 +32,23 @@ namespace DeskDirector.Text.Json.AspNetCore
                 context.ParameterInfo
             );
 
-            schema.PopulateWith(from);
+            switch (from) {
+                case OpenApiSchema concrete:
+                    schema.PopulateWith(concrete);
+                    break;
+
+                case OpenApiSchemaReference schemaRef:
+                    OpenApiSchema reference = new() {
+                        OneOf = [schemaRef]
+                    };
+                    schema.PopulateWith(reference);
+                    break;
+
+                default:
+                    throw new InvalidOperationException(
+                        $"Type IOpenApiSchema({from.GetType().FullName}) is not supported."
+                    );
+            }
 
             ModifySchema(schema, context);
 
@@ -81,54 +92,6 @@ namespace DeskDirector.Text.Json.AspNetCore
             allOf = schema.AllOf;
 
             return allOf is [{ Type: null }];
-        }
-
-        private static bool IsOptionalCollection(
-            Type type,
-            [NotNullWhen(true)] out Type? value)
-        {
-            value = null;
-
-            if (!type.IsGenericType ||
-                type.GetGenericTypeDefinition() != typeof(OptionalCollection<>)) {
-                return false;
-            }
-
-            Type? itemType = type.GetGenericArguments().FirstOrDefault();
-            if (itemType == null) {
-                throw new InvalidOperationException("OptionalCollection<T> doesn't have GenericArguments");
-            }
-
-            if (typeof(IOptional).IsAssignableFrom(itemType)) {
-                throw new InvalidOperationException("OptionalCollection<T>'s child type T is another optional type.");
-            }
-
-            value = itemType;
-            return true;
-        }
-
-        private static bool IsOptional(
-            Type type,
-            [NotNullWhen(true)] out Type? value)
-        {
-            value = null;
-
-            if (!type.IsGenericType ||
-                type.GetGenericTypeDefinition() != typeof(Optional<>)) {
-                return false;
-            }
-
-            Type? itemType = type.GetGenericArguments().FirstOrDefault();
-            if (itemType == null) {
-                throw new InvalidOperationException("Optional<T> doesn't have GenericArguments");
-            }
-
-            if (typeof(IOptional).IsAssignableFrom(itemType)) {
-                throw new InvalidOperationException("Optional<T>'s child type T is another optional type.");
-            }
-
-            value = itemType;
-            return true;
         }
 
         protected virtual void ModifySchema(OpenApiSchema schema, SchemaFilterContext context)

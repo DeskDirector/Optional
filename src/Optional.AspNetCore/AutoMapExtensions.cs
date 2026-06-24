@@ -5,7 +5,7 @@ namespace DeskDirector.Text.Json.AspNetCore
 {
     internal static class AutoMapExtensions
     {
-        internal static void PopulateWith(this OpenApiSchema to, IOpenApiSchema from)
+        internal static void PopulateWith(this OpenApiSchema to, OpenApiSchema from)
         {
             ArgumentNullException.ThrowIfNull(to);
             ArgumentNullException.ThrowIfNull(from);
