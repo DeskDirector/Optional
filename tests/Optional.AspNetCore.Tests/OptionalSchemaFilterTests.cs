@@ -30,7 +30,7 @@ namespace Optional.AspNetCore.Tests
                     SupportNonNullableReferenceTypes = true,
                     UseAllOfToExtendReferenceSchemas = true
                 },
-                new JsonSerializerDataContractResolver(new JsonSerializerOptions())
+                new OptionalSerializerDataContractResolver(new JsonSerializerDataContractResolver(new JsonSerializerOptions()))
             );
 
             SchemaFilterContext context = new(
