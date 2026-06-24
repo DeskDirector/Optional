@@ -16,9 +16,17 @@ namespace DeskDirector.Text.Json.AspNetCore
 
         public DataContract GetDataContractForType(Type type)
         {
+            return Handle(type, _inner);
+        }
+
+        public static DataContract Handle(Type type, ISerializerDataContractResolver inner)
+        {
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(inner);
+
             Type effectiveType = OptionalReflection.IsOptional(type, out Type? value) ? value : type;
 
-            DataContract contract = _inner.GetDataContractForType(effectiveType);
+            DataContract contract = inner.GetDataContractForType(effectiveType);
             if (contract.DataType != DataType.Object) {
                 return contract;
             }
