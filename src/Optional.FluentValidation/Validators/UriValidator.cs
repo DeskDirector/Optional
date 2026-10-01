@@ -15,7 +15,7 @@ namespace DeskDirector.Text.Json.Validation.Validators
         {
             return scheme.Is(UriScheme.None)
                 ? "{PropertyName} is invalid URI"
-                : $"{{PropertyName}} need to be valid URI with any of schemes in <{String.Join(", ", GetSchemeNames(scheme))}>";
+                : $"{{PropertyName}} need to be valid URI with any of schemes in <{String.Join(", ", scheme.GetNames())}>";
         }
 
         public UriValidator(UriScheme scheme)
@@ -27,92 +27,90 @@ namespace DeskDirector.Text.Json.Validation.Validators
         {
             return value switch {
                 Optional<string> optional => IsValid(optional),
-                string text => IsValid(text),
+                string text => _scheme.IsValid(text),
                 _ => true
             };
         }
 
         private bool IsValid(Optional<string> optional)
         {
-            return !optional.HasValue(out string? value) || IsValid(value);
-        }
-
-        private bool IsValid(string value)
-        {
-            if (String.IsNullOrWhiteSpace(value)) {
-                return false;
-            }
-
-            if (!Uri.IsWellFormedUriString(value, UriKind.Absolute)) {
-                return false;
-            }
-
-            return _scheme == UriScheme.None || HasCorrectScheme(value);
-        }
-
-        private bool HasCorrectScheme(string value)
-        {
-            return UriSchemeUtils.Checks.Any(c => c(_scheme, value));
-        }
-
-        private static IEnumerable<string> GetSchemeNames(UriScheme scheme)
-        {
-            if (scheme.Is(UriScheme.None)) {
-                yield break;
-            }
-
-            if (scheme.Is(UriScheme.HTTP)) {
-                yield return "http";
-            }
-
-            if (scheme.Is(UriScheme.HTTPS)) {
-                yield return "https";
-            }
-
-            if (scheme.Is(UriScheme.FTP)) {
-                yield return "ftp";
-            }
-
-            if (scheme.Is(UriScheme.MailTo)) {
-                yield return "mailto";
-            }
-
-            if (scheme.Is(UriScheme.File)) {
-                yield return "file";
-            }
-
-            if (scheme.Is(UriScheme.Data)) {
-                yield return "data";
-            }
-
-            if (scheme.Is(UriScheme.WebSocket)) {
-                yield return "ws";
-            }
-
-            if (scheme.Is(UriScheme.WebSocketSecure)) {
-                yield return "wss";
-            }
+            return !optional.HasValue(out string? value) || _scheme.IsValid(value);
         }
     }
 
     public static class UriSchemeUtils
     {
-        public static bool IsNot(this UriScheme source, UriScheme target)
+        extension(UriScheme source)
         {
-            if (target == UriScheme.None) {
-                return source != UriScheme.None;
+            public bool IsNot(UriScheme target)
+            {
+                if (target == UriScheme.None) {
+                    return source != UriScheme.None;
+                }
+
+                return (source & target) != target;
             }
 
-            return (source & target) != target;
-        }
+            public bool Is(UriScheme target)
+            {
+                if (target == UriScheme.None) {
+                    return source == UriScheme.None;
+                }
 
-        public static bool Is(this UriScheme source, UriScheme target)
-        {
-            if (target == UriScheme.None) {
-                return source == UriScheme.None;
+                return (source & target) == target;
             }
 
-            return (source & target) == target;
+            public bool IsValid(string? value)
+            {
+                if (String.IsNullOrWhiteSpace(value)) {
+                    return false;
+                }
+
+                if (!Uri.IsWellFormedUriString(value, UriKind.Absolute)) {
+                    return false;
+                }
+
+                return source == UriScheme.None || Checks.Any(c => c(source, value));
+            }
+
+            public IEnumerable<string> GetNames()
+            {
+                if (source.Is(UriScheme.None)) {
+                    yield break;
+                }
+
+                if (source.Is(UriScheme.HTTP)) {
+                    yield return "http";
+                }
+
+                if (source.Is(UriScheme.HTTPS)) {
+                    yield return "https";
+                }
+
+                if (source.Is(UriScheme.FTP)) {
+                    yield return "ftp";
+                }
+
+                if (source.Is(UriScheme.MailTo)) {
+                    yield return "mailto";
+                }
+
+                if (source.Is(UriScheme.File)) {
+                    yield return "file";
+                }
+
+                if (source.Is(UriScheme.Data)) {
+                    yield return "data";
+                }
+
+                if (source.Is(UriScheme.WebSocket)) {
+                    yield return "ws";
+                }
+
+                if (source.Is(UriScheme.WebSocketSecure)) {
+                    yield return "wss";
+                }
+            }
         }
 
         internal static readonly IReadOnlyCollection<Func<UriScheme, string, bool>> Checks = [
